@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <servlet>
     <servlet-name>index</servlet-name>
-    <servlet-class>com.ruanko.web.IndexServlet</servlet-class>
+    <servlet-class>web.IndexServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>index</servlet-name>
@@ -10,7 +10,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toRegister</servlet-name>
-    <servlet-class>com.ruanko.web.ToRegisterServlet</servlet-class>
+    <servlet-class>web.ToRegisterServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toRegister</servlet-name>
@@ -18,7 +18,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>register</servlet-name>
-    <servlet-class>com.ruanko.web.RegisterServlet</servlet-class>
+    <servlet-class>web.RegisterServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>register</servlet-name>
@@ -26,7 +26,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toLogin</servlet-name>
-    <servlet-class>com.ruanko.web.ToLoginServlet</servlet-class>
+    <servlet-class>web.ToLoginServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toLogin</servlet-name>
@@ -34,7 +34,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toNewUser</servlet-name>
-    <servlet-class>com.ruanko.web.ToNewUserServlet</servlet-class>
+    <servlet-class>web.ToNewUserServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toNewUser</servlet-name>
@@ -42,7 +42,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toError</servlet-name>
-    <servlet-class>com.ruanko.web.ToErrorServlet</servlet-class>
+    <servlet-class>web.ToErrorServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toError</servlet-name>
@@ -50,7 +50,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>login</servlet-name>
-    <servlet-class>com.ruanko.web.LoginServlet</servlet-class>
+    <servlet-class>web.LoginServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>login</servlet-name>
@@ -58,7 +58,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>logout</servlet-name>
-    <servlet-class>com.ruanko.web.LogoutServlet</servlet-class>
+    <servlet-class>web.LogoutServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>logout</servlet-name>
@@ -66,7 +66,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toAdmin</servlet-name>
-    <servlet-class>com.ruanko.web.ToAdminServlet</servlet-class>
+    <servlet-class>web.ToAdminServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toAdmin</servlet-name>
@@ -74,7 +74,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toOperator</servlet-name>
-    <servlet-class>com.ruanko.web.ToOperatorServlet</servlet-class>
+    <servlet-class>web.ToOperatorServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toOperator</servlet-name>
@@ -82,7 +82,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toDraft</servlet-name>
-    <servlet-class>com.ruanko.web.ToDraftServlet</servlet-class>
+    <servlet-class>web.ToDraftServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toDraft</servlet-name>
@@ -90,7 +90,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>draft</servlet-name>
-    <servlet-class>com.ruanko.web.DraftServlet</servlet-class>
+    <servlet-class>web.DraftServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>draft</servlet-name>
@@ -98,7 +98,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toDfphtList</servlet-name>
-    <servlet-class>com.ruanko.web.ToDfphtListServlet</servlet-class>
+    <servlet-class>web.ToDfphtListServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toDfphtList</servlet-name>
@@ -106,7 +106,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toAssignOper</servlet-name>
-    <servlet-class>com.ruanko.web.ToAssignOperServlet</servlet-class>
+    <servlet-class>web.ToAssignOperServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toAssignOper</servlet-name>
@@ -114,7 +114,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>assignOper</servlet-name>
-    <servlet-class>com.ruanko.web.AssignOperServlet</servlet-class>
+    <servlet-class>web.AssignOperServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>assignOper</servlet-name>
@@ -122,7 +122,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toDhqhtList</servlet-name>
-    <servlet-class>com.ruanko.web.ToDhqhtListServlet</servlet-class>
+    <servlet-class>web.ToDhqhtListServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toDhqhtList</servlet-name>
@@ -130,7 +130,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toAddHQOpinion</servlet-name>
-    <servlet-class>com.ruanko.web.ToAddHQOpinionServlet</servlet-class>
+    <servlet-class>web.ToAddHQOpinionServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toAddHQOpinion</servlet-name>
@@ -138,7 +138,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>addHQOpinion</servlet-name>
-    <servlet-class>com.ruanko.web.AddHQOpinionServlet</servlet-class>
+    <servlet-class>web.AddHQOpinionServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>addHQOpinion</servlet-name>
@@ -146,7 +146,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>contractDetail</servlet-name>
-    <servlet-class>com.ruanko.web.ContractDetailServlet</servlet-class>
+    <servlet-class>web.ContractDetailServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>contractDetail</servlet-name>
@@ -154,7 +154,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toDdghtList</servlet-name>
-    <servlet-class>com.ruanko.web.ToDdghtListServlet</servlet-class>
+    <servlet-class>web.ToDdghtListServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toDdghtList</servlet-name>
@@ -162,7 +162,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toDgContract</servlet-name>
-    <servlet-class>com.ruanko.web.ToDgContractServlet</servlet-class>
+    <servlet-class>web.ToDgContractServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toDgContract</servlet-name>
@@ -170,7 +170,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>dgContract</servlet-name>
-    <servlet-class>com.ruanko.web.DgContractServlet</servlet-class>
+    <servlet-class>web.DgContractServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>dgContract</servlet-name>
@@ -178,7 +178,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>showHQOpinion</servlet-name>
-    <servlet-class>com.ruanko.web.ShowHQOpinionServlet</servlet-class>
+    <servlet-class>web.ShowHQOpinionServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>showHQOpinion</servlet-name>
@@ -186,7 +186,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toDshphtList</servlet-name>
-    <servlet-class>com.ruanko.web.ToDshphtListServlet</servlet-class>
+    <servlet-class>web.ToDshphtListServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toDshphtList</servlet-name>
@@ -194,7 +194,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toAddSHPOpinion</servlet-name>
-    <servlet-class>com.ruanko.web.ToAddSHPOpinionServlet</servlet-class>
+    <servlet-class>web.ToAddSHPOpinionServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toAddSHPOpinion</servlet-name>
@@ -202,7 +202,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>addSHPOpinion</servlet-name>
-    <servlet-class>com.ruanko.web.AddSHPOpinionServlet</servlet-class>
+    <servlet-class>web.AddSHPOpinionServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>addSHPOpinion</servlet-name>
@@ -210,7 +210,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toDqdhtList</servlet-name>
-    <servlet-class>com.ruanko.web.ToDqdhtListServlet</servlet-class>
+    <servlet-class>web.ToDqdhtListServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toDqdhtList</servlet-name>
@@ -218,7 +218,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toAddQDInfo</servlet-name>
-    <servlet-class>com.ruanko.web.ToAddQDInfoServlet</servlet-class>
+    <servlet-class>web.ToAddQDInfoServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toAddQDInfo</servlet-name>
@@ -226,7 +226,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>addQDInfo</servlet-name>
-    <servlet-class>com.ruanko.web.AddQDInfoServlet</servlet-class>
+    <servlet-class>web.AddQDInfoServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>addQDInfo</servlet-name>
@@ -234,7 +234,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toYhqxList</servlet-name>
-    <servlet-class>com.ruanko.web.ToYhqxListServlet</servlet-class>
+    <servlet-class>web.ToYhqxListServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toYhqxList</servlet-name>
@@ -242,7 +242,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>toAssignPerm</servlet-name>
-    <servlet-class>com.ruanko.web.ToAssignPermServlet</servlet-class>
+    <servlet-class>web.ToAssignPermServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>toAssignPerm</servlet-name>
@@ -250,7 +250,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>assignPerm</servlet-name>
-    <servlet-class>com.ruanko.web.AssignPermServlet</servlet-class>
+    <servlet-class>web.AssignPermServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>assignPerm</servlet-name>
