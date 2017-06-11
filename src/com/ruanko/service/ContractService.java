@@ -1,4 +1,4 @@
-﻿package service;
+package com.ruanko.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -6,23 +6,23 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import dao.ConProcessDao;
-import dao.ConStateDao;
-import dao.ContractDao;
-import dao.UserDao;
-import dao.impl.ConProcessDaoImpl;
-import dao.impl.ConStateDaoImpl;
-import dao.impl.ContractDaoImpl;
-import dao.impl.UserDaoImpl;
-import model.CSignatureOpinion;
-import model.ConBusiModel;
-import model.ConDetailBusiModel;
-import model.ConProcess;
-import model.ConState;
-import model.Contract;
-import model.User;
-import utils.AppException;
-import utils.Constant;
+import com.ruanko.dao.ConProcessDao;
+import com.ruanko.dao.ConStateDao;
+import com.ruanko.dao.ContractDao;
+import com.ruanko.dao.UserDao;
+import com.ruanko.dao.impl.ConProcessDaoImpl;
+import com.ruanko.dao.impl.ConStateDaoImpl;
+import com.ruanko.dao.impl.ContractDaoImpl;
+import com.ruanko.dao.impl.UserDaoImpl;
+import com.ruanko.model.CSignatureOpinion;
+import com.ruanko.model.ConBusiModel;
+import com.ruanko.model.ConDetailBusiModel;
+import com.ruanko.model.ConProcess;
+import com.ruanko.model.ConState;
+import com.ruanko.model.Contract;
+import com.ruanko.model.User;
+import com.ruanko.utils.AppException;
+import com.ruanko.utils.Constant;
 
 /**
  *	Contract business logic class

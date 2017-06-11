@@ -1,19 +1,19 @@
-package service;
+package com.ruanko.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.RightDao;
-import dao.RoleDao;
-import dao.UserDao;
-import dao.impl.RightDaoImpl;
-import dao.impl.RoleDaoImpl;
-import dao.impl.UserDaoImpl;
-import model.PermissionBusiModel;
-import model.Right;
-import model.Role;
-import model.User;
-import utils.AppException;
+import com.ruanko.dao.RightDao;
+import com.ruanko.dao.RoleDao;
+import com.ruanko.dao.UserDao;
+import com.ruanko.dao.impl.RightDaoImpl;
+import com.ruanko.dao.impl.RoleDaoImpl;
+import com.ruanko.dao.impl.UserDaoImpl;
+import com.ruanko.model.PermissionBusiModel;
+import com.ruanko.model.Right;
+import com.ruanko.model.Role;
+import com.ruanko.model.User;
+import com.ruanko.utils.AppException;
 
 /**
  * User business logic class
