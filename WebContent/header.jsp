@@ -2,9 +2,8 @@
 
 <div class="header">
 	<div class="toplinks">
-		<span> 
- 	       [<a href="toLogin" target="_top">Login</a>]
-		   &nbsp;|&nbsp; [<a href="toRegister">Register</a>]
+		<span> [<a href="toLogin" target="_top">Login</a>]
+			&nbsp;|&nbsp; [<a href="toRegister">Register</a>]
 		</span>
 	</div>
 
