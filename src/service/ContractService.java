@@ -45,7 +45,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * Draft contract
+	 * 起草（Draft）合同
 	 * 
 	 * @param contract 
 	 * @return boolean  Return true if successful , otherwise false
@@ -55,13 +55,14 @@ public class ContractService {
 		boolean flag = false;// Define flag
 		
 		/*
-		 * 1.Call generateConNum() to generate contract number,and set the number to contract object
+		 * 1.调用generateConNum()函数生成合同编号（contract number）,将其导入到contract对象中
 		 */ 
 		contract.setNum(generateConNum());
 		
 		try {
 			/*
-			 * 2.If the contract successfully saved, save the draft contract state in the database
+			 * 2.如果contract成功保存在数据库中, 将该合同的状态信息（draft contract state）保存在数据库中
+			 * 注：保存合同信息的同时会更新合同id（详情可见contractDao.add（）函数中的psmt.getGeneratedKeys()语句）
 			 */
 			if (contractDao.add(contract)) {
 				// Instantiate conState object
@@ -75,13 +76,13 @@ public class ContractService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.ContractService.draft");
+					"service.ContractService.draft");
 		}
 		return flag;
 	}
 	
 	/**
-	 * Query contract collection that to be distributed
+	 * 提取所有未被分配的合同信息
 	 * 
 	 * @return Query all contracts that need to be allocated; Otherwise return null
 	 * @throws AppException
@@ -92,19 +93,19 @@ public class ContractService {
 	
 		try {
 			/*
-			 * 1.Get id set of contract that the status is "STATE_DRAFTED" 
+			 * 1.从“t_contract”表中获取状态为“起草”的合同id集合 
 			 */
 			List<Integer> conIds = conStateDao.getConIdsByType(Constant.STATE_DRAFTED);
 			
 
-			/* 2.Traverse the query out contract id set, find whether have corresponding record in contract process table,
+			/* 2.遍历合同id集, 判断其是否在“t_contract_process"表中有相关记录,
 			 * If have records, means the contract has been allocated, otherwise, means have not been allocated
 			 */
 			for (int conId : conIds) {
 				
 				/* 
-				 * 3.Save contract information that need to be allocated into contract business entity object if the contract is not allocated,
-				 * and put entity classes into conList
+				 * 3.如果合同没有被分配，把需要被分配的合同信息保存到“contract business entity”
+				 * 并且把实体存入conList列表中
 				 */
 				if (!conProcessDao.isExist(conId)) {
 					// Get information of designated contract
@@ -127,14 +128,14 @@ public class ContractService {
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.service.ContractService.getDfphtList");
+			throw new AppException("service.ContractService.getDfphtList");
 		}
 		// Return contractList
 		return contractList;
 	}
 	
 	/**
-	 * Get contract entity information
+	 * 通过id获取contract实体信息
 	 * 
 	 * @param id 
 	 * @return contract entity
@@ -150,13 +151,13 @@ public class ContractService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.ContractService.getContract");
+					"service.ContractService.getContract");
 		}
 		return contract;
 	}
 	
 	/**
-	 * Distribute contract
+	 * 分配合同
 	 * 
 	 * @param conId 
 	 * @param userIds 
@@ -180,13 +181,13 @@ public class ContractService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.ContractService.distribute");
+					"service.ContractService.distribute");
 		}
 		return flag;
 	}
 	
 	/**
-	 * Query contract set that to be countersigned
+	 * 通过会签人id获取所有未会签的合同信息
 	 * 
 	 * @param userId User id
 	 * @return Query all contracts that to be countersigned
@@ -204,12 +205,12 @@ public class ContractService {
 		conProcess.setState(Constant.UNDONE);
 		try {
 			/*
-			 * 1.Get contract id set that to be countersigned
+			 * 1.获取特定用户所有会签未完成的合同id
 			 */
 			List<Integer> conIds = conProcessDao.getConIds(conProcess);
 
 			/* 
-			 * 2.Get contract's information that to be countersigned,and save into contract business entity object,and put the entity class into conList
+			 * 2.保存到conList数组
 			 */
 			for (int conId : conIds) {
 				// 閼撅拷 Get information from  specified contract
@@ -231,14 +232,15 @@ public class ContractService {
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.service.ContractService.getDhqhtList");
+			throw new AppException("service.ContractService.getDhqhtList");
 		}
 		// Return the set of storage contract business entities
 		return conList;
 	}
 	
 	/**
-	 * Countersign contract,save Countersigned information
+	 * 会签合同，将会签内容保存到数据库里
+	 * 判断未会签人数是否为0，若为0则添加“会签完成”的state
 	 * 
 	 * @param conProcess contract process object
 	 * @return boolean Return true if operation successfully閿涘therwise return false
@@ -253,7 +255,7 @@ public class ContractService {
 		conProcess.setState(Constant.DONE);
 		
 		try {
-			if (conProcessDao.update(conProcess)) { // To do countersign contract, enter countersigne information
+			if (conProcessDao.update(conProcess)) { //更新数据库记录
 				/*
 				 * After countersign successful, statistics total number of persons to be countersigned, if the total number is 0, then all people have completed countersign
 				 * and set contract process state to "STATE_CSIGNED"
@@ -261,7 +263,7 @@ public class ContractService {
 				// Pass parameters  through conProcess to statistics the number of persons to be countersigned,set state to "UNDONE"
 				conProcess.setState(Constant.UNDONE);
 
-				// Total number of persons to be countersigned
+				// 未会签人数
 				int totalCount = conProcessDao.getTotalCount(conProcess);
 				
 				// if the number of persons to be countersigned is 0, then all people have completed countersign
@@ -277,13 +279,13 @@ public class ContractService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.ContractService.counterSign");
+					"service.ContractService.counterSign");
 		}
 		return flag;
 	}
 	
 	/**
-	 * Get contract details
+	 * 通过合同id获取合同细节
 	 * 
 	 * @param id Contract id
 	 * @return Contract details business entity
@@ -314,13 +316,13 @@ public class ContractService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.ContractService.getContractDetail");
+					"service.ContractService.getContractDetail");
 		}
 		return conDetailBusiModel;
 	}
 	
 	/**
-	 * Query contract set that to be finalized
+	 * 从特定用户所起草的所有合同里抽取会签完成但并未定稿的合同信息
 	 * 
 	 * @param userId User id
 	 * @return Query all contracts that to be finalized
@@ -338,13 +340,12 @@ public class ContractService {
 			 * And do not exist "STATE_FINALIZED" state at the same time
 			 */
 			/*
-			 * 1.Get id set of draft contracts
+			 * 1.获取特定用户的起草的所有合同id
 			 */
 			List<Integer> drafConIds = contractDao.getIdsByUserId(userId);
 			
 			/*
-			 * 2.Screen out different id set of contracts to be finalized from drafted contracts,and save to conIds
-			 * Contracts to be finalized:exist "STATE_CSIGNED" state,do not exist "STATE_FINALIZED" state at the same time
+			 * 2.从特定用户所起草的所有合同里抽取会签完成但并未定稿的合同
 			 */
 			for (int dConId : drafConIds) {
 				if (conStateDao.isExist(dConId, Constant.STATE_CSIGNED)
@@ -354,7 +355,7 @@ public class ContractService {
 			}
 			
 			/* 
-			 * 3.Get contract's information that to be finalized,and save to  contract business entity object,and put entity class to conList 
+			 * 3.获取合同信息
 			 */
 			for (int conId : conIds) {
 				// Get information of designated contract
@@ -376,14 +377,14 @@ public class ContractService {
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.service.ContractService.getDdghtList");
+			throw new AppException("service.ContractService.getDdghtList");
 		}
 		// Return conList
 		return conList;
 	}
 	
 	/**
-	 * Finalize  contract 
+	 * 定稿合同 
 	 * 
 	 * @param contract Contract object
 	 * @return boolean Return true if operation successfully閿涘therwise return false 
@@ -411,13 +412,13 @@ public class ContractService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.ContractService.finalize");
+					"service.ContractService.finalize");
 		}
 		return flag;
 	}
 	
 	/**
-	 * Display countersign opinion
+	 * 显示特定合同的会签意见
 	 * 
 	 * @param conId Contract id
 	 * @return Contract state object set
@@ -430,7 +431,7 @@ public class ContractService {
 		try {
 			
 			/*
-			 * 1.Get id set of countersign contract 
+			 * 1.获取特点合同已会签的conProcess的id
 			 */
 			List<Integer> conProcessIds = conProcessDao.getIds(conId, Constant.PROCESS_CSIGN, Constant.DONE);
 			/*
@@ -458,14 +459,14 @@ public class ContractService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.ContractService.showHQOpinion");
+					"service.ContractService.showHQOpinion");
 		}
 		return csOpinionList;
 		
 	}
 	
 	/**
-	 * Query contract set that to be approved
+	 * 获取特定 审批人（userId）   所有未审批的合同信息
 	 * 
 	 * @param userId User id
 	 * @return Query all contracts to be approved,otherwise return null
@@ -525,14 +526,14 @@ public class ContractService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.ContractService.getDshphtList");
+					"service.ContractService.getDshphtList");
 		}
 		// Return conList
 		return conList;
 	}
 	
 	/**
-	 * Approve contract,save approval information
+	 * 审批合同
 	 * 
 	 * @param conProcess Contract process object  
 	 * @return boolean Return true if operation successfully閿涘therwise return false 
@@ -578,13 +579,13 @@ public class ContractService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.ContractService.approve");
+					"service.ContractService.approve");
 		}
 		return flag;
 	}
 	
 	/**
-	 * Query contract set to be signed
+	 * 查询特点用户所有已审批但未签订的合同
 	 * 
 	 * @param userId User id
 	 * @return Query all contracts to be signed,otherwise return false
@@ -644,14 +645,14 @@ public class ContractService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.ContractService.getDqdhtList");
+					"service.ContractService.getDqdhtList");
 		}
 		// Return conList
 		return conList;
 	}
 	
 	/**
-	 * Sign contract,save signed information
+	 * 签订合同
 	 * 
 	 * @param conProcess Contract process object
 	 * @return boolean Return true if operation successfully閿涘therwise return false 
@@ -681,7 +682,7 @@ public class ContractService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.ContractService.sign");
+					"service.ContractService.sign");
 		}
 		return flag;
 	}

@@ -34,7 +34,7 @@ public class UserService {
 	}
 
 	/**
-	 *User registration
+	 *注册
 	 * @param user User object
 	 * @return Return true if registration is successful, otherwise return false
 	 * @throws AppException
@@ -47,13 +47,13 @@ public class UserService {
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.service.UserService.register");
+			throw new AppException("service.UserService.register");
 		}
 		return flag;
 	}
 	
 	/**
-	 * User login
+	 * 登录，返回用户id(数据库中t_user表id字段)
 	 * 
 	 * @param name 
 	 * @param password 
@@ -74,7 +74,7 @@ public class UserService {
 	}
 	
 	/**
-	 * Get role information that corresponding to the user
+	 * 获取用户的角色信息
 	 * 
 	 * @param userId 
 	 * @return Role object
@@ -92,13 +92,13 @@ public class UserService {
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.service.UserService.getUserRole");
+			throw new AppException("service.UserService.getUserRole");
 		}
 		return role;
 	}
 	
 	/**
-	 * Get user list that corresponding to the role
+	 * 获取角色为roleID的用户列表
 	 * 
 	 * @param roleId 
 	 * @return User list
@@ -128,14 +128,14 @@ public class UserService {
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.service.UserService.getUserList");
+			throw new AppException("service.UserService.getUserList");
 		}	
 		// Return userList
 		return userList;
 	}
 	
 	/**
-	 * Get user permission list
+	 * 获取用户-角色 匹配列表
 	 * 
 	 * @return permissionList  User permission list
 	 * @throws AppException
@@ -180,14 +180,14 @@ public class UserService {
 			
 		} catch (AppException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.service.UserService.getYhqxList");
+			throw new AppException("service.UserService.getYhqxList");
 		}	
 		// Permission business entity set
 		return permissionList;
 	}
 	
 	/**
-	 * Get role list
+	 * 获取角色列表
 	 * 
 	 * @return Role object set
 	 * @throws AppException
@@ -202,13 +202,13 @@ public class UserService {
 			
 		} catch (AppException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.service.UserService.getRoleList");
+			throw new AppException("service.UserService.getRoleList");
 		}
 		return roleList;
 	}
 	
 	/**
-	 * Configure permission
+	 * 配置权限
 	 *  
 	 * @param right Permission object
 	 * @return boolean Return true if operation successful,otherwise return false
@@ -247,7 +247,7 @@ public class UserService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.UserService.assignPermission");
+					"service.UserService.assignPermission");
 		}
 		return flag;
 	}
