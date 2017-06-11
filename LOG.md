@@ -9,3 +9,4 @@ Group13-Project
 2017/6/07 17:02 Upload webcontent、build classes、src -GARCIIAa
 2017/6/07 17:02 Upload Formal v1.0 src -GARCIIAa
 2017/6/11 14:00 Change project structure -GARCIIAa
+2017/6/11 15:00 Change service package -S Sword
