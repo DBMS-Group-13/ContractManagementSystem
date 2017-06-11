@@ -10,7 +10,7 @@
 		<servlet-name>index</servlet-name>
 		<!-- Set the Servlet class that processing requests: complete package path 
 			+ class name -->
-		<servlet-class>com.ruanko.web.IndexServlet</servlet-class>
+		<servlet-class>web.IndexServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<!-- The Servlet name should keep consistent as above-mentioned -->
@@ -25,7 +25,7 @@
 		<servlet-name>toRegister</servlet-name>
 		<!-- Set the Servlet class that processing requests: complete package path 
 			+ class name -->
-		<servlet-class>com.ruanko.web.ToRegisterServlet</servlet-class>
+		<servlet-class>web.ToRegisterServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<!-- The Servlet name should keep consistent as above-mentioned -->
@@ -40,7 +40,7 @@
 		<servlet-name>register</servlet-name>
 		<!-- Set the Servlet class that processing requests: complete package path 
 			+ class name -->
-		<servlet-class>com.ruanko.web.RegisterServlet</servlet-class>
+		<servlet-class>web.RegisterServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<!-- The Servlet name should keep consistent as above-mentioned -->
@@ -55,7 +55,7 @@
 		<servlet-name>toLogin</servlet-name>
 		<!-- Set the Servlet class that processing requests: complete package path 
 			+ class name -->
-		<servlet-class>com.ruanko.web.ToLoginServlet</servlet-class>
+		<servlet-class>web.ToLoginServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<!-- The Servlet name should keep consistent as above-mentioned -->
@@ -70,7 +70,7 @@
 		<servlet-name>toNewUser</servlet-name>
 		<!-- Set the Servlet class that processing requests: complete package path 
 			+ class name -->
-		<servlet-class>com.ruanko.web.ToNewUserServlet</servlet-class>
+		<servlet-class>web.ToNewUserServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<!-- The Servlet name should keep consistent as above-mentioned -->
@@ -85,7 +85,7 @@
 		<servlet-name>toError</servlet-name>
 		<!-- Set the Servlet class that processing requests: complete package path 
 			+ class name -->
-		<servlet-class>com.ruanko.web.ToErrorServlet</servlet-class>
+		<servlet-class>web.ToErrorServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<!-- The Servlet name should keep consistent as above-mentioned -->
@@ -100,7 +100,7 @@
 		<servlet-name>login</servlet-name>
 		<!-- Set the Servlet class that processing requests: complete package path 
 			+ class name -->
-		<servlet-class>com.ruanko.web.LoginServlet</servlet-class>
+		<servlet-class>web.LoginServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<!-- The Servlet name should keep consistent as above-mentioned -->
@@ -115,7 +115,7 @@
 		<servlet-name>logout</servlet-name>
 		<!-- Set the Servlet class that processing requests: complete package path 
 			+ class name -->
-		<servlet-class>com.ruanko.web.LogoutServlet</servlet-class>
+		<servlet-class>web.LogoutServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<!-- The Servlet name should keep consistent as above-mentioned -->
@@ -127,7 +127,7 @@
 	<!-- Configure the access of ToAdminServlet -->
 	<servlet>
 		<servlet-name>toAdmin</servlet-name>
-		<servlet-class>com.ruanko.web.ToAdminServlet</servlet-class>
+		<servlet-class>web.ToAdminServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toAdmin</servlet-name>
@@ -137,7 +137,7 @@
 	<!-- Configure the access of ToOperatorServlet -->
 	<servlet>
 		<servlet-name>toOperator</servlet-name>
-		<servlet-class>com.ruanko.web.ToOperatorServlet</servlet-class>
+		<servlet-class>web.ToOperatorServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toOperator</servlet-name>
@@ -147,7 +147,7 @@
 	<!-- Configure the access of ToDraftServlet -->
 	<servlet>
 		<servlet-name>toDraft</servlet-name>
-		<servlet-class>com.ruanko.web.ToDraftServlet</servlet-class>
+		<servlet-class>web.ToDraftServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toDraft</servlet-name>
@@ -157,7 +157,7 @@
 	<!-- Configure the access of DraftServlet -->
 	<servlet>
 		<servlet-name>draft</servlet-name>
-		<servlet-class>com.ruanko.web.DraftServlet</servlet-class>
+		<servlet-class>web.DraftServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>draft</servlet-name>
@@ -167,7 +167,7 @@
 	<!-- Configure the access of ToDfphtListServlet -->
 	<servlet>
 		<servlet-name>toDfphtList</servlet-name>
-		<servlet-class>com.ruanko.web.ToDfphtListServlet</servlet-class>
+		<servlet-class>web.ToDfphtListServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toDfphtList</servlet-name>
@@ -177,7 +177,7 @@
 	<!-- Configure the access of ToAssignOperServlet -->
 	<servlet>
 		<servlet-name>toAssignOper</servlet-name>
-		<servlet-class>com.ruanko.web.ToAssignOperServlet</servlet-class>
+		<servlet-class>web.ToAssignOperServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toAssignOper</servlet-name>
@@ -187,7 +187,7 @@
 	<!-- Configure the access of AssignOperServlet -->
 	<servlet>
 		<servlet-name>assignOper</servlet-name>
-		<servlet-class>com.ruanko.web.AssignOperServlet</servlet-class>
+		<servlet-class>web.AssignOperServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>assignOper</servlet-name>
@@ -197,7 +197,7 @@
 	<!-- Configure the access of ToDhqhtListServlet -->
 	<servlet>
 		<servlet-name>toDhqhtList</servlet-name>
-		<servlet-class>com.ruanko.web.ToDhqhtListServlet</servlet-class>
+		<servlet-class>web.ToDhqhtListServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toDhqhtList</servlet-name>
@@ -207,7 +207,7 @@
 	<!-- Configure the access of ToAddHQOpinionServlet -->
 	<servlet>
 		<servlet-name>toAddHQOpinion</servlet-name>
-		<servlet-class>com.ruanko.web.ToAddHQOpinionServlet</servlet-class>
+		<servlet-class>web.ToAddHQOpinionServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toAddHQOpinion</servlet-name>
@@ -217,7 +217,7 @@
 	<!-- Configure the access of AddHQOpinionServlet -->
 	<servlet>
 		<servlet-name>addHQOpinion</servlet-name>
-		<servlet-class>com.ruanko.web.AddHQOpinionServlet</servlet-class>
+		<servlet-class>web.AddHQOpinionServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>addHQOpinion</servlet-name>
@@ -227,7 +227,7 @@
 	<!-- Configure the access of ContractDetailServlet -->
 	<servlet>
 		<servlet-name>contractDetail</servlet-name>
-		<servlet-class>com.ruanko.web.ContractDetailServlet</servlet-class>
+		<servlet-class>web.ContractDetailServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>contractDetail</servlet-name>
@@ -237,7 +237,7 @@
 	<!-- Configure the access of ToDdghtListServlet -->
 	<servlet>
 		<servlet-name>toDdghtList</servlet-name>
-		<servlet-class>com.ruanko.web.ToDdghtListServlet</servlet-class>
+		<servlet-class>web.ToDdghtListServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toDdghtList</servlet-name>
@@ -247,7 +247,7 @@
 	<!-- Configure the access of ToDgContract -->
 	<servlet>
 		<servlet-name>toDgContract</servlet-name>
-		<servlet-class>com.ruanko.web.ToDgContractServlet</servlet-class>
+		<servlet-class>web.ToDgContractServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toDgContract</servlet-name>
@@ -257,7 +257,7 @@
 	<!-- Configure the access of DgContract -->
 	<servlet>
 		<servlet-name>dgContract</servlet-name>
-		<servlet-class>com.ruanko.web.DgContractServlet</servlet-class>
+		<servlet-class>web.DgContractServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dgContract</servlet-name>
@@ -267,7 +267,7 @@
 	<!-- Configure the access of ShowHQOpinionServlet -->
 	<servlet>
 		<servlet-name>showHQOpinion</servlet-name>
-		<servlet-class>com.ruanko.web.ShowHQOpinionServlet</servlet-class>
+		<servlet-class>web.ShowHQOpinionServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>showHQOpinion</servlet-name>
@@ -277,7 +277,7 @@
 	<!-- Configure the access of ToDshphtListServlet -->
 	<servlet>
 		<servlet-name>toDshphtList</servlet-name>
-		<servlet-class>com.ruanko.web.ToDshphtListServlet</servlet-class>
+		<servlet-class>web.ToDshphtListServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toDshphtList</servlet-name>
@@ -287,7 +287,7 @@
 	<!-- Configure the access of ToAddSHPOpinionServlet -->
 	<servlet>
 		<servlet-name>toAddSHPOpinion</servlet-name>
-		<servlet-class>com.ruanko.web.ToAddSHPOpinionServlet</servlet-class>
+		<servlet-class>web.ToAddSHPOpinionServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toAddSHPOpinion</servlet-name>
@@ -297,7 +297,7 @@
 	<!-- Configure the access of AddSHPOpinionServlet -->
 	<servlet>
 		<servlet-name>addSHPOpinion</servlet-name>
-		<servlet-class>com.ruanko.web.AddSHPOpinionServlet</servlet-class>
+		<servlet-class>web.AddSHPOpinionServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>addSHPOpinion</servlet-name>
@@ -307,7 +307,7 @@
 	<!-- Configure the access of ToDqdhtListServlet -->
 	<servlet>
 		<servlet-name>toDqdhtList</servlet-name>
-		<servlet-class>com.ruanko.web.ToDqdhtListServlet</servlet-class>
+		<servlet-class>web.ToDqdhtListServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toDqdhtList</servlet-name>
@@ -317,7 +317,7 @@
 	<!-- Configure the access of ToAddQDInfoServlet -->
 	<servlet>
 		<servlet-name>toAddQDInfo</servlet-name>
-		<servlet-class>com.ruanko.web.ToAddQDInfoServlet</servlet-class>
+		<servlet-class>web.ToAddQDInfoServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toAddQDInfo</servlet-name>
@@ -327,7 +327,7 @@
 	<!-- Configure the access of AddQDInfoServlet -->
 	<servlet>
 		<servlet-name>addQDInfo</servlet-name>
-		<servlet-class>com.ruanko.web.AddQDInfoServlet</servlet-class>
+		<servlet-class>web.AddQDInfoServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>addQDInfo</servlet-name>
@@ -337,7 +337,7 @@
 	<!-- Configure the access of ToYhqxListServlet -->
 	<servlet>
 		<servlet-name>toYhqxList</servlet-name>
-		<servlet-class>com.ruanko.web.ToYhqxListServlet</servlet-class>
+		<servlet-class>web.ToYhqxListServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toYhqxList</servlet-name>
@@ -347,7 +347,7 @@
 	<!-- Configure the access of ToAssignPermServlet -->
 	<servlet>
 		<servlet-name>toAssignPerm</servlet-name>
-		<servlet-class>com.ruanko.web.ToAssignPermServlet</servlet-class>
+		<servlet-class>web.ToAssignPermServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toAssignPerm</servlet-name>
@@ -357,7 +357,7 @@
 	<!-- Configure the access of AssignPermServlet -->
 	<servlet>
 		<servlet-name>assignPerm</servlet-name>
-		<servlet-class>com.ruanko.web.AssignPermServlet</servlet-class>
+		<servlet-class>web.AssignPermServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>assignPerm</servlet-name>

@@ -16,11 +16,11 @@
 </head>
 
 <body>
-	<div class="mtitle">Contract to de finalized</div>
+	<div class="mtitle">Process</div>
 
 	<div>
 		<form>
-			Search contract to be finalized <input
+			Contract process <input
 				placeholder="Enter the search conditions.." class="textF"/><input
 				type="submit" value="Search" class="button" />
 		</form>
@@ -31,10 +31,11 @@
 			<tr>
 				<th>Contract name</th>
 				<th class="th1">Draft time</th>
-				<th width="400px">Operation</th>
+				<th width="400px">Process</th>
 			</tr>
 			<%
-				List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");  
+				List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");
+			    if(contractList != null){
 		        for (ConBusiModel cbm : contractList) {
        	 	%>
 			<tr>
@@ -42,14 +43,10 @@
 					href="javascript:preview('contractDetail?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
 				</td>
 				<td><%=cbm.getDrafTime()%></td>
-				<td><a href="showHQOpinion?conId=<%=cbm.getConId()%>"> <img
-						src="images/information.png" alt="Countersign opinion" />
-						Countersign opinion
-				</a> &nbsp;|&nbsp; <a href="toDgContract?conId=<%=cbm.getConId()%>">
-						<img src="images/icon-edit.png" alt="Finalize" /> Finalize
-				</a></td>
+				<td><a>3/5</a></td>
 			</tr>
-			<%} %>
+			<%} 
+			}%>
 		</table>
 	</div>
 </body>

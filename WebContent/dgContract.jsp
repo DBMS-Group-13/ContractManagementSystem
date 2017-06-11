@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@page import="com.ruanko.model.Contract"%>
+<%@page import="model.Contract"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -35,23 +35,23 @@
 		<table class="update" style="width: 700px;">
 			<tr height="28">
 				<td width="140">Contract name:</td>
-				<td><input type="text" id="name" name="name"
+				<td><input type="text" id="name" name="name" class="textF"
 					value="<%=contract.getName()%>" readonly="readonly"></td>
 			</tr>
 			<tr height="28">
 				<td>Customer:</td>
-				<td><input type="text" name="customer"
+				<td><input type="text" name="customer" class="textF"
 					value="<%=contract.getCustomer()%>" readonly="readonly"></td>
 			</tr>
 			<tr>
 				<td>Begin time:</td>
-				<td><input type="text" id="beginTime" name="beginTime"
+				<td><input type="text" id="beginTime" name="beginTime" class="textF"
 					value="<%=contract.getBeginTime()%>" readonly="readonly"></td>
 
 			</tr>
 			<tr>
 				<td>End time:</td>
-				<td><input type="text" id="endTime" name="endTime"
+				<td><input type="text" id="endTime" name="endTime" class="textF"
 					value="<%=contract.getEndTime()%>" readonly="readonly"></td>
 			</tr>
 			<tr>
@@ -59,7 +59,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td colspan="2"><textarea id="content" name="content"
+				<td colspan="2"><textarea id="content" name="content" class="content"
 						style="width: 680px; height: 300px; resize: none;"><%=contract.getContent()%></textarea>
 				</td>
 			</tr>

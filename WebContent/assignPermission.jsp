@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page
-	import="com.ruanko.model.PermissionBusiModel,com.ruanko.model.Role"%>
+	import="model.PermissionBusiModel,model.Role"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
