@@ -362,6 +362,20 @@
 	<servlet-mapping>
 		<servlet-name>assignPerm</servlet-name>
 		<url-pattern>/assignPerm</url-pattern>
+	</servlet-mapping><!--Configure the access of ToDraftedServlet--><servlet>
+		<servlet-name>toDrafted</servlet-name>
+		<servlet-class>web.ToDraftedServlet</servlet-class>
+</servlet>
+	<servlet-mapping>
+		<servlet-name>toDrafted</servlet-name>
+		<url-pattern>/toDrafted</url-pattern>
+	</servlet-mapping><!--Configure the access of ToCountersignedServlet--><servlet>
+		<servlet-name>toCountersigned</servlet-name>
+		<servlet-class>web.ToCountersignedServlet</servlet-class>
+</servlet>
+	<servlet-mapping>
+		<servlet-name>toCountersigned</servlet-name>
+		<url-pattern>/toCountersigned</url-pattern>
 	</servlet-mapping><!--Welcom Page -->
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>

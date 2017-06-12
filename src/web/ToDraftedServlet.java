@@ -1,4 +1,4 @@
-package com.ruanko.web;
+package web;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,21 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.ruanko.model.PermissionBusiModel;
-import com.ruanko.service.UserService;
-import com.ruanko.utils.AppException;
+import model.ConBusiModel;
+import service.ContractService;
+import utils.AppException;
 
 /**
- * Access page of user permission list
+ * Access page of contract to be countersigned
  */
-public class ToYhqxListServlet extends HttpServlet{
+public class ToDraftedServlet extends HttpServlet{
 
 	/**
-	 * Jump to page of user permission list
+	 * Jump to page of contract to be countersigned
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {	
-		// Set character set of request to "UTF-8"
+		// Set the request's character encoding
 		request.setCharacterEncoding("UTF-8");
 		
 		// Declare session
@@ -39,16 +39,16 @@ public class ToYhqxListServlet extends HttpServlet{
 		}else {
 			
 			try {
-				// Initialize userService
-				UserService userService = new UserService();
-				// Initialize permissionList
-				List<PermissionBusiModel> permissionList = new ArrayList<PermissionBusiModel>();
-				// Call business logic layer to get user permission list
-				permissionList = userService.getYhqxList();
-				// Save newUserList to request
-				request.setAttribute("permissionList", permissionList);
-				// Forward to page of user permission list
-				request.getRequestDispatcher("/yhqxList.jsp").forward(request, response);
+				// Initialize contractService
+				ContractService contractService = new ContractService();
+				// Initialize contractList
+				List<ConBusiModel> contractList = new ArrayList<ConBusiModel>();
+				// Call business logic layer to get list of contract to be countersigned 
+				contractList = contractService.getProcess_CounteredList(userId);
+				// Save contractList to request
+				request.setAttribute("contractList", contractList);
+				// Forward to page of contract to be countersigned
+				request.getRequestDispatcher("/drafted.jsp").forward(request, response);
 			} catch (AppException e) {
 				e.printStackTrace();
 				// Redirect to the exception page

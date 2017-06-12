@@ -1,4 +1,4 @@
-package com.ruanko.web;
+package web;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,17 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.ruanko.model.ConBusiModel;
-import com.ruanko.service.ContractService;
-import com.ruanko.utils.AppException;
+import model.ConBusiModel;
+import service.ContractService;
+import utils.AppException;
 
-/**
- * Access page of contract to be signed
- */
-public class ToDqdhtListServlet extends HttpServlet{
+public class ToCountersignedServlet  extends HttpServlet{
 
 	/**
-	 *Jump to page of contract to be signed
+	 * Jump to page of contract to be countersigned
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {	
@@ -29,7 +26,7 @@ public class ToDqdhtListServlet extends HttpServlet{
 		
 		// Declare session
 		HttpSession session = null;
-		//  Get session by using request
+		// Get session by using request
 		session = request.getSession();
 		Integer userId = (Integer)session.getAttribute("userId");
 		
@@ -39,16 +36,16 @@ public class ToDqdhtListServlet extends HttpServlet{
 		}else {
 			
 			try {
-				//Initialize contractService
+				// Initialize contractService
 				ContractService contractService = new ContractService();
 				// Initialize contractList
 				List<ConBusiModel> contractList = new ArrayList<ConBusiModel>();
-				// Call business logic layer to get list of contract to be signed
-				contractList = contractService.getDqdhtList(userId);
+				// Call business logic layer to get list of contract to be countersigned 
+				contractList = contractService.getProcess_CounteredList(userId);
 				// Save contractList to request
 				request.setAttribute("contractList", contractList);
-				// Forward to contract to be signed page
-				request.getRequestDispatcher("/dqdhtList.jsp").forward(request, response);
+				// Forward to page of contract to be countersigned
+				request.getRequestDispatcher("/countersigned.jsp").forward(request, response);
 			} catch (AppException e) {
 				e.printStackTrace();
 				// Redirect to the exception page
@@ -65,5 +62,4 @@ public class ToDqdhtListServlet extends HttpServlet{
 		// Call doPost() to process request
 		this.doPost(request, response);
 	}
-
 }
