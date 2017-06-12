@@ -1,14 +1,16 @@
 package model;
 
-/**
- * User entity class
- */
 public class User {
-
 	private int id;			    //ID
 	private String name;		//User name
 	private String password;	//Password
+	private String secPassword; //secondary password
+	private String problem1;
+	private String answer1;
+	private String problem2;
+	private String answer2;
 	private int del;			//Delete status(0-Not deleted, 1-Deleted)
+	
 	
 	/**
 	 * No-arg constructor assigns initial values to object attributes
@@ -17,7 +19,13 @@ public class User {
 		this.id = 0;
 		this.name = "";
 		this.password = "";
+		this.secPassword="";
+		this.problem1="";
+		this.answer1="";
+		this.problem2="";
+		this.answer2="";
 		this.del = 0;
+		
 	}
 
 	/*
@@ -56,4 +64,43 @@ public class User {
 		this.del = del;
 	}
 
+	public String getSecPassword()
+	{
+		return secPassword;
+	}
+	
+	public void setSecPassword(String secPassword)
+	{
+		this.secPassword=secPassword;
+	}
+
+	public void setProblem1(String problem)
+	{
+		
+	}
+	
+	public void setProblem2(String problem)
+	{
+		
+	}
+	
+	public String getProblem1()
+	{
+		return problem1;
+	}
+	
+	public String getProblem2()
+	{
+		return problem2;
+	}
+	
+	public String getAnswer1()
+	{
+		return answer1;
+	}
+	
+	public String getAnswer2()
+	{
+		return answer2;
+	}
 }

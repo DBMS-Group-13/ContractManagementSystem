@@ -485,6 +485,56 @@ public class ContractService {
 	}
 	
 	/**
+	 * 通过起草员id 获取所有已定稿的合同信息
+	 * 
+	 * @param userId User id
+	 * @return Query all countersigned contracts 
+	 * @throws AppException
+	 */
+	public List<ConBusiModel> getProcess_FinalizeList(int userId)throws AppException{
+		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();  //要返回的合同简略信息列表
+		List<Integer> drafConIds = contractDao.getIdsByUserId(userId);
+		
+		try {
+			/*
+			 * 1.获取特定用户所有定稿的合同id
+			 */
+			List<Integer> conIds= new ArrayList<Integer>();
+			for (int conId : drafConIds) {
+				if(conStateDao.isExist(conId, Constant.STATE_FINALIZED))
+					conIds.add(conId);
+			}
+
+			/* 
+			 * 2.保存到conList数组
+			 */
+			for (int conId : conIds) {
+				// Get information from  specified contract
+				Contract contract = contractDao.getById(conId);
+				// Get status of designated contract
+				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				// Initialize conBusiModel
+				ConBusiModel conBusiModel = new ConBusiModel();
+				if (contract != null) {
+					// Set contract id and name into conBusiModel object
+					conBusiModel.setConId(contract.getId());
+					conBusiModel.setConName(contract.getName());
+				}
+				if (conState != null) {
+					// Set Drafting time into conBusiModel object
+					conBusiModel.setDrafTime(conState.getTime()); 
+				}
+				conList.add(conBusiModel);
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("service.ContractService.getProcess_FinalizeList");
+		}
+		// Return the set of storage contract business entities
+		return conList;
+	}
+	
+	/**
 	 * 显示特定合同的会签意见
 	 * 
 	 * @param conId Contract id
@@ -529,7 +579,6 @@ public class ContractService {
 					"service.ContractService.showHQOpinion");
 		}
 		return csOpinionList;
-		
 	}
 	
 	/**
@@ -822,6 +871,57 @@ public class ContractService {
 					"service.ContractService.sign");
 		}
 		return flag;
+	}
+	
+	/**
+	 * 通过起草员id 获取所有已签订完成的合同信息
+	 * 
+	 * @param userId User id
+	 * @return Query all countersigned contracts 
+	 * @throws AppException
+	 */
+	public List<ConBusiModel> getProcess_SignedList(int userId)throws AppException
+	{
+		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();  //要返回的合同简略信息列表
+		List<Integer> drafConIds = contractDao.getIdsByUserId(userId);
+		
+		try {
+			/*
+			 * 1.获取特定用户所有签订完成的合同id
+			 */
+			List<Integer> conIds= new ArrayList<Integer>();
+			for (int conId : drafConIds) {
+				if(conStateDao.isExist(conId, Constant.STATE_SIGNED))
+					conIds.add(conId);
+			}
+
+			/* 
+			 * 2.保存到conList数组
+			 */
+			for (int conId : conIds) {
+				// Get information from  specified contract
+				Contract contract = contractDao.getById(conId);
+				// Get status of designated contract
+				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				// Initialize conBusiModel
+				ConBusiModel conBusiModel = new ConBusiModel();
+				if (contract != null) {
+					// Set contract id and name into conBusiModel object
+					conBusiModel.setConId(contract.getId());
+					conBusiModel.setConName(contract.getName());
+				}
+				if (conState != null) {
+					// Set Drafting time into conBusiModel object
+					conBusiModel.setDrafTime(conState.getTime()); 
+				}
+				conList.add(conBusiModel);
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("service.ContractService.getProcess_SignedList");
+		}
+		// Return the set of storage contract business entities
+		return conList;
 	}
 	
 	/**
