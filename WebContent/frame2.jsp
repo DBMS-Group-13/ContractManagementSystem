@@ -31,8 +31,8 @@
 								<ul class="nav">
 									<li><a href="toDraft" target="main" class="">Draft Contract</a></li>
 									<li><a href="toDdghtList" target="main" class="">Contract to be finalized</a></li>
-									/<li><a href="#" target="main" class="">Finalized Contract</a></li>
-									<li><a href="#" target="main" class="">Query Process</a></li>
+									<li><a href="toDgContract" target="main" class="">Finalized Contract</a></li>
+									<li><a href="toQueryProcess" target="main" class="">Query Process</a></li>
 								</ul>
 							</div>
 						</li>

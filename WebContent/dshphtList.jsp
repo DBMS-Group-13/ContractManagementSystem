@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page import="com.ruanko.model.ConBusiModel"%>
+<%@page import="model.ConBusiModel"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -33,7 +33,7 @@
 				<th class="th1">Draft time</th>
 				<th class="th1">Operation</th>
 			</tr>
-			<%
+			<%  
 				List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");  
 		        for (ConBusiModel cbm : contractList) {
        	 	%>
