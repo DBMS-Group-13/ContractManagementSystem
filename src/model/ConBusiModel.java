@@ -9,6 +9,8 @@ public class ConBusiModel {
 
 	private int conId; 			//Contract id
 	private String conName; 	//Contract name
+	private int DONENum;        //完成人数
+	private int DistributeENum; //分配人数
 	private Date drafTime;		//Draft time
 	
 	/**
@@ -17,6 +19,8 @@ public class ConBusiModel {
 	public ConBusiModel() {
 		this.conId = 0;
 		this.conName = "";
+		this.DONENum = 0;
+		this.DistributeENum = 0;
 		this.drafTime = new Date();
 	}
 
@@ -38,6 +42,22 @@ public class ConBusiModel {
 
 	public void setConName(String conName) {
 		this.conName = conName;
+	}
+	
+	public int getDONENum() {
+		return DONENum;
+	}
+	
+	public void setDONENum(int DONENum) {
+		this.DONENum = DONENum;
+	}
+	
+	public int getDistributeENum() {
+		return DistributeENum;
+	}
+	
+	public void setDistributeENum(int DistributeENum) {
+		this.DistributeENum = DistributeENum;
 	}
 
 	public Date getDrafTime() {

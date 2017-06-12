@@ -34,7 +34,7 @@ public class UserService {
 	}
 
 	/**
-	 *×¢²á
+	 *æ³¨å†Œ
 	 * @param user User object
 	 * @return Return true if registration is successful, otherwise return false
 	 * @throws AppException
@@ -53,7 +53,7 @@ public class UserService {
 	}
 	
 	/**
-	 * µÇÂ¼£¬·µ»ØÓÃ»§id(Êı¾İ¿âÖĞt_user±íid×Ö¶Î)
+	 * ç™»å½•ï¼Œè¿”å›ç”¨æˆ·id(æ•°æ®åº“ä¸­t_userè¡¨idå­—æ®µ)
 	 * 
 	 * @param name 
 	 * @param password 
@@ -74,7 +74,7 @@ public class UserService {
 	}
 	
 	/**
-	 * »ñÈ¡ÓÃ»§µÄ½ÇÉ«ĞÅÏ¢
+	 * è·å–ç”¨æˆ·çš„è§’è‰²ä¿¡æ¯
 	 * 
 	 * @param userId 
 	 * @return Role object
@@ -98,7 +98,7 @@ public class UserService {
 	}
 	
 	/**
-	 * »ñÈ¡½ÇÉ«ÎªroleIDµÄÓÃ»§ÁĞ±í
+	 * è·å–è§’è‰²ä¸ºroleIDçš„ç”¨æˆ·åˆ—è¡¨
 	 * 
 	 * @param roleId 
 	 * @return User list
@@ -135,7 +135,7 @@ public class UserService {
 	}
 	
 	/**
-	 * »ñÈ¡ÓÃ»§-½ÇÉ« Æ¥ÅäÁĞ±í
+	 * è·å–ç”¨æˆ·-è§’è‰² åŒ¹é…åˆ—è¡¨
 	 * 
 	 * @return permissionList  User permission list
 	 * @throws AppException
@@ -187,7 +187,7 @@ public class UserService {
 	}
 	
 	/**
-	 * »ñÈ¡½ÇÉ«ÁĞ±í
+	 * è·å–è§’è‰²åˆ—è¡¨
 	 * 
 	 * @return Role object set
 	 * @throws AppException
@@ -208,7 +208,7 @@ public class UserService {
 	}
 	
 	/**
-	 * ÅäÖÃÈ¨ÏŞ
+	 * é…ç½®æƒé™
 	 *  
 	 * @param right Permission object
 	 * @return boolean Return true if operation successful,otherwise return false

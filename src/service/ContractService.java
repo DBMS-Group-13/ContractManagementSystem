@@ -1,4 +1,4 @@
-package service;
+ï»¿package service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * Æğ²İ£¨Draft£©ºÏÍ¬
+	 * èµ·è‰ï¼ˆDraftï¼‰åˆåŒ
 	 * 
 	 * @param contract 
 	 * @return boolean  Return true if successful , otherwise false
@@ -55,14 +55,14 @@ public class ContractService {
 		boolean flag = false;// Define flag
 		
 		/*
-		 * 1.µ÷ÓÃgenerateConNum()º¯ÊıÉú³ÉºÏÍ¬±àºÅ£¨contract number£©,½«Æäµ¼Èëµ½contract¶ÔÏóÖĞ
+		 * 1.è°ƒç”¨generateConNum()å‡½æ•°ç”ŸæˆåˆåŒç¼–å·ï¼ˆcontract numberï¼‰,å°†å…¶å¯¼å…¥åˆ°contractå¯¹è±¡ä¸­
 		 */ 
 		contract.setNum(generateConNum());
 		
 		try {
 			/*
-			 * 2.Èç¹ûcontract³É¹¦±£´æÔÚÊı¾İ¿âÖĞ, ½«¸ÃºÏÍ¬µÄ×´Ì¬ĞÅÏ¢£¨draft contract state£©±£´æÔÚÊı¾İ¿âÖĞ
-			 * ×¢£º±£´æºÏÍ¬ĞÅÏ¢µÄÍ¬Ê±»á¸üĞÂºÏÍ¬id£¨ÏêÇé¿É¼ûcontractDao.add£¨£©º¯ÊıÖĞµÄpsmt.getGeneratedKeys()Óï¾ä£©
+			 * 2.å¦‚æœcontractæˆåŠŸä¿å­˜åœ¨æ•°æ®åº“ä¸­, å°†è¯¥åˆåŒçš„çŠ¶æ€ä¿¡æ¯ï¼ˆdraft contract stateï¼‰ä¿å­˜åœ¨æ•°æ®åº“ä¸­
+			 * æ³¨ï¼šä¿å­˜åˆåŒä¿¡æ¯çš„åŒæ—¶ä¼šæ›´æ–°åˆåŒidï¼ˆè¯¦æƒ…å¯è§contractDao.addï¼ˆï¼‰å‡½æ•°ä¸­çš„psmt.getGeneratedKeys()è¯­å¥ï¼‰
 			 */
 			if (contractDao.add(contract)) {
 				// Instantiate conState object
@@ -82,7 +82,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * ÌáÈ¡ËùÓĞÎ´±»·ÖÅäµÄºÏÍ¬ĞÅÏ¢
+	 * æå–æ‰€æœ‰æœªè¢«åˆ†é…çš„åˆåŒä¿¡æ¯
 	 * 
 	 * @return Query all contracts that need to be allocated; Otherwise return null
 	 * @throws AppException
@@ -93,19 +93,19 @@ public class ContractService {
 	
 		try {
 			/*
-			 * 1.´Ó¡°t_contract¡±±íÖĞ»ñÈ¡×´Ì¬Îª¡°Æğ²İ¡±µÄºÏÍ¬id¼¯ºÏ 
+			 * 1.ä»â€œt_contractâ€è¡¨ä¸­è·å–çŠ¶æ€ä¸ºâ€œèµ·è‰â€çš„åˆåŒidé›†åˆ 
 			 */
 			List<Integer> conIds = conStateDao.getConIdsByType(Constant.STATE_DRAFTED);
 			
 
-			/* 2.±éÀúºÏÍ¬id¼¯, ÅĞ¶ÏÆäÊÇ·ñÔÚ¡°t_contract_process"±íÖĞÓĞÏà¹Ø¼ÇÂ¼,
+			/* 2.éå†åˆåŒidé›†, åˆ¤æ–­å…¶æ˜¯å¦åœ¨â€œt_contract_process"è¡¨ä¸­æœ‰ç›¸å…³è®°å½•,
 			 * If have records, means the contract has been allocated, otherwise, means have not been allocated
 			 */
 			for (int conId : conIds) {
 				
 				/* 
-				 * 3.Èç¹ûºÏÍ¬Ã»ÓĞ±»·ÖÅä£¬°ÑĞèÒª±»·ÖÅäµÄºÏÍ¬ĞÅÏ¢±£´æµ½¡°contract business entity¡±
-				 * ²¢ÇÒ°ÑÊµÌå´æÈëconListÁĞ±íÖĞ
+				 * 3.å¦‚æœåˆåŒæ²¡æœ‰è¢«åˆ†é…ï¼ŒæŠŠéœ€è¦è¢«åˆ†é…çš„åˆåŒä¿¡æ¯ä¿å­˜åˆ°â€œcontract business entityâ€
+				 * å¹¶ä¸”æŠŠå®ä½“å­˜å…¥conListåˆ—è¡¨ä¸­
 				 */
 				if (!conProcessDao.isExist(conId)) {
 					// Get information of designated contract
@@ -135,7 +135,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * Í¨¹ıid»ñÈ¡contractÊµÌåĞÅÏ¢
+	 * é€šè¿‡idè·å–contractå®ä½“ä¿¡æ¯
 	 * 
 	 * @param id 
 	 * @return contract entity
@@ -157,7 +157,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * ·ÖÅäºÏÍ¬
+	 * åˆ†é…åˆåŒ
 	 * 
 	 * @param conId 
 	 * @param userIds 
@@ -187,7 +187,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * Í¨¹ı»áÇ©ÈËid»ñÈ¡ËùÓĞÎ´»áÇ©µÄºÏÍ¬ĞÅÏ¢
+	 * é€šè¿‡ä¼šç­¾äººidè·å–æ‰€æœ‰æœªä¼šç­¾çš„åˆåŒä¿¡æ¯
 	 * 
 	 * @param userId User id
 	 * @return Query all contracts that to be countersigned
@@ -205,15 +205,15 @@ public class ContractService {
 		conProcess.setState(Constant.UNDONE);
 		try {
 			/*
-			 * 1.»ñÈ¡ÌØ¶¨ÓÃ»§ËùÓĞ»áÇ©Î´Íê³ÉµÄºÏÍ¬id
+			 * 1.è·å–ç‰¹å®šç”¨æˆ·æ‰€æœ‰ä¼šç­¾æœªå®Œæˆçš„åˆåŒid
 			 */
 			List<Integer> conIds = conProcessDao.getConIds(conProcess);
 
 			/* 
-			 * 2.±£´æµ½conListÊı×é
+			 * 2.ä¿å­˜åˆ°conListæ•°ç»„
 			 */
 			for (int conId : conIds) {
-				// é‘¾ï¿½ Get information from  specified contract
+				// é–¼æ’…æ‹· Get information from  specified contract
 				Contract contract = contractDao.getById(conId);
 				// Get status of designated contract
 				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
@@ -239,11 +239,78 @@ public class ContractService {
 	}
 	
 	/**
-	 * »áÇ©ºÏÍ¬£¬½«»áÇ©ÄÚÈİ±£´æµ½Êı¾İ¿âÀï
-	 * ÅĞ¶ÏÎ´»áÇ©ÈËÊıÊÇ·ñÎª0£¬ÈôÎª0ÔòÌí¼Ó¡°»áÇ©Íê³É¡±µÄstate
+	 * é€šè¿‡ä¼šç­¾äººidè·å–æ‰€æœ‰å·²ä¼šç­¾çš„åˆåŒä¿¡æ¯
+	 * 
+	 * @param userId User id
+	 * @return Query all countersigned contracts 
+	 * @throws AppException
+	 */
+	public List<ConBusiModel> getProcess_CounteredList(int userId)throws AppException{
+		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
+		ConProcess conProcess = new ConProcess();
+		// Set values to contract process object
+		conProcess.setUserId(userId);
+		// Set process's operation type to "PROCESS_CSIGN"
+		conProcess.setType(Constant.PROCESS_CSIGN);
+		// Set corresponding state of "PROCESS_CSIGN" type  is "DONE"
+		conProcess.setState(Constant.DONE);
+		
+		try {
+			/*
+			 * 1.è·å–ç‰¹å®šç”¨æˆ·æ‰€æœ‰ä¼šç­¾å®Œæˆçš„åˆåŒid
+			 */
+			List<Integer> conIds = conProcessDao.getConIds(conProcess);
+
+			/* 
+			 * 2.ä¿å­˜åˆ°conListæ•°ç»„
+			 */
+			for (int conId : conIds) {
+				// Get information from  specified contract
+				Contract contract = contractDao.getById(conId);
+				// Get status of designated contract
+				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				// è¯¥åˆåŒå·²ä¼šç­¾äººæ•°
+				ConProcess CSIGN_Done=new ConProcess();
+				CSIGN_Done.setConId(conId);
+				CSIGN_Done.setState(Constant.DONE);
+				CSIGN_Done.setType(Constant.PROCESS_CSIGN);
+				int totalDoneCount=conProcessDao.getTotalCount(CSIGN_Done);
+				
+				ConProcess CSIGN_UNDone=new ConProcess();
+				CSIGN_UNDone.setConId(conId);
+				CSIGN_UNDone.setState(Constant.UNDONE);
+				CSIGN_UNDone.setType(Constant.PROCESS_CSIGN);
+				// è¯¥åˆåŒä¼šç­¾äººæ•°
+				int totalCount=totalDoneCount+conProcessDao.getTotalCount(CSIGN_UNDone);
+				// Initialize conBusiModel
+				ConBusiModel conBusiModel = new ConBusiModel();
+				if (contract != null) {
+					// Set contract id and name into conBusiModel object
+					conBusiModel.setConId(contract.getId());
+					conBusiModel.setConName(contract.getName());
+				}
+				conBusiModel.setDONENum(totalDoneCount);
+				conBusiModel.setDistributeENum(totalCount);
+				if (conState != null) {
+					// Set Drafting time into conBusiModel object
+					conBusiModel.setDrafTime(conState.getTime()); 
+				}
+				conList.add(conBusiModel);
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("service.ContractService.getProcess_CounteredList");
+		}
+		// Return the set of storage contract business entities
+		return conList;
+	}
+	
+	/**
+	 * ä¼šç­¾åˆåŒï¼Œå°†ä¼šç­¾å†…å®¹ä¿å­˜åˆ°æ•°æ®åº“é‡Œ
+	 * åˆ¤æ–­æœªä¼šç­¾äººæ•°æ˜¯å¦ä¸º0ï¼Œè‹¥ä¸º0åˆ™æ·»åŠ â€œä¼šç­¾å®Œæˆâ€çš„state
 	 * 
 	 * @param conProcess contract process object
-	 * @return boolean Return true if operation successfullyé”›å®±therwise return false
+	 * @return boolean Return true if operation successfullyé–¿æ¶˜î†ˆtherwise return false
 	 * @throws AppException
 	 */
 	public boolean counterSign(ConProcess conProcess) throws AppException {
@@ -255,7 +322,7 @@ public class ContractService {
 		conProcess.setState(Constant.DONE);
 		
 		try {
-			if (conProcessDao.update(conProcess)) { //¸üĞÂÊı¾İ¿â¼ÇÂ¼
+			if (conProcessDao.update(conProcess)) { //æ›´æ–°æ•°æ®åº“è®°å½•
 				/*
 				 * After countersign successful, statistics total number of persons to be countersigned, if the total number is 0, then all people have completed countersign
 				 * and set contract process state to "STATE_CSIGNED"
@@ -263,7 +330,7 @@ public class ContractService {
 				// Pass parameters  through conProcess to statistics the number of persons to be countersigned,set state to "UNDONE"
 				conProcess.setState(Constant.UNDONE);
 
-				// Î´»áÇ©ÈËÊı
+				// æœªä¼šç­¾äººæ•°
 				int totalCount = conProcessDao.getTotalCount(conProcess);
 				
 				// if the number of persons to be countersigned is 0, then all people have completed countersign
@@ -285,7 +352,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * Í¨¹ıºÏÍ¬id»ñÈ¡ºÏÍ¬Ï¸½Ú
+	 * é€šè¿‡åˆåŒidè·å–åˆåŒç»†èŠ‚
 	 * 
 	 * @param id Contract id
 	 * @return Contract details business entity
@@ -322,7 +389,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * ´ÓÌØ¶¨ÓÃ»§ËùÆğ²İµÄËùÓĞºÏÍ¬Àï³éÈ¡»áÇ©Íê³Éµ«²¢Î´¶¨¸åµÄºÏÍ¬ĞÅÏ¢
+	 * ä»ç‰¹å®šç”¨æˆ·æ‰€èµ·è‰çš„æ‰€æœ‰åˆåŒé‡ŒæŠ½å–ä¼šç­¾å®Œæˆä½†å¹¶æœªå®šç¨¿çš„åˆåŒä¿¡æ¯
 	 * 
 	 * @param userId User id
 	 * @return Query all contracts that to be finalized
@@ -340,12 +407,12 @@ public class ContractService {
 			 * And do not exist "STATE_FINALIZED" state at the same time
 			 */
 			/*
-			 * 1.»ñÈ¡ÌØ¶¨ÓÃ»§µÄÆğ²İµÄËùÓĞºÏÍ¬id
+			 * 1.è·å–ç‰¹å®šç”¨æˆ·çš„èµ·è‰çš„æ‰€æœ‰åˆåŒid
 			 */
 			List<Integer> drafConIds = contractDao.getIdsByUserId(userId);
 			
 			/*
-			 * 2.´ÓÌØ¶¨ÓÃ»§ËùÆğ²İµÄËùÓĞºÏÍ¬Àï³éÈ¡»áÇ©Íê³Éµ«²¢Î´¶¨¸åµÄºÏÍ¬
+			 * 2.ä»ç‰¹å®šç”¨æˆ·æ‰€èµ·è‰çš„æ‰€æœ‰åˆåŒé‡ŒæŠ½å–ä¼šç­¾å®Œæˆä½†å¹¶æœªå®šç¨¿çš„åˆåŒ
 			 */
 			for (int dConId : drafConIds) {
 				if (conStateDao.isExist(dConId, Constant.STATE_CSIGNED)
@@ -355,7 +422,7 @@ public class ContractService {
 			}
 			
 			/* 
-			 * 3.»ñÈ¡ºÏÍ¬ĞÅÏ¢
+			 * 3.è·å–åˆåŒä¿¡æ¯
 			 */
 			for (int conId : conIds) {
 				// Get information of designated contract
@@ -384,10 +451,10 @@ public class ContractService {
 	}
 	
 	/**
-	 * ¶¨¸åºÏÍ¬ 
+	 * å®šç¨¿åˆåŒ 
 	 * 
 	 * @param contract Contract object
-	 * @return boolean Return true if operation successfullyé”›å®±therwise return false 
+	 * @return boolean Return true if operation successfullyé–¿æ¶˜î†ˆtherwise return false 
 	 * @throws AppException
 	 */
 	public boolean finalize(Contract contract) throws AppException {
@@ -418,7 +485,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * ÏÔÊ¾ÌØ¶¨ºÏÍ¬µÄ»áÇ©Òâ¼û
+	 * æ˜¾ç¤ºç‰¹å®šåˆåŒçš„ä¼šç­¾æ„è§
 	 * 
 	 * @param conId Contract id
 	 * @return Contract state object set
@@ -431,7 +498,7 @@ public class ContractService {
 		try {
 			
 			/*
-			 * 1.»ñÈ¡ÌØµãºÏÍ¬ÒÑ»áÇ©µÄconProcessµÄid
+			 * 1.è·å–ç‰¹ç‚¹åˆåŒå·²ä¼šç­¾çš„conProcessçš„id
 			 */
 			List<Integer> conProcessIds = conProcessDao.getIds(conId, Constant.PROCESS_CSIGN, Constant.DONE);
 			/*
@@ -466,7 +533,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * »ñÈ¡ÌØ¶¨ ÉóÅúÈË£¨userId£©   ËùÓĞÎ´ÉóÅúµÄºÏÍ¬ĞÅÏ¢
+	 * è·å–å®¡æ‰¹äººï¼ˆuserIdï¼‰   æ‰€æœ‰æœªå®¡æ‰¹çš„åˆåŒä¿¡æ¯
 	 * 
 	 * @param userId User id
 	 * @return Query all contracts to be approved,otherwise return null
@@ -533,10 +600,77 @@ public class ContractService {
 	}
 	
 	/**
-	 * ÉóÅúºÏÍ¬
+	 * é€šè¿‡å®¡æ‰¹å‘˜idè·å–æ‰€æœ‰å·²å®¡æ‰¹çš„åˆåŒä¿¡æ¯
+	 * 
+	 * @param userId User id
+	 * @return Query all countersigned contracts 
+	 * @throws AppException
+	 */
+	public List<ConBusiModel> getProcess_ApproveList(int userId)throws AppException{
+		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
+		ConProcess conProcess = new ConProcess();
+		// Set values to contract process object
+		conProcess.setUserId(userId);
+		// Set process's operation type to "PROCESS_CSIGN"
+		conProcess.setType(Constant.PROCESS_APPROVE);
+		// Set corresponding state of "PROCESS_CSIGN" type  is "DONE"
+		conProcess.setState(Constant.DONE);
+		
+		try {
+			/*
+			 * 1.è·å–ç‰¹å®šç”¨æˆ·æ‰€æœ‰ä¼šç­¾å®Œæˆçš„åˆåŒid
+			 */
+			List<Integer> conIds = conProcessDao.getConIds(conProcess);
+
+			/* 
+			 * 2.ä¿å­˜åˆ°conListæ•°ç»„
+			 */
+			for (int conId : conIds) {
+				// Get information from  specified contract
+				Contract contract = contractDao.getById(conId);
+				// Get status of designated contract
+				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				// è¯¥åˆåŒå·²ä¼šç­¾äººæ•°
+				ConProcess APPROVE_Done=new ConProcess();
+				APPROVE_Done.setConId(conId);
+				APPROVE_Done.setState(Constant.DONE);
+				APPROVE_Done.setType(Constant.PROCESS_APPROVE);
+				int totalDoneCount=conProcessDao.getTotalCount(APPROVE_Done);
+				
+				ConProcess APPROVE_UNDone=new ConProcess();
+				APPROVE_UNDone.setConId(conId);
+				APPROVE_UNDone.setState(Constant.UNDONE);
+				APPROVE_UNDone.setType(Constant.PROCESS_APPROVE);
+				// è¯¥åˆåŒä¼šç­¾äººæ•°
+				int totalCount=totalDoneCount+conProcessDao.getTotalCount(APPROVE_UNDone);
+				// Initialize conBusiModel
+				ConBusiModel conBusiModel = new ConBusiModel();
+				if (contract != null) {
+					// Set contract id and name into conBusiModel object
+					conBusiModel.setConId(contract.getId());
+					conBusiModel.setConName(contract.getName());
+				}
+				conBusiModel.setDONENum(totalDoneCount);
+				conBusiModel.setDistributeENum(totalCount);
+				if (conState != null) {
+					// Set Drafting time into conBusiModel object
+					conBusiModel.setDrafTime(conState.getTime()); 
+				}
+				conList.add(conBusiModel);
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("service.ContractService.getProcess_ApproveList");
+		}
+		// Return the set of storage contract business entities
+		return conList;
+	}
+	
+	/**
+	 * å®¡æ‰¹åˆåŒ
 	 * 
 	 * @param conProcess Contract process object  
-	 * @return boolean Return true if operation successfullyé”›å®±therwise return false 
+	 * @return boolean Return true if operation successfullyé–¿æ¶˜î†ˆtherwise return false 
 	 * @throws AppException
 	 */
 	public boolean approve(ConProcess conProcess) throws AppException {
@@ -585,7 +719,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * ²éÑ¯ÌØµãÓÃ»§ËùÓĞÒÑÉóÅúµ«Î´Ç©¶©µÄºÏÍ¬
+	 * æŸ¥è¯¢ ç­¾è®¢å‘˜ æ‰€æœ‰æœªç­¾è®¢ï¼ˆå®¡æ‰¹å®Œæˆï¼‰çš„åˆåŒ
 	 * 
 	 * @param userId User id
 	 * @return Query all contracts to be signed,otherwise return false
@@ -652,10 +786,10 @@ public class ContractService {
 	}
 	
 	/**
-	 * Ç©¶©ºÏÍ¬
+	 * ç­¾è®¢åˆåŒ
 	 * 
 	 * @param conProcess Contract process object
-	 * @return boolean Return true if operation successfullyé”›å®±therwise return false 
+	 * @return boolean Return true if operation successfullyé–¿æ¶˜î†ˆtherwise return false 
 	 * @throws AppException
 	 */
 	public boolean sign(ConProcess conProcess) throws AppException {
@@ -668,16 +802,19 @@ public class ContractService {
 		
 		try {
 			if (conProcessDao.update(conProcess)) {// Sign contract:update contract process information
-				/*
-				 * Sign successful,save contract state information
-				 */
+				
 				// Instantiation conState object, for encapsulate contract state information
-				ConState conState = new ConState();
-				conState.setConId(conProcess.getConId());
-				// Set contract state type to "STATE_SIGNED"
-				conState.setType(Constant.STATE_SIGNED);
-				// Save contract state information
-				flag = conStateDao.add(conState);
+				conProcess.setState(Constant.UNDONE);
+                int totalCount = conProcessDao.getTotalCount(conProcess);
+				
+				if (totalCount == 0) {
+					ConState conState = new ConState();
+					conState.setConId(conProcess.getConId());
+					// Set contract state to "STATE_CSIGNED"
+					conState.setType(Constant.STATE_SIGNED);
+					// Save contract state information
+					flag = conStateDao.add(conState);
+				}
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
