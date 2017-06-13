@@ -30,19 +30,19 @@
 	<div class="list">
 		<table>
 			<tr>
-				<th>Contract name&nbsp;&nbsp;&nbsp;&nbsp;</th>
-				<th class="th1">Draft time&nbsp;&nbsp;&nbsp;&nbsp;</th>
-				<th class="th1">Status</th>
+				<th width="200px">Contract name&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th width="200px">Draft time&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th width="200px">Status</th>
 			</tr>
 			<%
 				List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");  
 		        for (ConBusiModel cbm : contractList) {
        	 	%>
 			<tr>
-				<td class="tdname"><a href="javascript:void(0)"><%=cbm.getConName()%></a>
+				<td align="center"><a href="javascript:void(0)"><%=cbm.getConName()%></a>
 				</td>
-				<td><%=cbm.getDrafTime()%></td>
-				<td><%=cbm.getDONENum()%>/
+				<td align="center"><%=cbm.getDrafTime()%></td>
+				<td align="center"><%=cbm.getDONENum()%>/
 				<%=cbm.getDistributeENum()%></td>
 			</tr>
 			<%

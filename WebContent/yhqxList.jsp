@@ -23,9 +23,9 @@
 	<div class="list">
 		<table>
 			<tr>
-				<th>User name</th>
-				<th class="th2">Role name</th>
-				<th class="th2">Operation</th>
+				<th width="200px">User name</th>
+				<th width="200px">Role name</th>
+				<th width="200px">Operation</th>
 			</tr>
 			<%
 					List<PermissionBusiModel> permissionList = (List<PermissionBusiModel>) request
@@ -33,9 +33,9 @@
 					for (PermissionBusiModel pbm : permissionList) {
 				%>
 			<tr>
-				<td class="tdname"><%=pbm.getUserName()%></td>
-				<td><%=pbm.getRoleName()%></td>
-				<td><a
+				<td align="center"><%=pbm.getUserName()%></td>
+				<td align="center"><%=pbm.getRoleName()%></td>
+				<td align="center"><a
 					href="toAssignPerm?userId=<%=pbm.getUserId()%>&uName=<%=pbm.getUserName()%>&roleId=<%=pbm.getRoleId()%>">
 						<img src="images/cog_edit.png" alt="Authorize" /> Authorize
 				</a></td>

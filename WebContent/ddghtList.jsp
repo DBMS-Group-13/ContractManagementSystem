@@ -29,8 +29,8 @@
 	<div class="list">
 		<table>
 			<tr>
-				<th>Contract name</th>
-				<th class="th1">Draft time</th>
+				<th width="200px">Contract name</th>
+				<th width="200px">Draft time</th>
 				<th width="400px">Operation</th>
 			</tr>
 			<%
@@ -38,11 +38,11 @@
 		        for (ConBusiModel cbm : contractList) {
        	 	%>
 			<tr>
-				<td class="tdname"><a
+				<td align="center"><a
 					href="javascript:preview('contractDetail?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
 				</td>
-				<td><%=cbm.getDrafTime()%></td>
-				<td><a href="showHQOpinion?conId=<%=cbm.getConId()%>"> <img
+				<td align="center"><%=cbm.getDrafTime()%></td>
+				<td align="center"><a href="showHQOpinion?conId=<%=cbm.getConId()%>"> <img
 						src="images/information.png" alt="Countersign opinion" />
 						Countersign opinion
 				</a> &nbsp;|&nbsp; <a href="toDgContract?conId=<%=cbm.getConId()%>">

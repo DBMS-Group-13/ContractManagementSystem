@@ -390,7 +390,17 @@
 	<servlet-mapping>
 		<servlet-name>toSigned</servlet-name>
 		<url-pattern>/toSigned</url-pattern>
-	</servlet-mapping><!--Welcom Page -->
+	</servlet-mapping>
+    <!-- Configure the access of AssignPermServlet -->
+	<servlet>
+		<servlet-name>toQueryProcess</servlet-name>
+		<servlet-class>web.ToQueryProcessServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>toQueryProcess</servlet-name>
+		<url-pattern>/toQueryProcess</url-pattern>
+	</servlet-mapping>
+	<!--Welcom Page -->
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>

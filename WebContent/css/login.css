@@ -14,6 +14,23 @@ font-family: 'Lato', sans-serif;
   background:url(../assets/img/backgroundf2.jpg);
 }
 
+.textF{
+	width:100px;
+	height:25px;
+	border-radius: 25px;
+	border-radius: 42px;
+    border: 2px solid #324b4e;
+    background: #ffffff;
+    outline: none;
+    position: relative;
+    transition: .3s linear;
+}
+.textF:focus{
+	width: 300px;
+}
+.textF:hover{
+	background: #a8a8a8;
+}
 
 .cont_centrar {
   position: relative;

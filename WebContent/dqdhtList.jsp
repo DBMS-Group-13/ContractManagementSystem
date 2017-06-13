@@ -29,20 +29,20 @@
 	<div class="list">
 		<table>
 			<tr>
-				<th>Contract name</th>
-				<th class="th1">Draft time</th>
-				<th class="th1">Operation</th>
+				<th width="200px">Contract name</th>
+				<th width="200px">Draft time</th>
+				<th width="200px">Operation</th>
 			</tr>
 			<%
 				List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");  
 		        for (ConBusiModel cbm : contractList) {
        	 	%>
 			<tr>
-				<td class="tdname"><a
+				<td align="center"><a
 					href="javascript:preview('contractDetail?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
 				</td>
-				<td><%=cbm.getDrafTime()%></td>
-				<td><a href="toAddQDInfo?conId=<%=cbm.getConId()%>"> <img
+				<td align="center"><%=cbm.getDrafTime()%></td>
+				<td align="center"><a href="toAddQDInfo?conId=<%=cbm.getConId()%>"> <img
 						src="images/icon-edit.png" alt="Sign" /> Sign
 				</a></td>
 			</tr>
@@ -53,13 +53,8 @@
 		</table>
 	</div>
 
-	<div align="right" class="pagelist">
-		<a href="#"><img src="images/page/first.png" alt="" /></a> &nbsp; <a
-			href="#"><img src="images/page/pre.png" alt="" /></a>&nbsp; <a
-			href="#"><img src="images/page/next.png" alt="" /></a>&nbsp; <a
-			href="#"><img src="images/page/last.png" alt="" /></a>&nbsp; <span
-			class="pageinfo"> Total&nbsp;<strong>2</strong>&nbsp;pages&nbsp;<strong>13</strong>&nbsp;records
-		</span>
+	<div align="left" class="pagelist">
+		 Total&nbsp;<strong><%=contractList.size()%></strong>&nbsp;Contracts
 	</div>
 </body>
 </html>

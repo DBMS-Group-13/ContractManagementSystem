@@ -22,9 +22,9 @@
 		</script>
 <script type="text/javascript">
 			function check2(){
-				var name = document.getElementById('name');
-				var password = document.getElementById('password');
-				var password2 = document.getElementById('password2');
+				var name = document.getElementById('rname');
+				var password = document.getElementById('rpassword');
+				var password2 = document.getElementById('rpassword2');
 				if(name.value == ""){
 					alert("User name can not be empty!");
 					name.focus();
@@ -77,13 +77,16 @@
 			name = (String) request.getAttribute("userName");
 			}
 		  %>
-          <input type="text" name="name" id="name" placeholder="ID" />
-          <input type="password" name="password" id="password" placeholder="Password" />
+		  <table>
+		  <tr><td>
+          <input type="text" name="name" class="textF" id="name" placeholder="ID" /></td></tr>
+          <tr><td>
+          <input type="password" name="password" class="textF" id="password" placeholder="Password" /></td></tr>
           <%
-								if (request.getAttribute("message") != null) {
-							%> <%=request.getAttribute("message")%> <%
-								}
-							%>
+			if (request.getAttribute("message") != null) {
+		    %> <%=request.getAttribute("message")%> <%
+			}%>
+			</table>
           <button class="btn_login" onClick="return check()">LOGIN</button>
           </form>
         </div>
@@ -92,11 +95,13 @@
           <form action="register" method="post">
           <table>
           <tr><td>
-          <input type="text" name="name" id="name" placeholder="User" /></td></tr>
+          <input type="text" class="textF" name="rname" id="rname" placeholder="User" /></td></tr>
           <tr><td>
-          <input type="password" name="password" id="password" placeholder="Password" /></td></tr>
+          <input type="text" class="textF" name="rmail" id="rmail" placeholder="example@Gmail.com" /></td></tr>
           <tr><td>
-          <input type="password" name="password2" id="password2" placeholder="Confirm Password" /></td></tr>
+          <input type="password" class="textF" name="rpassword" id="rpassword" placeholder="Password" /></td></tr>
+          <tr><td>
+          <input type="password" class="textF" name="rpassword2" id="rpassword2" placeholder="Confirm Password" /></td></tr>
           </table>
           <button class="btn_sign_up" onClick="return check2()">SIGN UP</button>  
           </form>

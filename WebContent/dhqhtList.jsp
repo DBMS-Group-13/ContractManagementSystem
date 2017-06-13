@@ -29,20 +29,20 @@
 	<div class="list">
 		<table>
 			<tr>
-				<th>Contract name</th>
-				<th class="th1">Draft time</th>
-				<th class="th2">Operation</th>
+				<th width="200px">Contract name</th>
+				<th width="200px">Draft time</th>
+				<th width="200px">Operation</th>
 			</tr>
 			<%
 				List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");  
 		        for (ConBusiModel cbm : contractList) {
        	 	%>
 			<tr>
-				<td class="tdname"><a
+				<td align="center"><a
 					href="javascript:preview('contractDetail?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
 				</td>
-				<td><%=cbm.getDrafTime()%></td>
-				<td><a href="toAddHQOpinion?conId=<%=cbm.getConId()%>"> <img
+				<td align="center"><%=cbm.getDrafTime()%></td>
+				<td align="center"><a href="toAddHQOpinion?conId=<%=cbm.getConId()%>"> <img
 						src="images/icon-edit.png" alt="Countersign" /> Countersign
 				</a></td>
 			</tr>
