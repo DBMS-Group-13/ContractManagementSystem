@@ -1353,7 +1353,7 @@ public class ContractService {
 				// Get status of designated contract
 				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
 				// get state of contract
-				int state=0;
+				int state=-1;
 				if(conStateDao.isExist(conId, Constant.STATE_SIGNED))
 				{
 					state=Constant.STATE_SIGNED;
@@ -1370,7 +1370,7 @@ public class ContractService {
 				{
 					state=Constant.STATE_CSIGNED;
 					conBusiModel.setState("Finalizing");
-				}else
+				}else if(conStateDao.isExist(conId, Constant.STATE_DRAFTED))
 				{
 					state=Constant.STATE_DRAFTED;
 					conBusiModel.setState("csigning");
