@@ -31,7 +31,7 @@
 								<ul class="nav">
 									<li><a href="toDraft" target="main" class="">Draft Contract</a></li>
 									<li><a href="toDdghtList" target="main" class="">Contract to be finalized</a></li>
-									<li><a href="toDgContract" target="main" class="">Finalized Contract</a></li>
+									<li><a href="toDrafted" target="main" class="">Finalized Contract</a></li>
 									<li><a href="toQueryProcess" target="main" class="">Query Process</a></li>
 								</ul>
 							</div>
@@ -50,7 +50,7 @@
 							<div id="subPages3" class="collapse ">
 								<ul class="nav">
 									<li><a href="toDshphtList" target="main">Contract to be approved</a></li>
-									<li><a href="#" target="main" class="">Approved Contract</a></li>
+									<li><a href="toApproved" target="main" class="">Approved Contract</a></li>
 								</ul>
 							</div>
 						</li>
@@ -59,7 +59,7 @@
 							<div id="subPages4" class="collapse ">
 								<ul class="nav">
 									<li><a href="toDqdhtList" target="main">Contract to be signed</a></li>
-									<li><a href="#" target="main" class="">Signed Contract</a></li>
+									<li><a href="toSigned" target="main" class="">Signed Contract</a></li>
 								</ul>
 							</div>
 						</li>

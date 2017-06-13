@@ -16,11 +16,11 @@
 </head>
 
 <body>
-	<div class="mtitle">Countersigned Contract</div>
+	<div class="mtitle">Finallized Contract</div>
 
 	<div class="search">
 		<form>
-			Search contract to countersigned <input type="text" class="textF"
+			Search contract finallized <input type="text" class="textF"
 				value="Please enter contract name..." name="name"
 				onFocus="this.value=''" class=""/> &nbsp;&nbsp; <input type="submit"
 				value="Search" class="button" /> <br />
@@ -30,8 +30,8 @@
 	<div class="list">
 		<table>
 			<tr>
-				<th>Contract name&nbsp;&nbsp;&nbsp;&nbsp;</th>
-				<th class="th1">Draft time&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th>Contract name</th>
+				<th class="th1">Draft time</th>
 				<th class="th1">Status</th>
 			</tr>
 			<%
@@ -42,8 +42,7 @@
 				<td class="tdname"><a href="javascript:void(0)"><%=cbm.getConName()%></a>
 				</td>
 				<td><%=cbm.getDrafTime()%></td>
-				<td><%=cbm.getDONENum()%>/
-				<%=cbm.getDistributeENum()%></td>
+				<td>Finalized</td>
 			</tr>
 			<%
 				}

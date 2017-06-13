@@ -16,11 +16,11 @@
 </head>
 
 <body>
-	<div class="mtitle">Countersigned Contract</div>
+	<div class="mtitle">Approved</div>
 
 	<div class="search">
 		<form>
-			Search contract to countersigned <input type="text" class="textF"
+			Search contract approved <input type="text" class="textF"
 				value="Please enter contract name..." name="name"
 				onFocus="this.value=''" class=""/> &nbsp;&nbsp; <input type="submit"
 				value="Search" class="button" /> <br />

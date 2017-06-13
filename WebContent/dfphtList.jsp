@@ -20,10 +20,10 @@
 
 	<div class="search">
 		<form>
-			Search contract to be assigned <input type="text"
+			Search contract to be assigned <input type="text" class="textF"
 				value="Please enter contract name..." name="name"
 				onFocus="this.value=''" /> &nbsp;&nbsp; <input type="submit"
-				value="Search" class="search-submit" /> <br />
+				value="Search" class="button" /> <br />
 		</form>
 	</div>
 
@@ -55,13 +55,8 @@
 		</table>
 	</div>
 
-	<div align="right" class="pagelist">
-		<a href="#"><img src="images/page/first.png" alt="" /></a> &nbsp; <a
-			href="#"><img src="images/page/pre.png" alt="" /></a>&nbsp; <a
-			href="#"><img src="images/page/next.png" alt="" /></a>&nbsp; <a
-			href="#"><img src="images/page/last.png" alt="" /></a>&nbsp; <span
-			class="pageinfo"> Total&nbsp;<strong>2</strong>&nbsp;pages&nbsp;<strong>13</strong>&nbsp;records
-		</span>
+	<div align="left" class="pagelist">
+		 Total&nbsp;<strong><%=contractList.size()%></strong>&nbsp;Contracts
 	</div>
 </body>
 </html>
