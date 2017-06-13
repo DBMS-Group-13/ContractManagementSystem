@@ -190,6 +190,7 @@ public class RightDaoImpl implements RightDao {
 				psmt.setInt(1, right.getUserId());
 				psmt.setString(2, date);
 				psmt.setString(3, content);
+				psmt.executeUpdate();
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -242,6 +243,7 @@ public class RightDaoImpl implements RightDao {
 				psmt.setInt(1, right.getUserId());
 				psmt.setString(2, date);
 				psmt.setString(3, content);
+				psmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

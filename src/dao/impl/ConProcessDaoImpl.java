@@ -103,6 +103,7 @@ public class ConProcessDaoImpl implements ConProcessDao{
 				String date = sDateFormat.format(new java.util.Date());  
 				psmt.setString(2, date);
 				psmt.setString(3, content);
+				psmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -213,6 +214,7 @@ public class ConProcessDaoImpl implements ConProcessDao{
 				String date = sDateFormat.format(new java.util.Date());  
 				psmt.setString(2, date);
 				psmt.setString(3, content);
+				psmt.executeUpdate();
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();

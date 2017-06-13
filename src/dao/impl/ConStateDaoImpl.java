@@ -55,6 +55,7 @@ public class ConStateDaoImpl implements ConStateDao {
 				String date = sDateFormat.format(new java.util.Date());  
 				psmt.setString(1, date);
 				psmt.setString(2, content);
+				psmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
