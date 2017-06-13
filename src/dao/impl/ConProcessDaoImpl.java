@@ -69,6 +69,7 @@ public class ConProcessDaoImpl implements ConProcessDao{
 	 * @return boolean Return true if exist,otherwise return false
 	 * @throws AppException
 	 */
+	@SuppressWarnings("resource")
 	public boolean add(ConProcess conProcess)  throws AppException{	
 		boolean flag = false;// Operation flag
 		// Declare database connection object, pre-compiled object and result set object
@@ -81,7 +82,7 @@ public class ConProcessDaoImpl implements ConProcessDao{
 			// Declare operation statement:save contact operation process information, "?" is a placeholder
 			String sql = "insert into t_contract_process(con_id,user_id,type,state,content) values(?,?,?,?,?)";
 				
-			psmt = conn.prepareStatement(sql);// pre-compiled sql
+			psmt = conn.prepareStatement(sql); // pre-compiled sql
 			// Set values for the placeholder
 			psmt.setInt(1, conProcess.getConId());
 			psmt.setInt(2, conProcess.getUserId());
@@ -93,6 +94,15 @@ public class ConProcessDaoImpl implements ConProcessDao{
 			
 			if(result > 0){// If the affected lines greater than 0, the operation success
 				flag = true;
+				String content = "User" + conProcess.getUserId() + "insert data into t_contract_process";
+				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
+				psmt = conn.prepareStatement(sql2); // pre-compiled sql
+				// Set values for the placeholder
+				psmt.setInt(1, conProcess.getUserId());
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				psmt.setString(2, date);
+				psmt.setString(3, content);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -164,6 +174,7 @@ public class ConProcessDaoImpl implements ConProcessDao{
 	 * @return boolean Return true if successful , otherwise false
 	 * @throws AppException
 	 */
+	@SuppressWarnings("resource")
 	public boolean update(ConProcess conProcess) throws AppException {
 		boolean flag = false;// Operation flag
 		// Declare database connection object, pre-compiled object and results set object
@@ -194,6 +205,15 @@ public class ConProcessDaoImpl implements ConProcessDao{
 			
 			if (count > 0) {// If affected lines greater than 0, the update is successful
 				flag = true;
+				String content = "User" + conProcess.getUserId() + "update data in t_contract_process";
+				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
+				psmt = conn.prepareStatement(sql2); // pre-compiled sql
+				// Set values for the placeholder
+				psmt.setInt(1, conProcess.getUserId());
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				psmt.setString(2, date);
+				psmt.setString(3, content);
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();

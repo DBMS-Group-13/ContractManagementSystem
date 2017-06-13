@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,6 +155,7 @@ public class RightDaoImpl implements RightDao {
 	 * @return boolean Return true if successful , otherwise false
 	 * @throws AppException
 	 */
+	@SuppressWarnings("resource")
 	public boolean updateById(Right right) throws AppException {
 		boolean flag = false;// Operation flag
 		//Declare Connection object,PreparedStatement object
@@ -178,6 +180,16 @@ public class RightDaoImpl implements RightDao {
 			
 			if (count > 0) {// If affected lines greater than 0, the update is successful
 				flag = true;
+				String content = "User" + right.getUserId() + "update data in t_contract";
+				String sql2 = "insert into t_log(con_id,time,content)values(?,?,?)";
+				psmt = conn.prepareStatement(sql2); // pre-compiled sql
+				
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				// Set values for the placeholder
+				psmt.setInt(1, right.getUserId());
+				psmt.setString(2, date);
+				psmt.setString(3, content);
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -197,6 +209,7 @@ public class RightDaoImpl implements RightDao {
 	 * @return Return true if successful , otherwise false
 	 * @throws AppException
 	 */
+	@SuppressWarnings("resource")
 	public boolean add(Right right) throws AppException {
 		boolean flag = false;// Operation flag
 		//Declare Connection object,PreparedStatement object
@@ -219,6 +232,16 @@ public class RightDaoImpl implements RightDao {
 			result = psmt.executeUpdate();// Execute update operation, return the affected rows
 			if (result > 0) {
 				flag = true;
+				String content = "User" + right.getUserId() + "insert data into t_contract";
+				String sql2 = "insert into t_log(con_id,time,content)values(?,?,?)";
+				psmt = conn.prepareStatement(sql2); // pre-compiled sql
+				
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				// Set values for the placeholder
+				psmt.setInt(1, right.getUserId());
+				psmt.setString(2, date);
+				psmt.setString(3, content);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
