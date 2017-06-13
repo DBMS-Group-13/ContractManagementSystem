@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class ContractDaoImpl implements ContractDao {
 	 * @return boolean Return true if successful , otherwise false
 	 * @throws AppException
 	 */
+	@SuppressWarnings("resource")
 	public boolean add(Contract contract) throws AppException{
 		boolean flag = false;// Operation flag
 		// Declare database connection object, pre-compiled object and results set object
@@ -60,6 +62,15 @@ public class ContractDaoImpl implements ContractDao {
 			if (rs.next()) {
 				contract.setId(rs.getInt(1));// Get primary key's value,and set it into contract object
 				flag = true; // If affected lines greater than 0, so operation success
+				String content = "User" + contract.getUserId() + "insert data into t_contract";
+				String sql2 = "insert into t_log(con_id,time,content)values(?,?,?)";
+				psmt = conn.prepareStatement(sql2); // pre-compiled sql
+				// Set values for the placeholder
+				psmt.setInt(1, contract.getUserId());
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				psmt.setString(2, date);
+				psmt.setString(3, content);
 			}
 			
 		} catch (SQLException e) {
@@ -183,6 +194,7 @@ public class ContractDaoImpl implements ContractDao {
 	 * @return boolean Return true if successful , otherwise false
 	 * @throws AppException
 	 */
+	@SuppressWarnings("resource")
 	public boolean updateById(Contract contract) throws AppException {
 		boolean flag = false;// Operation flag
 		// Declare database connection object, pre-compiled object
@@ -212,6 +224,16 @@ public class ContractDaoImpl implements ContractDao {
 			
 			if (count > 0) {// If affected lines greater than 0, so update success
 				flag = true;
+				String content = "User" + contract.getUserId() + "update data in t_contract";
+				String sql2 = "insert into t_log(con_id,time,content)values(?,?,?)";
+				psmt = conn.prepareStatement(sql2); // pre-compiled sql
+				
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				// Set values for the placeholder
+				psmt.setInt(1, contract.getUserId());
+				psmt.setString(2, date);
+				psmt.setString(3, content);
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -224,4 +246,41 @@ public class ContractDaoImpl implements ContractDao {
 		return flag;
 	}
 	
+	public List<Integer> getId() throws AppException {
+		
+		// Declare database connection object, pre-compiled object and result set object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<Integer> List = new ArrayList<Integer>();
+		
+		try {
+			// Create database connection
+			conn = DBUtil.getConnection();
+			//Define SQL statement: query contract information according to the contract id 
+			String sql = "select id from t_contract ";
+
+			// Pre-compiled sql, and set the parameter values
+			psmt = conn.prepareStatement(sql);
+			
+			// Query result set
+			rs = psmt.executeQuery();
+
+			//Get information in result set by loop,and encapsulated into contract object
+			while(rs.next()) {
+				List.add(rs.getInt("id"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(
+					"dao.impl.ContractDaoImpl.getById");
+		} finally {
+			//  Close the database operation object
+			DBUtil.closeResultSet(rs);
+			DBUtil.closeStatement(psmt);
+			DBUtil.closeConnection(conn);
+		}
+		return List;
+	}
 }
