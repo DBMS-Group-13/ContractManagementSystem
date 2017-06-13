@@ -255,7 +255,7 @@ public class ContractService {
 			for (int conId : conIds) {
 				
 				/* 
-				 * 3.如果合同已被分配，保存分配的合同信息
+				 * 3.如果合同已被分配，保存分配信息
 				 */
 				if (conProcessDao.isExist(conId)) {
 					// Get information of designated contract
@@ -273,12 +273,50 @@ public class ContractService {
 						//Set drafting time to conBusiModel object
 						conDistribute.setDrafTime(conState.getTime()); 
 					}
+					
+					//会签人名单
+					List<Integer> processIds=conProcessDao.getIds(conId, Constant.PROCESS_CSIGN, Constant.DONE);
+					processIds.addAll(conProcessDao.getIds(conId, Constant.PROCESS_CSIGN, Constant.UNDONE));
+					String names="";
+					for(int id:processIds)
+					{
+						int userId=conProcessDao.getById(id).getUserId();
+						names=userDao.getById(userId).getName()+",";
+					}
+					names=names.substring(0, names.length()-1);
+					conDistribute.setCsign(names);
+					
+					//会签人名单
+					processIds=conProcessDao.getIds(conId, Constant.PROCESS_APPROVE, Constant.DONE);
+					processIds.addAll(conProcessDao.getIds(conId, Constant.PROCESS_APPROVE, Constant.UNDONE));
+					processIds.addAll(conProcessDao.getIds(conId, Constant.PROCESS_APPROVE, Constant.VETOED));
+					names="";
+					for(int id:processIds)
+					{
+						int userId=conProcessDao.getById(id).getUserId();
+						names=userDao.getById(userId).getName()+",";
+					}
+					names=names.substring(0, names.length()-1);
+					conDistribute.setApprove(names);
+					
+					//会签人名单
+					processIds=conProcessDao.getIds(conId, Constant.PROCESS_SIGN, Constant.DONE);
+					processIds.addAll(conProcessDao.getIds(conId, Constant.PROCESS_SIGN, Constant.UNDONE));
+					names="";
+					for(int id:processIds)
+					{
+						int userId=conProcessDao.getById(id).getUserId();
+						names=userDao.getById(userId).getName()+",";
+					}
+					names=names.substring(0, names.length()-1);
+					conDistribute.setSign(names);
+					
 					conList.add(conDistribute); // Add conBusiModel to contractList
 				}
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
-			throw new AppException("service.ContractService.getDfphtList");
+			throw new AppException("service.ContractService.getConDistributeList");
 		}
 		// Return contractList
 		return conList;
@@ -1010,9 +1048,8 @@ public class ContractService {
 						flag = conStateDao.add(conState);
 					}else
 					{
-						//
+						contractDao.setDel(conProcess.getConId());
 					}
-					
 				}
 			}
 		} catch (AppException e) {
@@ -1305,7 +1342,7 @@ public class ContractService {
 			drafConIds= contractDao.getIdsByUserId(userId);
 		else {
 			//获取所有合同id
-			drafConIds= new ArrayList<Integer>();
+			drafConIds= contractDao.getIds();
 		}
 		
 		try {

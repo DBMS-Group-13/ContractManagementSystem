@@ -252,21 +252,21 @@ public class UserService {
 		return flag;
 	}
 	
-	public List<User> getUsers(){
+	public List<User> getUsers() throws AppException{
 		return userDao.getUsers();
 	}
 	
-	public boolean isEmailExist(String email)
+	public boolean isEmailExist(String email) throws AppException
 	{
 		return userDao.JudgeEmail(email);
 	}
 	
-	public User loadByEmail(String email)
+	public User loadByEmail(String email) throws AppException
 	{
 		return userDao.getByEmail(email);
 	}
 	
-	public void updateUser(User user)
+	public void updateUser(User user) throws AppException
 	{
 		userDao.UpdateUser(user);
 	}
