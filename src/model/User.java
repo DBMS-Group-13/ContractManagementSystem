@@ -5,10 +5,10 @@ public class User {
 	private String name;		//User name
 	private String password;	//Password
 	private String secPassword; //secondary password
-	private String problem1;
-	private String answer1;
-	private String problem2;
-	private String answer2;
+	private String email;
+	private String token;
+	private Long activateTime;
+	private String createdate;
 	private int del;			//Delete status(0-Not deleted, 1-Deleted)
 	
 	
@@ -20,12 +20,9 @@ public class User {
 		this.name = "";
 		this.password = "";
 		this.secPassword="";
-		this.problem1="";
-		this.answer1="";
-		this.problem2="";
-		this.answer2="";
+		this.email = "";
+		this.token = "";
 		this.del = 0;
-		
 	}
 
 	/*
@@ -74,33 +71,37 @@ public class User {
 		this.secPassword=secPassword;
 	}
 
-	public void setProblem1(String problem)
+	public void setEmail(String email)
 	{
-		
+		this.email = email;
+	}
+	public String getEmail()
+	{
+		return email;
+	}
+	public void setToken(String token)
+	{
+		this.token = token;
+	}
+	public String getToken()
+	{
+		return token;
+	}
+	public void setActivateTime(Long activateTime)
+	{
+		this.activateTime = activateTime;
+	}
+	public Long getActivateTime()
+	{
+		return activateTime;
+	}
+	public void setCreateDate(String createdate)
+	{
+		this.createdate = createdate;
+	}
+	public String getCreateDate()
+	{
+		return createdate;
 	}
 	
-	public void setProblem2(String problem)
-	{
-		
-	}
-	
-	public String getProblem1()
-	{
-		return problem1;
-	}
-	
-	public String getProblem2()
-	{
-		return problem2;
-	}
-	
-	public String getAnswer1()
-	{
-		return answer1;
-	}
-	
-	public String getAnswer2()
-	{
-		return answer2;
-	}
 }

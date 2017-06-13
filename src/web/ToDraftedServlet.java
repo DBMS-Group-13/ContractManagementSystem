@@ -48,7 +48,7 @@ public class ToDraftedServlet extends HttpServlet{
 				// Save contractList to request
 				request.setAttribute("contractList", contractList);
 				// Forward to page of contract to be countersigned
-				request.getRequestDispatcher("/drafted.jsp").forward(request, response);
+				request.getRequestDispatcher("/finalized.jsp").forward(request, response);
 			} catch (AppException e) {
 				e.printStackTrace();
 				// Redirect to the exception page

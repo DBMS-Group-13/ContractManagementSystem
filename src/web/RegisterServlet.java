@@ -1,7 +1,9 @@
 package web;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.User;
 import service.UserService;
 import utils.AppException;
+import utils.MailUtil;
 
 /**
  * Servlet for registration
@@ -26,7 +29,7 @@ public class RegisterServlet extends HttpServlet {
 		// Get registration information 
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
-
+		String email = request.getParameter("email");
 		// Declare operation flag
 		boolean flag = false;
 		// Initialize the prompt message 
@@ -42,6 +45,8 @@ public class RegisterServlet extends HttpServlet {
 			// Encapsulate the user information to the user object
 			user.setName(name);
 			user.setPassword(password);
+			user.setEmail(email);
+			user = MailUtil.activateMail(user);
 			// Call business logic layer for user registration 
 			flag = userService.register(user);
 			if (flag) { // Registration Successful
@@ -52,10 +57,10 @@ public class RegisterServlet extends HttpServlet {
 				message = "Registration failed";
 				request.setAttribute("message", message); // Save prompt message into request 
 				// Forward to the registration page
-				request.getRequestDispatcher("/register.jsp").forward(request,
+				request.getRequestDispatcher("/login.jsp").forward(request,
 						response);
 			}
-		} catch (AppException e) {
+		} catch (AppException | NoSuchAlgorithmException | MessagingException e) {
 			e.printStackTrace();
 			// Redirect to the exception page
 			response.sendRedirect("toError");
