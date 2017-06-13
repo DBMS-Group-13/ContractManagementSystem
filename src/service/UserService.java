@@ -251,5 +251,24 @@ public class UserService {
 		}
 		return flag;
 	}
+	
+	public List<User> getUsers(){
+		return userDao.getUsers();
+	}
+	
+	public boolean isEmailExist(String email)
+	{
+		return userDao.JudgeEmail(email);
+	}
+	
+	public User loadByEmail(String email)
+	{
+		return userDao.getByEmail(email);
+	}
+	
+	public void updateUser(User user)
+	{
+		userDao.UpdateUser(user);
+	}
 
 }
