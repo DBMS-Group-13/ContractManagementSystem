@@ -22,6 +22,7 @@ import model.ConProcess;
 import model.ConState;
 import model.Contract;
 import model.Customer;
+import model.Log;
 import model.User;
 import utils.AppException;
 import utils.Constant;
@@ -1538,7 +1539,7 @@ public class ContractService {
 	 * Generated contract number, the rule is: year month day hour minute second+5 random numbers when drafting contract,
 	 * Will generate a unique number stored in the database, but the contract number is not the primary key in the table.
 	 */
-	private String generateConNum() {
+	public String generateConNum() {
 		// Initialize date
 		Date date = new Date();
 		// Define date format
@@ -1552,6 +1553,18 @@ public class ContractService {
 		// Generate contract number is current date and time + 5 random numbers
 		String contractNum = sft.format(date) + rand;
 		return contractNum;
+	}
+	
+	public List<Log> getLog() throws AppException{
+		UserDao ud = new UserDaoImpl();
+		List<Log> logList=new ArrayList<Log>();
+		try {
+			logList = ud.getLogs();
+			return logList;
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("service.ContractService.getLog");
+		}
 	}
 
 }

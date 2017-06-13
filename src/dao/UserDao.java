@@ -82,6 +82,10 @@ public interface UserDao {
 	//删除顾客，Del属性设为1
 	public boolean setCustomerDel(int id) throws AppException;
 	
+<<<<<<< HEAD
 	//获取所有日志
+=======
+	//获取日志
+>>>>>>> 54d7e5deb1e2d58a6d9fcf876f870855719e4f5a
 	public List<Log> getLogs() throws AppException;
 }

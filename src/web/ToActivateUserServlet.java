@@ -32,7 +32,7 @@ public class ToActivateUserServlet extends HttpServlet {
 		Long time = System.currentTimeMillis();
 		User u = user.loadByEmail(email);
 		if (u != null) {
-			if (u.getStatus() == 0 && u.getActivateTime() != 1) {
+			if (u.getStatus() == 0 && u.getActivateTime() != 0) {
 				if (u.getActivateTime() < time) {
 					// 过期--激活失败
 					u.setActivateTime(Long.parseLong("-1"));
@@ -51,11 +51,15 @@ public class ToActivateUserServlet extends HttpServlet {
 						u.setToken(token.replace("1", "c"));
 						user.updateUser(u);
 						// resp.getWriter().write(JsonUtil.toJson(u));
+						message = "Activate successfully！";
+						request.setAttribute("message", message);
+						request.getRequestDispatcher("/result.jsp").forward(request,
+								response);
 					} else {
 						// 在时间内但是激活码错误
 						message = "The activation code is wrong！";
 						request.setAttribute("message", message);
-						request.getRequestDispatcher("/error.jsp").forward(request,
+						request.getRequestDispatcher("/result.jsp").forward(request,
 								response);
 					}
 				}
@@ -64,14 +68,14 @@ public class ToActivateUserServlet extends HttpServlet {
 				// 已经被激活的重复点链接
 				message = "The user has been activated！";
 				request.setAttribute("message", message);
-				request.getRequestDispatcher("/error.jsp").forward(request,
+				request.getRequestDispatcher("/result.jsp").forward(request,
 						response);
 			}
 			// u为空
 		} else if (u == null) {
 			message = "Wrong user！";
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("/error.jsp").forward(request,
+			request.getRequestDispatcher("/result.jsp").forward(request,
 					response);
 		}
 		}

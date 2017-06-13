@@ -62,11 +62,19 @@ public class RegisterServlet extends HttpServlet {
 				// Call business logic layer for user registration 
 				flag = userService.register(user);
 				}
-			else
+			else{
 				user = MailUtil.activateMail(user);
+				userService.updateUser(user);
+				flag = true;
+			}
 			if (flag) { // Registration Successful
 				// After registration Successful, redirect to the login page
-				response.sendRedirect("toLogin");
+				//response.sendRedirect("toLogin");
+				message = "Please go to your emailbox to check the activated mail!";
+				request.setAttribute("message", message); // Save prompt message into request 
+				// Forward to the registration page
+				request.getRequestDispatcher("/login.jsp").forward(request,
+						response);
 			} else { // Registration failed
 				// Set prompt message
 				message = "Registration failed";
