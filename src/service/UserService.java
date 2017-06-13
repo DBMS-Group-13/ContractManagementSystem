@@ -9,6 +9,7 @@ import dao.UserDao;
 import dao.impl.RightDaoImpl;
 import dao.impl.RoleDaoImpl;
 import dao.impl.UserDaoImpl;
+import model.Customer;
 import model.PermissionBusiModel;
 import model.Right;
 import model.Role;
@@ -269,6 +270,40 @@ public class UserService {
 	public void updateUser(User user) throws AppException
 	{
 		userDao.UpdateUser(user);
+	}
+	
+	public List<Customer> getCustomers() throws AppException{
+		return userDao.getCustomers();
+	}
+	
+	public boolean deleteUser(int userId) throws AppException{
+		if(userDao.setUserDel(userId))
+			return true;
+		else {
+			return false;
+		}
+	}
+	
+	public boolean add(Customer customer) throws AppException{
+		userDao.addCustomer(customer);
+		return true;
+	}
+	
+	public boolean update(Customer customer) throws AppException {
+		if(userDao.UpdateCustomer(customer))
+			return true;
+		else {
+			return false;
+		}
+	}
+	
+	public boolean deleteCustomer(int customerId) throws AppException
+	{
+		if(userDao.setCustomerDel(customerId))
+			return true;
+		else {
+			return false;
+		}
 	}
 
 }
