@@ -9,6 +9,7 @@ public class User {
 	private String token;
 	private Long activateTime;
 	private String createdate;
+	private int status;
 	private int del;			//Delete status(0-Not deleted, 1-Deleted)
 	
 	
@@ -102,6 +103,14 @@ public class User {
 	public String getCreateDate()
 	{
 		return createdate;
+	}
+	public void setStatus(int status)
+	{
+		this.status = status;
+	}
+	public int getStatus()
+	{
+		return status;
 	}
 	
 }

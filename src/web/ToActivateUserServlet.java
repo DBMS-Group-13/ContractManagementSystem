@@ -2,6 +2,7 @@ package web;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -24,14 +25,11 @@ public class ToActivateUserServlet extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-	       String email = request.getParameter("email");
+	        String email = request.getParameter("email");
 	        String token = request.getParameter("token");
 	        Long time = System.currentTimeMillis();
-	        User u = userService.loadByEmail(email);
-	        UserDTO ud = new UserDTO();
-	        ud.setMail(email);
+	        User u = UserService.loadByEmail(email);
 	        if(u!=null) {
-	            ud.setEmail(1);
 	            if(u.getStatus()==0&&u.getActivateTime()!=1) {
 	                if(u.getActivateTime()<time) {
 	                    //过期--激活失败
@@ -39,44 +37,32 @@ public class ToActivateUserServlet extends HttpServlet {
 	                    //重新发送激活邮件
 	                    u = MailUtil.activateMail(u);
 	                    //重新设置了有效时间和token激活码
-	                    userService.updateUser(u);
-	                    ud.setTime(-1);
-	                    model.addAttribute("user", JsonUtil.toJson(ud));
-	                    //resp.getWriter().write(JsonUtil.toJson(u));
+	                    UserService.updateUser(u);
 	                } else if (u.getActivateTime()>time){
 	                    //在时间内
 	                    u.setActivateTime(Long.parseLong("1"));
-	                    ud.setTime(1);
 	                    if(u.getToken().equals(token)) {
 	                        //在时间内且激活码通过，激活成功
 	                        u.setStatus(1);
-	                        u.setCreateDate(new Date());
+	                        u.setCreateDate(new Date().toString());
 	                        //重新设置token防止被禁用的用户利用激活
-	                        u.setToken(token.replace("1", "c"));
-	                        u.setType("student");
+	                        u.setToken(token.replace("1", "c"));	                        
 	                        userService.updateUser(u);
-	                        ud.setToken(1);
-	                        ud.setStatus(1);
-	                        model.addAttribute("user", JsonUtil.toJson(ud));
 	                        //resp.getWriter().write(JsonUtil.toJson(u));
 	                    } else {
-	                        //在时间内但是且激活码错误
-	                        ud.setToken(-1);
-	                        model.addAttribute("user", JsonUtil.toJson(ud));
+	                        //在时间内但是激活码错误
+	                    	response.sendRedirect("toError");
 	                    }
 	                }
 	                //u.getStatus()!=1判断结束
 	            } else if(u.getStatus()==1) {
 	                //已经被激活的重复点链接
-	                ud.setStatus(-1);
-	                model.addAttribute("user", JsonUtil.toJson(ud));
+	            	response.sendRedirect("toError");
 	            }
 	        //u为空
 	        } else if(u==null) {
-	            ud.setEmail(-1);
-	            model.addAttribute("user", JsonUtil.toJson(ud));
+	        	response.sendRedirect("toError");
 	        }
-	        return "activatemail";
 	}
 
 	/**
