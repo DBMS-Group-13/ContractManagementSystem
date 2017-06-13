@@ -23,6 +23,9 @@ public class User {
 		this.secPassword="";
 		this.email = "";
 		this.token = "";
+		this.activateTime = Long.parseLong("0");
+		this.createdate = "";
+		this.status = 0;
 		this.del = 0;
 	}
 

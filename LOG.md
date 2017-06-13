@@ -21,3 +21,5 @@ Group13-Project
 2017/6/13 13:39 Change userservice and contractservice -S Sword
 2017/6/13 14:16 Uodate servlet -GARCIIAa
 2017/6/13 17:26 change ConDistribute、ContractService、UserService -S Sword
+2017/6/13 18:16 Uodate servlet + model + util -GARCIIAa
+2017/6/13 18:16 Realize register by email -GARCIIAa

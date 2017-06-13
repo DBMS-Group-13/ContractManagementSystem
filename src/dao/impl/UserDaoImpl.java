@@ -73,14 +73,19 @@ public class UserDaoImpl implements UserDao {
 		try {
 			conn = DBUtil.getConnection();// Create database connection
 			// Declare operation statement,save user information into database, "?" is a placeholder
-			String sql = "insert into t_user (name,password)"
-					+ " values (?,?)";
+			String sql = "insert into t_user (name,password,sec_password,email,token,activatetime,createdate,status)"
+					+ " values (?,?,?,?,?,?,?,?)";
 			
 			psmt = conn.prepareStatement(sql);// Pre-compiled sql
 			// Set values for the placeholder 
 			psmt.setString(1, user.getName());
 			psmt.setString(2, user.getPassword());
-
+			psmt.setString(3, user.getSecPassword());
+			psmt.setString(4, user.getEmail());
+			psmt.setString(5, user.getToken());
+			psmt.setLong(6, user.getActivateTime());
+			psmt.setString(7, user.getCreateDate());
+			psmt.setInt(8, user.getStatus());
 			result = psmt.executeUpdate();// Execute the update operation,return the affected rows
 			if (result > 0) {
 				flag = true;
@@ -313,7 +318,7 @@ public class UserDaoImpl implements UserDao {
 				customer.setFax(rs.getString("fax"));
 				customer.setCode(rs.getString("code"));
 				customer.setBank(rs.getString("bank"));
-				customer.setAccount(rs.getString("account"));
+				customer.setAccout(rs.getString("account"));
 				customer.setDel(rs.getInt("del"));
 				customers.add(customer);
 			}
@@ -341,8 +346,9 @@ public class UserDaoImpl implements UserDao {
 		try {
 			// Create database connection
 			conn = DBUtil.getConnection();
+			
 			// Declare operation statement:query user information according to the user id , "?" is a placeholder
-			String sql = "select id,name,password "
+			String sql = "select * "
 					+"from t_user "
 					+"where email = ? and del = 0";
 			// pre-compiled sql
@@ -361,6 +367,10 @@ public class UserDaoImpl implements UserDao {
 				user.setSecPassword(rs.getString("sec_password"));
 				user.setEmail(rs.getString("email"));
 				user.setToken(rs.getString("token"));
+				user.setActivateTime(rs.getLong("activatetime"));
+				user.setCreateDate(rs.getString("createdate"));
+				user.setStatus(rs.getInt("status"));
+				user.setDel(rs.getInt("del"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -453,9 +463,11 @@ public class UserDaoImpl implements UserDao {
 			// Loop to get information in result set,and save in ids
 			while (rs.next()) {
 				String formal_email = rs.getString("email");
-				if(formal_email.compareTo(email) == 0){
-					flag = true;
-				};
+				if(formal_email != null){
+					if(formal_email.compareTo(email) == 0){
+						flag = true;
+						}
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

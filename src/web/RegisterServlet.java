@@ -27,9 +27,9 @@ public class RegisterServlet extends HttpServlet {
 		//Set the request's character encoding
 		request.setCharacterEncoding("UTF-8");
 		// Get registration information 
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
-		String email = request.getParameter("email");
+		String name = request.getParameter("rname");
+		String password = request.getParameter("rpassword");
+		String email = request.getParameter("rmail");
 		// Declare operation flag
 		boolean flag = false;
 		// Initialize the prompt message 
@@ -46,10 +46,24 @@ public class RegisterServlet extends HttpServlet {
 			user.setName(name);
 			user.setPassword(password);
 			user.setEmail(email);
-			boolean emailFlag = userService.isEmailExist(email);
-			user = MailUtil.activateMail(user);
-			// Call business logic layer for user registration 
-			flag = userService.register(user);
+			if(userService.isEmailExist(email)){				
+				user = userService.loadByEmail(email);
+				if(user.getStatus() == 1){
+					message = "This email has been registerd!";
+					request.setAttribute("message", message); // Save prompt message into request 
+					// Forward to the registration page
+					request.getRequestDispatcher("/login.jsp").forward(request,
+							response);
+				}
+			}
+			if(user.getCreateDate()  == ""){
+				
+				user = MailUtil.activateMail(user);
+				// Call business logic layer for user registration 
+				flag = userService.register(user);
+				}
+			else
+				user = MailUtil.activateMail(user);
 			if (flag) { // Registration Successful
 				// After registration Successful, redirect to the login page
 				response.sendRedirect("toLogin");
