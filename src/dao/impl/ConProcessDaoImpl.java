@@ -90,7 +90,7 @@ public class ConProcessDaoImpl implements ConProcessDao{
 			psmt.setInt(4, conProcess.getState());
 			psmt.setString(5, conProcess.getContent());
 		
-			int result = psmt.executeUpdate();// Execute update
+            int result = psmt.executeUpdate();// Execute update
 			
 			if(result > 0){// If the affected lines greater than 0, the operation success
 				flag = true;
@@ -201,10 +201,9 @@ public class ConProcessDaoImpl implements ConProcessDao{
 			psmt.setInt(5, conProcess.getConId());
 			psmt.setInt(6, conProcess.getType());
 			// Execute update, return the affected rows
-			int count = psmt.executeUpdate();
+			flag = psmt.execute();
 			
-			if (count > 0) {// If affected lines greater than 0, the update is successful
-				flag = true;
+			if (flag == true) {// If affected lines greater than 0, the update is successful
 				String content = "User" + conProcess.getUserId() + "update data in t_contract_process";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); // pre-compiled sql
