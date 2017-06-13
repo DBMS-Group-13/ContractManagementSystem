@@ -32,7 +32,7 @@ public class UserDeleteServlet extends HttpServlet {
 		try{
 			List<User> users = new ArrayList<User>();
 			UserService us = new UserService();
-			int userId = (int) request.getAttribute("userId");
+			int userId =  Integer.parseInt(request.getParameter("userId"));
 			if(us.deleteUser(userId)){
 				users= us.getUsers();
 				request.setAttribute("users", users);

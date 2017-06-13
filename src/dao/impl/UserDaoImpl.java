@@ -11,6 +11,7 @@ import java.util.List;
 import dao.UserDao;
 import model.User;
 import model.Customer;
+import model.Log;
 import utils.AppException;
 import utils.DBUtil;
 
@@ -684,5 +685,48 @@ public class UserDaoImpl implements UserDao {
 			DBUtil.closeConnection(conn);
 		}
 		return flag;
+	}
+	
+	//获取所有日志
+	public List<Log> getLogs() throws AppException {
+		Log log = null;
+		
+		List<Log> logs = new ArrayList<Log>();
+		
+		//Declare Connection object,PreparedStatement object and ResultSet object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			// Create database connection
+			conn = DBUtil.getConnection();
+			// Declare operation statement:query user id set,"?" is a placeholder
+			String sql = "select * from t_log";
+			
+			psmt = conn.prepareStatement(sql);
+			
+			rs = psmt.executeQuery();// Return result set
+			// Loop to get information in result set,and save in ids
+			while (rs.next()) {
+				log = new Log();
+				log.setId(rs.getInt("id"));
+				log.setUserId(rs.getInt("userId"));
+				log.setContent(rs.getString("content"));
+				log.setTime(rs.getDate("time"));
+				log.setDel(rs.getInt("del"));
+				logs.add(log);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(
+					"dao.impl.UserDaoImpl.getLogs");
+		} finally {
+			// Close database operation object, release resources
+			DBUtil.closeResultSet(rs);
+			DBUtil.closeStatement(psmt);
+			DBUtil.closeConnection(conn);
+		}
+		return logs;
 	}
 }
