@@ -347,7 +347,7 @@
 	<!-- Configure the access of toUpdateUserServlet -->
 	<servlet>
 		<servlet-name>toUpdateUser</servlet-name>
-		<servlet-class>userUpdate.jsp</servlet-class>
+		<servlet-class>web.UpdateUserServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toUpdateUser</servlet-name>

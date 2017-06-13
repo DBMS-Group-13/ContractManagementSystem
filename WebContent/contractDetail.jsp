@@ -24,29 +24,15 @@
 				<%=contract.getName()%>
 			</div>
 			<div class="info">
-				<small>Customer:</small><%=contract.getCustomer()%>
-				<small>Drafter:</small><%=contract.getDraftsman()%>
-				<small>Begin time:</small><%=contract.getBeginTime()%>
-				<small>End time:</small><%=contract.getEndTime()%>
+				<small>Customer:</small><%=contract.getCustomer()%><br/>
+				<small>Drafter:</small><%=contract.getDraftsman()%><br/>
+				<small>Begin time:</small><%=contract.getBeginTime()%><br/>
+				<small>End time:</small><%=contract.getEndTime()%><br/>
 			</div>
-			<div class="content">
+			<div>
+				<small>Content:<br/></small>
 				<%=contract.getContent()%>
 			</div>
-		</div>
-
-		<div class="pfooter">
-			<ul>
-				<li><a target="_blank" href="#">Contract Management System</a>
-				</li>
-				<li>｜</li>
-				<li><a target="_blank" href="#">Help</a></li>
-			</ul>
-
-			<p>
-				Copyright&nbsp;&copy;&nbsp;Ruanko COE&nbsp; <a
-					href="http://www.ruanko.com" title="www.ruanko.com" target="_blank"><strong>www.ruanko.com</strong>
-				</a>&nbsp;Copyright Reserved
-			</p>
 		</div>
 	</div>
 </body>

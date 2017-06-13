@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page import="model.PermissionBusiModel"%>
+<%@page import="model.User"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -24,23 +24,31 @@
 		<table>
 			<tr>
 				<th width="200px">User name</th>
-				<th width="200px">Role name</th>
-				<th width="200px">Operation</th>
+				<th width="200px">User password</th>
+				<th width="200px">User email</th>
+				<th width="200px">User MD5</th>
+				<th width="200px">User createDate</th>
+				<th width="200px">User status</th>
+				<th width="400px">Options</th>
 			</tr>
 			<%
-					List<PermissionBusiModel> permissionList = (List<PermissionBusiModel>) request
-							.getAttribute("permissionList");
-					for (PermissionBusiModel pbm : permissionList) {
+					List<User> userList = (List<User>) request
+							.getAttribute("users");
+					for (User pbm : userList) {
 				%>
 			<tr>
-				<td align="center"><%=pbm.getUserName()%></td>
-				<td align="center"><%=pbm.getRoleName()%></td>
-				<td align="center"><a
-					href="toAssignPerm?userId=<%=pbm.getUserId()%>&uName=<%=pbm.getUserName()%>&roleId=<%=pbm.getRoleId()%>">
-						<img src="images/cog_edit.png" alt="Authorize" /> Authorize </a>| 
-						<a href="toDeleteUser?userId=<%=pbm.getUserId()%>"><img alt="delete" src="images/delete.png">Del</a>
-				</td>
-			</tr>
+				<td align="center"><%=pbm.getName() %></td>
+				<td align="center"><%=pbm.getPassword()%></td>
+				<td align="center"><%=pbm.getEmail()%></td>
+				<td align="center">MD5:<%=pbm.getToken()%></td>
+				<td align="center"><%=pbm.getCreateDate()%></td>
+				<%if(pbm.getStatus()==0){%>
+					<td align="center">用户待激活</td>
+				<%}else{%>
+				    <td align="center">已经激活</td>
+				<%} %>
+				<td align="center"><a href="toDeleteUser?delUserId=<%=pbm.getId()%>"><img alt="delete" src="images/delete.png" width="15" height="15">Del</a> | <a href="userUpdate.jsp?name=<%=pbm.getName()%>&password
+				=<%=pbm.getPassword()%>&email=<%=pbm.getEmail()%>"><img alt="update" src="images/cog_edit.png" width="15" height="15">update</a>
 			<%
 					}
 				%>
@@ -51,7 +59,7 @@
 	</div>
 
 	<div align="left" class="pagelist">
-		 Total&nbsp;<strong><%=permissionList.size()%></strong>&nbsp;Users
+		 Total&nbsp;<strong><%=userList.size()%></strong>&nbsp;Users
 	</div>
 </body>
 </html>
