@@ -649,7 +649,131 @@ public class ContractService {
 	}
 	
 	/**
-	 * 通过审批员id获取所有审批同意的合同信息
+	 * 获取审批人（userId）   所有已审批的合同信息
+	 * 
+	 * @param userId User id
+	 * @return Query all contracts to be approved,otherwise return null
+	 * @throws AppException
+	 */
+	public List<ConBusiModel> getProcess_ApproveList(int userId)throws AppException{
+		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
+		ConProcess conProcess = new ConProcess();
+		// Set values to contract process object
+		conProcess.setUserId(userId);
+		// Set process's operation type to "PROCESS_CSIGN"
+		conProcess.setType(Constant.PROCESS_APPROVE);
+		// Set corresponding state of "PROCESS_CSIGN" type  is "DONE"
+		conProcess.setState(Constant.DONE);
+		
+		try {
+			/*
+			 * 1.获取特定用户所有审批同意的合同id
+			 */
+			List<Integer> conIds = conProcessDao.getConIds(conProcess);
+
+			/* 
+			 * 2.保存到conList数组
+			 */
+			for (int conId : conIds) {
+				// Get information from  specified contract
+				Contract contract = contractDao.getById(conId);
+				// Get status of designated contract
+				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				// 该合同已会签人数
+				ConProcess APPROVE_Done=new ConProcess();
+				APPROVE_Done.setConId(conId);
+				APPROVE_Done.setState(Constant.DONE);
+				APPROVE_Done.setType(Constant.PROCESS_APPROVE);
+				int totalDoneCount=conProcessDao.getTotalCount(APPROVE_Done);
+				
+				ConProcess APPROVE_UNDone=new ConProcess();
+				APPROVE_UNDone.setConId(conId);
+				APPROVE_UNDone.setState(Constant.UNDONE);
+				APPROVE_UNDone.setType(Constant.PROCESS_APPROVE);
+				
+				ConProcess APPROVE_VETOED=new ConProcess();
+				APPROVE_VETOED.setConId(conId);
+				APPROVE_VETOED.setState(Constant.VETOED);
+				APPROVE_VETOED.setType(Constant.PROCESS_APPROVE);
+				// 该合同会签人数
+				int totalCount=totalDoneCount+conProcessDao.getTotalCount(APPROVE_UNDone)+conProcessDao.getTotalCount(APPROVE_VETOED);
+				// Initialize conBusiModel
+				ConBusiModel conBusiModel = new ConBusiModel();
+				if (contract != null) {
+					// Set contract id and name into conBusiModel object
+					conBusiModel.setConId(contract.getId());
+					conBusiModel.setConName(contract.getName());
+				}
+				conBusiModel.setDONENum(totalDoneCount);
+				conBusiModel.setDistributeENum(totalCount);
+				conBusiModel.setIsRefuse(false);
+				if (conState != null) {
+					// Set Drafting time into conBusiModel object
+					conBusiModel.setDrafTime(conState.getTime()); 
+				}
+				conList.add(conBusiModel);
+			}
+			
+			
+			
+			/*
+			 * 1.获取特定用户所有审批否定的合同id
+			 */
+			conProcess.setState(Constant.VETOED);
+			conIds = conProcessDao.getConIds(conProcess);
+
+			/* 
+			 * 2.保存到conList数组
+			 */
+			for (int conId : conIds) {
+				// Get information from  specified contract
+				Contract contract = contractDao.getById(conId);
+				// Get status of designated contract
+				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				// 该合同已会签人数
+				ConProcess APPROVE_Done=new ConProcess();
+				APPROVE_Done.setConId(conId);
+				APPROVE_Done.setState(Constant.DONE);
+				APPROVE_Done.setType(Constant.PROCESS_APPROVE);
+				int totalDoneCount=conProcessDao.getTotalCount(APPROVE_Done);
+				
+				ConProcess APPROVE_UNDone=new ConProcess();
+				APPROVE_UNDone.setConId(conId);
+				APPROVE_UNDone.setState(Constant.UNDONE);
+				APPROVE_UNDone.setType(Constant.PROCESS_APPROVE);
+				
+				ConProcess APPROVE_VETOED=new ConProcess();
+				APPROVE_VETOED.setConId(conId);
+				APPROVE_VETOED.setState(Constant.VETOED);
+				APPROVE_VETOED.setType(Constant.PROCESS_APPROVE);
+				// 该合同会签人数
+				int totalCount=totalDoneCount+conProcessDao.getTotalCount(APPROVE_UNDone)+conProcessDao.getTotalCount(APPROVE_VETOED);
+				// Initialize conBusiModel
+				ConBusiModel conBusiModel = new ConBusiModel();
+				if (contract != null) {
+					// Set contract id and name into conBusiModel object
+					conBusiModel.setConId(contract.getId());
+					conBusiModel.setConName(contract.getName());
+				}
+				conBusiModel.setDONENum(totalDoneCount);
+				conBusiModel.setDistributeENum(totalCount);
+				conBusiModel.setIsRefuse(true);
+				if (conState != null) {
+					// Set Drafting time into conBusiModel object
+					conBusiModel.setDrafTime(conState.getTime()); 
+				}
+				conList.add(conBusiModel);
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("service.ContractService.getProcess_ApproveList");
+		}
+		// Return the set of storage contract business entities
+		return conList;
+	}
+	
+	/**
+	 * 通过审批员id获取所有审批通过的合同信息
 	 * 
 	 * @param userId User id
 	 * @return Query all countersigned contracts 
@@ -1128,7 +1252,13 @@ public class ContractService {
 	public List<ConBusiModel> getContract_StateList(int userId)throws AppException
 	{
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();  //要返回的合同简略信息列表
-		List<Integer> drafConIds = contractDao.getIdsByUserId(userId);
+		List<Integer> drafConIds;
+		if(userId!=-1)
+			drafConIds= contractDao.getIdsByUserId(userId);
+		else {
+			//获取所有合同id
+			drafConIds= new ArrayList<Integer>();
+		}
 		
 		try {
 			for (int conId : drafConIds) {
@@ -1162,7 +1292,7 @@ public class ContractService {
 				}
 				
 				//根据状态获取完成人数比例
-				if(state==Constant.STATE_APPROVED)
+				if(state==Constant.STATE_APPROVED||state==Constant.STATE_SIGNED)
 				{
 					ConProcess SIGN_Done=new ConProcess();
 					SIGN_Done.setConId(conId);

@@ -15,3 +15,4 @@ Group13-Project
 2017/6/12 17:57 Update servlet -GARCIIAa
 2017/6/12 22:37 Change user and contractservice -S Sword
 2017/6/13 10:36 Change ConBusiModel and contractservice -S Sword
+2017/6/13 12:24 Add ConDistribute and Change contractService -S Sword
