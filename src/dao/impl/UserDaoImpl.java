@@ -10,6 +10,7 @@ import java.util.List;
 
 import dao.UserDao;
 import model.User;
+import model.Customer;
 import utils.AppException;
 import utils.DBUtil;
 
@@ -280,6 +281,54 @@ public class UserDaoImpl implements UserDao {
 		}
 		return users;
 	}
+	
+	//获取所有用户信息，返回User类型List
+	public List<Customer> getCustomers() throws AppException {
+		Customer customer = null;
+		
+		List<Customer> customers = new ArrayList<Customer>();
+		
+		//Declare Connection object,PreparedStatement object and ResultSet object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			// Create database connection
+			conn = DBUtil.getConnection();
+			// Declare operation statement:query user id set,"?" is a placeholder
+			String sql = "select * from t_customer";
+			
+			psmt = conn.prepareStatement(sql);
+			
+			rs = psmt.executeQuery();// Return result set
+			// Loop to get information in result set,and save in ids
+			while (rs.next()) {
+				customer = new Customer();
+				customer.setId(rs.getInt("id"));
+				customer.setNum(rs.getString("num"));
+				customer.setName(rs.getString("name"));
+				customer.setAddress(rs.getString("address"));
+				customer.setTel(rs.getString("tel"));
+				customer.setFax(rs.getString("fax"));
+				customer.setCode(rs.getString("code"));
+				customer.setBank(rs.getString("bank"));
+				customer.setAccount(rs.getString("account"));
+				customer.setDel(rs.getInt("del"));
+				customers.add(customer);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(
+					"dao.impl.UserDaoImpl.getIds");
+		} finally {
+			// Close database operation object, release resources
+			DBUtil.closeResultSet(rs);
+			DBUtil.closeStatement(psmt);
+			DBUtil.closeConnection(conn);
+		}
+		return customers;
+	}
 
 	//根据邮箱地址，返回用户信息
 	public User getByEmail(String email) throws AppException {
@@ -345,18 +394,19 @@ public class UserDaoImpl implements UserDao {
 			// Create database connection
 			conn = DBUtil.getConnection();
 			// Declare operation statement:query user information according to the user id , "?" is a placeholder
-			String sql = "update t_user set id = ?,name = ?,password = ?,sec_password = ?"
-					+ "email = ?,token = ?";
+			String sql = "update t_user set name = ?,password = ?,sec_password = ?"
+					+ "email = ?,token = ? ,del = ? "
+					+ "where id = ?";
 			// pre-compiled sql
 			psmt = conn.prepareStatement(sql);
 			// Set values for the placeholder
-			psmt.setInt(1, id);
-			psmt.setString(2, name);
-			psmt.setString(3, password);
-			psmt.setString(4, sec_password);
-			psmt.setString(5, email);
-			psmt.setString(6, token);
-			psmt.setInt(7, del);
+			psmt.setString(1, name);
+			psmt.setString(2, password);
+			psmt.setString(3, sec_password);
+			psmt.setString(4, email);
+			psmt.setString(5, token);
+			psmt.setInt(6, del);
+			psmt.setInt(7, id);
 			// Query resultSet
 			rs = psmt.executeQuery();
 			
@@ -372,6 +422,40 @@ public class UserDaoImpl implements UserDao {
 				String date = sDateFormat.format(new java.util.Date());  
 				psmt.setString(2, date);
 				psmt.setString(3, content);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.UserDaoImpl.getById");
+		} finally {
+			// Close database object operation, release resources
+			DBUtil.closeResultSet(rs);
+			DBUtil.closeStatement(psmt);
+			DBUtil.closeConnection(conn);
+		}
+		return flag;
+	}
+	
+	//给定email，判断是否有重复
+	public boolean JudgeEmail(String email) throws AppException {
+		boolean flag = false;// Operation flag
+		//Declare database connection object, pre-compiled object and result set object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			// Create database connection
+			conn = DBUtil.getConnection();
+            String sql = "select email from t_user";
+			
+			psmt = conn.prepareStatement(sql);
+			
+			rs = psmt.executeQuery();// Return result set
+			// Loop to get information in result set,and save in ids
+			while (rs.next()) {
+				String formal_email = rs.getString("email");
+				if(formal_email.compareTo(email) == 0){
+					flag = true;
+				};
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

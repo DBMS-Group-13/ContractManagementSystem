@@ -45,4 +45,10 @@ public interface ContractDao {
 	 * @throws AppException
 	 */
 	public boolean updateById(Contract contract) throws AppException;
+	
+	//获取所有合同id
+	public List<Integer> getIds() throws AppException;
+	
+	//将合同ID对应的所有Del属性设为1
+	public boolean setDel(int con_id) throws AppException;
 }

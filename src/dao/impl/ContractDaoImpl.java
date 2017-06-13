@@ -247,7 +247,7 @@ public class ContractDaoImpl implements ContractDao {
 	}
 	
 	//获取所有合同id
-	public List<Integer> getId() throws AppException {
+	public List<Integer> getIds() throws AppException {
 		
 		// Declare database connection object, pre-compiled object and result set object
 		Connection conn = null;

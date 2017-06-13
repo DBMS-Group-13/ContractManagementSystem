@@ -100,11 +100,11 @@ public class Customer {
 		this.bank = bank;
 	}
 
-	public String getAccout() {
+	public String getAccount() {
 		return accout;
 	}
 
-	public void setAccout(String accout) {
+	public void setAccount(String accout) {
 		this.accout = accout;
 	}
 
