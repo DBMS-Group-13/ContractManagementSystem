@@ -265,7 +265,7 @@ public class UserDaoImpl implements UserDao {
 			// Create database connection
 			conn = DBUtil.getConnection();
 			// Declare operation statement:query user id set,"?" is a placeholder
-			String sql = "select * from t_user";
+			String sql = "select * from t_user where del = 0";
 			
 			psmt = conn.prepareStatement(sql);
 			
@@ -313,7 +313,7 @@ public class UserDaoImpl implements UserDao {
 			// Create database connection
 			conn = DBUtil.getConnection();
 			// Declare operation statement:query user id set,"?" is a placeholder
-			String sql = "select * from t_customer";
+			String sql = "select * from t_customer where del = 0";
 			
 			psmt = conn.prepareStatement(sql);
 			
@@ -655,7 +655,7 @@ public class UserDaoImpl implements UserDao {
 			// Create database connection
 			conn = DBUtil.getConnection();
 			// Declare sql:update contract information according to contract id
-			String sql = "update t_customer set del = 1"
+			String sql = "update t_customer set del = 1 "
 					+ "where id = ?";
 			// Pre-compiled sql, and set the parameter values
 			psmt = conn.prepareStatement(sql);
@@ -700,7 +700,7 @@ public class UserDaoImpl implements UserDao {
 			// Create database connection
 			conn = DBUtil.getConnection();
 			// Declare operation statement:query user id set,"?" is a placeholder
-			String sql = "select * from t_log";
+			String sql = "select * from t_log where del = 0";
 			
 			psmt = conn.prepareStatement(sql);
 			
