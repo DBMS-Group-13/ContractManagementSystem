@@ -189,6 +189,13 @@ public class UserDaoImpl implements UserDao {
 				user.setId(rs.getInt("id"));
 				user.setName(rs.getString("name"));
 				user.setPassword(rs.getString("password"));
+				user.setSecPassword(rs.getString("sec_password"));
+				user.setEmail(rs.getString("email"));
+				user.setToken(rs.getString("token"));
+				user.setActivateTime(rs.getLong("activateTime"));
+				user.setCreateDate(rs.getString("createdate"));
+				user.setStatus(rs.getInt("status"));
+				user.setDel(rs.getInt("del"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -272,6 +279,10 @@ public class UserDaoImpl implements UserDao {
 				user.setSecPassword(rs.getString("sec_password"));
 				user.setEmail(rs.getString("email"));
 				user.setToken(rs.getString("token"));
+				user.setActivateTime(rs.getLong("activateTime"));
+				user.setCreateDate(rs.getString("createdate"));
+				user.setStatus(rs.getInt("status"));
+				user.setDel(rs.getInt("del"));
 				users.add(user);
 			}
 		} catch (SQLException e) {
@@ -393,30 +404,25 @@ public class UserDaoImpl implements UserDao {
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
-			int id = user.getId();
-			String name = user.getName();
-			String password = user.getPassword();
-			String sec_password = user.getSecPassword();
-			String email = user.getEmail();
-			String token = user.getToken();
-			int del = user.getDel();
-			
 			// Create database connection
 			conn = DBUtil.getConnection();
 			// Declare operation statement:query user information according to the user id , "?" is a placeholder
 			String sql = "update t_user set name = ?,password = ?,sec_password = ?"
-					+ "email = ?,token = ? ,del = ? "
+					+ "email = ?,token = ? ,activateTime = ?,createdate = ?,status = ?,del = ? "
 					+ "where id = ?";
 			// pre-compiled sql
 			psmt = conn.prepareStatement(sql);
 			// Set values for the placeholder
-			psmt.setString(1, name);
-			psmt.setString(2, password);
-			psmt.setString(3, sec_password);
-			psmt.setString(4, email);
-			psmt.setString(5, token);
-			psmt.setInt(6, del);
-			psmt.setInt(7, id);
+			psmt.setString(1, user.getName());
+			psmt.setString(2, user.getPassword());
+			psmt.setString(3, user.getSecPassword());
+			psmt.setString(4, user.getEmail());
+			psmt.setString(5, user.getToken());
+			psmt.setLong(6, user.getActivateTime());
+			psmt.setString(7, user.getCreateDate());
+			psmt.setInt(8, user.getStatus());
+			psmt.setInt(9, user.getDel());
+			psmt.setInt(10, user.getId());
 			// Query resultSet
 			rs = psmt.executeQuery();
 			
