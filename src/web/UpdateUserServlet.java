@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import model.User;
 import service.UserService;
 import utils.AppException;
@@ -15,7 +16,7 @@ import utils.AppException;
 /**
  * Login Servlet
  */
-public class ToUserManagementServlet extends HttpServlet {
+public class UpdateUserServlet extends HttpServlet {
 
 	/**
 	 *  Process the POST login request
@@ -24,17 +25,30 @@ public class ToUserManagementServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// Set request's character encoding
 		request.setCharacterEncoding("UTF-8");
-		
+		String message = null;
 		/*
 		 *  Call methods in business logic layer to process business logic 
 		 */
 		try{
-			UserService us = new UserService();
 			List<User> users = new ArrayList<User>();
+			UserService us = new UserService();
+			String beforeEmail = (String) request.getAttribute("beforeEmail");
+			String afterEmail = (String) request.getAttribute("afterEmail");
+			String name = (String) request.getAttribute("name");
+			String password = (String) request.getAttribute("password");
+			User user = new User();
+			user = us.loadByEmail(beforeEmail);
+			user.setName(name);
+			user.setPassword(password);
+			user.setEmail(afterEmail);
+			us.updateUser(user);
 			users= us.getUsers();
 			request.setAttribute("users", users);
+			message = "Update successfully";
+			request.setAttribute("message", message);
 			request.getRequestDispatcher("/userManagement.jsp").forward(request,
-						response);
+						response);			
+			
 		// Save prompt message into request
 		// Save user name into request	
 		// Forward to login page

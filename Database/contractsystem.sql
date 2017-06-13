@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `contractsystem` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `contractsystem`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: contractsystem
 -- ------------------------------------------------------
--- Server version	5.6.36-log
+-- Server version	5.7.14-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -297,9 +297,12 @@ CREATE TABLE `t_user` (
   `sec_password` varchar(20) DEFAULT NULL,
   `email` varchar(200) DEFAULT NULL,
   `token` varchar(50) DEFAULT NULL,
+  `activatetime` bigint(10) DEFAULT '0',
+  `createdate` varchar(50) DEFAULT NULL,
+  `status` int(11) DEFAULT '0',
   `del` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -308,9 +311,17 @@ CREATE TABLE `t_user` (
 
 LOCK TABLES `t_user` WRITE;
 /*!40000 ALTER TABLE `t_user` DISABLE KEYS */;
-INSERT INTO `t_user` VALUES (1,'admin','123456','123456',NULL,NULL,0),(2,'tom','123456','123456',NULL,NULL,0),(3,'lucy','123456','123456',NULL,NULL,0),(4,'lily','123456','123456',NULL,NULL,0),(5,'jack','123456','123456',NULL,NULL,0),(6,'sanri','123456','123456',NULL,NULL,0),(7,'y','1',NULL,NULL,NULL,0);
+INSERT INTO `t_user` VALUES (1,'admin','123456','123456',NULL,NULL,0,NULL,0,0),(2,'tom','123456','123456',NULL,NULL,0,NULL,0,0),(3,'lucy','123456','123456',NULL,NULL,0,NULL,0,0),(4,'lily','123456','123456',NULL,NULL,0,NULL,0,0),(5,'jack','123456','123456',NULL,NULL,0,NULL,0,0),(6,'sanri','123456','123456',NULL,NULL,0,NULL,0,0),(7,'y','1',NULL,NULL,NULL,0,NULL,0,0),(8,'You','123456','','garciiaa@163.com','86eb18a9fcdf5f721549e8de813329bf',1497434538767,'Tue Jun 13 18:02:18 CST 2017',0,0);
 /*!40000 ALTER TABLE `t_user` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'contractsystem'
+--
+
+--
+-- Dumping routines for database 'contractsystem'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -321,4 +332,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-13 12:23:06
+-- Dump completed on 2017-06-13 21:47:59
