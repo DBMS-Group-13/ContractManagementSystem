@@ -546,10 +546,10 @@ public class UserDaoImpl implements UserDao {
 			// Create database connection
 			conn = DBUtil.getConnection();
 			// Declare sql:update contract information according to contract id
-			String sql = "update t_user set del = 1"
-					+ "where id = ?";
+			String sql = "update t_user set del = 1 where id = ?";
 			// Pre-compiled sql, and set the parameter values
 			psmt = conn.prepareStatement(sql);
+			//System.out.println(user_id);
 			psmt.setInt(1, user_id);
 
 			// Execute update,return affected rows
