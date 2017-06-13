@@ -98,6 +98,7 @@ public class UserDaoImpl implements UserDao {
 				psmt.setInt(1, user.getId());
 				psmt.setString(2, date);
 				psmt.setString(3, content);
+				psmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -436,6 +437,7 @@ public class UserDaoImpl implements UserDao {
 				String date = sDateFormat.format(new java.util.Date());  
 				psmt.setString(2, date);
 				psmt.setString(3, content);
+				psmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -521,6 +523,7 @@ public class UserDaoImpl implements UserDao {
 				// Set values for the placeholder
 				psmt.setString(2, date);
 				psmt.setString(3, content);
+				psmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -561,6 +564,7 @@ public class UserDaoImpl implements UserDao {
 				psmt.setInt(1, user_id);
 				psmt.setString(2, date);
 				psmt.setString(3, content);
+				psmt.executeUpdate();
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -626,6 +630,7 @@ public class UserDaoImpl implements UserDao {
 				String date = sDateFormat.format(new java.util.Date());  
 				psmt.setString(1, date);
 				psmt.setString(2, content);
+				psmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -667,6 +672,7 @@ public class UserDaoImpl implements UserDao {
 				String date = sDateFormat.format(new java.util.Date());  
 				psmt.setString(1, date);
 				psmt.setString(2, content);
+				psmt.executeUpdate();
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();

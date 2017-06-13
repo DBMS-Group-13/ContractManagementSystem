@@ -71,6 +71,7 @@ public class ContractDaoImpl implements ContractDao {
 				String date = sDateFormat.format(new java.util.Date());  
 				psmt.setString(2, date);
 				psmt.setString(3, content);
+				psmt.executeUpdate();
 			}
 			
 		} catch (SQLException e) {
@@ -233,6 +234,7 @@ public class ContractDaoImpl implements ContractDao {
 				psmt.setInt(1, contract.getUserId());
 				psmt.setString(2, date);
 				psmt.setString(3, content);
+				psmt.executeUpdate();
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -331,6 +333,7 @@ public class ContractDaoImpl implements ContractDao {
 				String date = sDateFormat.format(new java.util.Date());  
 				psmt.setString(1, date);
 				psmt.setString(2, content);
+				psmt.executeUpdate();
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
