@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import model.Customer;
 import model.User;
 import utils.AppException;
 
@@ -55,13 +56,28 @@ public interface UserDao {
 	
 	//获取所有用户信息，返回User类型List
 	public List<User> getUsers() throws AppException;
+	
+	//获取所有用户信息，返回User类型List
+	public List<Customer> getCustomers() throws AppException;
 		
 	//根据邮箱地址，返回用户信息
 	public User getByEmail(String email) throws AppException;
 	
-	//给定User，更新用户信息
+	//修改用户信息
 	public boolean UpdateUser(User user) throws AppException;
 	
 	//给定email，判断是否有重复
 	public boolean JudgeEmail(String email) throws AppException;
+	
+	//添加客户
+	public boolean addCustomer(Customer customer) throws AppException;
+	
+	//禁用账号，Del属性设为1
+	public boolean setUserDel(int user_id) throws AppException;
+	
+	//修改客户信息
+	public boolean UpdateCustomer(Customer customer) throws AppException;
+	
+	//删除顾客，Del属性设为1
+	public boolean setCustomerDel(int id) throws AppException;
 }

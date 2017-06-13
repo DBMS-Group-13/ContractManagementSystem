@@ -89,7 +89,7 @@ public class UserDaoImpl implements UserDao {
 			result = psmt.executeUpdate();// Execute the update operation,return the affected rows
 			if (result > 0) {
 				flag = true;
-				String content = "User" + user.getId() + "insert data into t_contract";
+				String content = "User" + user.getId() + "insert data into t_user";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); // pre-compiled sql
 				
@@ -318,7 +318,7 @@ public class UserDaoImpl implements UserDao {
 				customer.setFax(rs.getString("fax"));
 				customer.setCode(rs.getString("code"));
 				customer.setBank(rs.getString("bank"));
-				customer.setAccout(rs.getString("account"));
+				customer.setAccount(rs.getString("account"));
 				customer.setDel(rs.getInt("del"));
 				customers.add(customer);
 			}
@@ -384,7 +384,7 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 	
-	//给定User，更新用户信息
+	//修改用户信息
 	@SuppressWarnings("resource")
 	public boolean UpdateUser(User user) throws AppException {
 		boolean flag = false;// Operation flag
@@ -475,6 +475,205 @@ public class UserDaoImpl implements UserDao {
 		} finally {
 			// Close database object operation, release resources
 			DBUtil.closeResultSet(rs);
+			DBUtil.closeStatement(psmt);
+			DBUtil.closeConnection(conn);
+		}
+		return flag;
+	}
+	
+	//添加客户
+	@SuppressWarnings("resource")
+	public boolean addCustomer(Customer customer) throws AppException {
+		Connection conn = null; // Define database connection object
+		PreparedStatement psmt = null;// Define PreparedStatement object
+		
+		boolean flag = false;// Operation flag
+		int result = -1;
+		try {
+			conn = DBUtil.getConnection();// Create database connection
+			// Declare operation statement,save user information into database, "?" is a placeholder
+			String sql = "insert into t_customer (id,num,name,address,tel,fax,code,bank,account,del)"
+					+ " values (?,?,?,?,?,?,?,?,?,?)";
+			
+			psmt = conn.prepareStatement(sql);// Pre-compiled sql
+			// Set values for the placeholder 
+			psmt.setInt(1, customer.getId());
+			psmt.setString(2, customer.getNum());
+			psmt.setString(3, customer.getName());
+			psmt.setString(4, customer.getAddress());
+			psmt.setString(5, customer.getTel());
+			psmt.setString(6, customer.getFax());
+			psmt.setString(7, customer.getCode());
+			psmt.setString(8, customer.getBank());
+			psmt.setString(9, customer.getAccount());
+			psmt.setInt(10, customer.getDel());
+			result = psmt.executeUpdate();// Execute the update operation,return the affected rows
+			if (result > 0) {
+				flag = true;
+				String content = "User insert data into t_customer";
+				String sql2 = "insert into t_log(user_id,time,content)values(?,?)";
+				psmt = conn.prepareStatement(sql2); // pre-compiled sql
+				
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				// Set values for the placeholder
+				psmt.setString(2, date);
+				psmt.setString(3, content);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.UserDaoImpl.add");
+		} finally {
+			DBUtil.closeStatement(psmt);//  Close database object pretreatment
+			DBUtil.closeConnection(conn);// Close database connection object
+		}
+		return flag;
+	}
+	
+	//禁用账号，Del属性设为1
+	@SuppressWarnings("resource")
+	public boolean setUserDel(int user_id) throws AppException {
+		boolean flag = false;// Operation flag
+		// Declare database connection object, pre-compiled object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			// Create database connection
+			conn = DBUtil.getConnection();
+			// Declare sql:update contract information according to contract id
+			String sql = "update t_user set del = 1"
+					+ "where id = ?";
+			// Pre-compiled sql, and set the parameter values
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, user_id);
+
+			// Execute update,return affected rows
+			int count = psmt.executeUpdate();
+			
+			if (count > 0) {// If affected lines greater than 0, so update success
+				flag = true;
+				String content = "User" + user_id + " update data in t_user";
+				String sql5 = "insert into t_log(time,content)values(?,?,?)";
+				psmt = conn.prepareStatement(sql5); // pre-compiled sql
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				psmt.setInt(1, user_id);
+				psmt.setString(2, date);
+				psmt.setString(3, content);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.ContractDaoImpl.updateById");
+		} finally {
+			// Close database operation object
+			DBUtil.closeStatement(psmt);
+			DBUtil.closeConnection(conn);
+		}
+		return flag;
+	}
+	
+	//修改客户信息
+	@SuppressWarnings("resource")
+	public boolean UpdateCustomer(Customer customer) throws AppException {
+		boolean flag = false;// Operation flag
+		//Declare database connection object, pre-compiled object and result set object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			int id = customer.getId();
+			String num = customer.getNum();
+			String name = customer.getName();
+			String address = customer.getAddress();
+			String tel = customer.getTel();
+			String fax = customer.getFax();
+			String code = customer.getCode();
+			String bank = customer.getBank();
+			String account = customer.getAccount();
+			int del = customer.getDel();
+			
+			// Create database connection
+			conn = DBUtil.getConnection();
+			// Declare operation statement:query user information according to the user id , "?" is a placeholder
+			String sql = "update t_customer set num = ?, name = ?,"
+					+ "address = ?,tel = ?,fax = ?,code = ?,"
+					+ "bank = ?,account = ?,del = ? "
+					+ "where id = ?";
+			// pre-compiled sql
+			psmt = conn.prepareStatement(sql);
+			// Set values for the placeholder
+			psmt.setString(1, num);
+			psmt.setString(2, name);
+			psmt.setString(3, address);
+			psmt.setString(4, tel);
+			psmt.setString(5, fax);
+			psmt.setString(5, code);
+			psmt.setString(5, bank);
+			psmt.setString(5, account);
+			psmt.setInt(6, del);
+			psmt.setInt(7, id);
+			// Query resultSet
+			rs = psmt.executeQuery();
+			
+			// Save user information in Pole entity object when queried out resultSet
+			if (rs.next()) {
+				flag = true;
+				String content = "User update data in t_customer";
+				String sql2 = "insert into t_log(user_id,time,content)values(?,?)";
+				psmt = conn.prepareStatement(sql2); // pre-compiled sql
+				// Set values for the placeholder
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				psmt.setString(1, date);
+				psmt.setString(2, content);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.UserDaoImpl.getById");
+		} finally {
+			// Close database object operation, release resources
+			DBUtil.closeResultSet(rs);
+			DBUtil.closeStatement(psmt);
+			DBUtil.closeConnection(conn);
+		}
+		return flag;
+	}
+	
+	//删除顾客，Del属性设为1
+	@SuppressWarnings("resource")
+	public boolean setCustomerDel(int id) throws AppException {
+		boolean flag = false;// Operation flag
+		// Declare database connection object, pre-compiled object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			// Create database connection
+			conn = DBUtil.getConnection();
+			// Declare sql:update contract information according to contract id
+			String sql = "update t_customer set del = 1"
+					+ "where id = ?";
+			// Pre-compiled sql, and set the parameter values
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, id);
+
+			// Execute update,return affected rows
+			int count = psmt.executeUpdate();
+			
+			if (count > 0) {// If affected lines greater than 0, so update success
+				flag = true;
+				String content = "User  update data in t_customer";
+				String sql5 = "insert into t_log(time,content)values(?,?)";
+				psmt = conn.prepareStatement(sql5); // pre-compiled sql
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				psmt.setString(1, date);
+				psmt.setString(2, content);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.ContractDaoImpl.updateById");
+		} finally {
+			// Close database operation object
 			DBUtil.closeStatement(psmt);
 			DBUtil.closeConnection(conn);
 		}
