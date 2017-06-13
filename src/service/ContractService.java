@@ -21,6 +21,7 @@ import model.ConDistribute;
 import model.ConProcess;
 import model.ConState;
 import model.Contract;
+import model.Customer;
 import model.User;
 import utils.AppException;
 import utils.Constant;
@@ -187,6 +188,13 @@ public class ContractService {
 		return flag;
 	}
 	
+	/**
+	 * 通过会签人id获取所有未会签的合同信息
+	 * 
+	 * @param userId User id
+	 * @return Query all countersigned contracts 
+	 * @throws AppException
+	 */
 	public List<ConBusiModel> getDhqhtList(int userId) throws AppException {
 		// Initialize  conList
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
@@ -233,7 +241,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * 获取已分配的分配信息
+	 * 管理员获取分配信息
 	 * 
 	 * @param userId User id
 	 * @return Query all contracts that to be countersigned
@@ -472,6 +480,27 @@ public class ContractService {
 					"service.ContractService.getContractDetail");
 		}
 		return conDetailBusiModel;
+	}
+	
+	/**
+	 * 获取所有合同细节
+	 * 
+	 * @param id Contract id
+	 * @return Contract details business entity
+	 * @throws AppException
+	 */
+	public List<ConDetailBusiModel> getContractDetailList() throws AppException {
+		// Declare conDetailBusiModel
+		List<ConDetailBusiModel> conList=new ArrayList<ConDetailBusiModel>();
+		
+		List<Integer> conIds=contractDao.getIds();
+		
+		for(int id:conIds)
+		{
+			conList.add(getContractDetail(id));
+		}
+		
+		return conList;
 	}
 	
 	/**
@@ -1328,7 +1357,7 @@ public class ContractService {
 	}
 	
 	/**
-	 * 通过起草员id 获取所有合同的状态信息
+	 * 通过起草员id(如果id==-1，则为管理员，获取所以合同的状态信息) 获取该用户起草的所有合同的状态信息
 	 * 
 	 * @param userId User id
 	 * @return Query all countersigned contracts 
@@ -1464,6 +1493,45 @@ public class ContractService {
 		}
 		// Return the set of storage contract business entities
 		return conList;
+	}
+	
+	public List<ConBusiModel> SearchConBusiModel(List<ConBusiModel> list,String conName)
+	{
+		List<ConBusiModel> CBMList=new ArrayList<ConBusiModel>();
+		for(ConBusiModel conBusiModel:list)
+		{
+			if(conBusiModel.getConName().equals(conName))
+			{
+				CBMList.add(conBusiModel);
+			}
+		}
+		return CBMList;
+	}
+	
+	public List<User> SearchUser(List<User> list,String userName)
+	{
+		List<User> userList=new ArrayList<User>();
+		for(User user:list)
+		{
+			if(user.getName().equals(userName))
+			{
+				userList.add(user);
+			}
+		}
+		return userList;
+	}
+	
+	public List<Customer> SearchCustomer(List<Customer> list,String userName)
+	{
+		List<Customer> customerList=new ArrayList<Customer>();
+		for(Customer customer:list)
+		{
+			if(customer.getName().equals(userName))
+			{
+				customerList.add(customer);
+			}
+		}
+		return customerList;
 	}
 	
 	/**
