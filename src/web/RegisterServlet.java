@@ -46,6 +46,7 @@ public class RegisterServlet extends HttpServlet {
 			user.setName(name);
 			user.setPassword(password);
 			user.setEmail(email);
+			boolean emailFlag = userService.isEmailExist(email);
 			user = MailUtil.activateMail(user);
 			// Call business logic layer for user registration 
 			flag = userService.register(user);
