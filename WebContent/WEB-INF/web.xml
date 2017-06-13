@@ -376,6 +376,20 @@
 	<servlet-mapping>
 		<servlet-name>toCountersigned</servlet-name>
 		<url-pattern>/toCountersigned</url-pattern>
+	</servlet-mapping><!--Configure the access of ToApprovedServlet--><servlet>
+		<servlet-name>toApproved</servlet-name>
+		<servlet-class>web.ToApprovedServlet</servlet-class>
+</servlet>
+	<servlet-mapping>
+		<servlet-name>toApproved</servlet-name>
+		<url-pattern>/toApproved</url-pattern>
+	</servlet-mapping><!--Configure the access of ToSignedServlet--><servlet>
+		<servlet-name>toSigned</servlet-name>
+		<servlet-class>web.ToSignedServlet</servlet-class>
+</servlet>
+	<servlet-mapping>
+		<servlet-name>toSigned</servlet-name>
+		<url-pattern>/toSigned</url-pattern>
 	</servlet-mapping><!--Welcom Page -->
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
