@@ -63,7 +63,7 @@ public class ContractDaoImpl implements ContractDao {
 				contract.setId(rs.getInt(1));// Get primary key's value,and set it into contract object
 				flag = true; // If affected lines greater than 0, so operation success
 				String content = "User" + contract.getUserId() + "insert data into t_contract";
-				String sql2 = "insert into t_log(con_id,time,content)values(?,?,?)";
+				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); // pre-compiled sql
 				// Set values for the placeholder
 				psmt.setInt(1, contract.getUserId());
@@ -225,7 +225,7 @@ public class ContractDaoImpl implements ContractDao {
 			if (count > 0) {// If affected lines greater than 0, so update success
 				flag = true;
 				String content = "User" + contract.getUserId() + "update data in t_contract";
-				String sql2 = "insert into t_log(con_id,time,content)values(?,?,?)";
+				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); // pre-compiled sql
 				
 				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
@@ -246,6 +246,7 @@ public class ContractDaoImpl implements ContractDao {
 		return flag;
 	}
 	
+	//获取所有合同id
 	public List<Integer> getId() throws AppException {
 		
 		// Declare database connection object, pre-compiled object and result set object
@@ -282,5 +283,65 @@ public class ContractDaoImpl implements ContractDao {
 			DBUtil.closeConnection(conn);
 		}
 		return List;
+	}
+	
+	//将合同ID对应的所有Del属性设为1
+	@SuppressWarnings("resource")
+	public boolean setDel(int con_id) throws AppException {
+		boolean flag = false;// Operation flag
+		// Declare database connection object, pre-compiled object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			// Create database connection
+			conn = DBUtil.getConnection();
+			// Declare sql:update contract information according to contract id
+			String sql = "update t_contract set del = 1"
+					+ "where con_id = ?";
+			// Pre-compiled sql, and set the parameter values
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, con_id);
+			
+			String sql2 = "update t_contract_attachment set del = 1"
+					+ "where con_id = ?";
+			// Pre-compiled sql, and set the parameter values
+			psmt = conn.prepareStatement(sql2);
+			psmt.setInt(1, con_id);
+			
+			String sql3 = "update t_contract_process set del = 1"
+					+ "where con_id = ?";
+			// Pre-compiled sql, and set the parameter values
+			psmt = conn.prepareStatement(sql3);
+			psmt.setInt(1, con_id);
+			
+			String sql4 = "update t_contract_state set del = 1"
+					+ "where con_id = ?";
+			// Pre-compiled sql, and set the parameter values
+			psmt = conn.prepareStatement(sql4);
+			psmt.setInt(1, con_id);
+
+			// Execute update,return affected rows
+			int count = psmt.executeUpdate();
+			
+			if (count > 0) {// If affected lines greater than 0, so update success
+				flag = true;
+				String content = "User update data in t_contract,t_contract_attachment,"
+						+ "t_contract_process,t_contract_state";
+				String sql5 = "insert into t_log(time,content)values(?,?)";
+				psmt = conn.prepareStatement(sql5); // pre-compiled sql
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				psmt.setString(1, date);
+				psmt.setString(2, content);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.ContractDaoImpl.updateById");
+		} finally {
+			// Close database operation object
+			DBUtil.closeStatement(psmt);
+			DBUtil.closeConnection(conn);
+		}
+		return flag;
 	}
 }

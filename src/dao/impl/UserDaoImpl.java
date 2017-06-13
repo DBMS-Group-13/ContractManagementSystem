@@ -84,7 +84,7 @@ public class UserDaoImpl implements UserDao {
 			if (result > 0) {
 				flag = true;
 				String content = "User" + user.getId() + "insert data into t_contract";
-				String sql2 = "insert into t_log(con_id,time,content)values(?,?,?)";
+				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); // pre-compiled sql
 				
 				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
@@ -237,6 +237,7 @@ public class UserDaoImpl implements UserDao {
 		return ids;
 	}
 	
+	//获取所有用户信息，返回User类型List
 	public List<User> getUsers() throws AppException {
 		User user = null;
 		
@@ -280,6 +281,7 @@ public class UserDaoImpl implements UserDao {
 		return users;
 	}
 
+	//根据邮箱地址，返回用户信息
 	public User getByEmail(String email) throws AppException {
 		// Declare user object
 		User user = null;
@@ -323,6 +325,7 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 	
+	//给定User，更新用户信息
 	@SuppressWarnings("resource")
 	public boolean UpdateUser(User user) throws AppException {
 		boolean flag = false;// Operation flag

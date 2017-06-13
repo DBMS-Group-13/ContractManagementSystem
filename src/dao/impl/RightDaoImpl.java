@@ -181,7 +181,7 @@ public class RightDaoImpl implements RightDao {
 			if (count > 0) {// If affected lines greater than 0, the update is successful
 				flag = true;
 				String content = "User" + right.getUserId() + "update data in t_contract";
-				String sql2 = "insert into t_log(con_id,time,content)values(?,?,?)";
+				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); // pre-compiled sql
 				
 				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
@@ -233,7 +233,7 @@ public class RightDaoImpl implements RightDao {
 			if (result > 0) {
 				flag = true;
 				String content = "User" + right.getUserId() + "insert data into t_contract";
-				String sql2 = "insert into t_log(con_id,time,content)values(?,?,?)";
+				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); // pre-compiled sql
 				
 				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
