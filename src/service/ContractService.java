@@ -17,6 +17,7 @@ import dao.impl.UserDaoImpl;
 import model.CSignatureOpinion;
 import model.ConBusiModel;
 import model.ConDetailBusiModel;
+import model.ConDistribute;
 import model.ConProcess;
 import model.ConState;
 import model.Contract;
@@ -186,13 +187,6 @@ public class ContractService {
 		return flag;
 	}
 	
-	/**
-	 * 通过会签人id获取所有未会签的合同信息
-	 * 
-	 * @param userId User id
-	 * @return Query all contracts that to be countersigned
-	 * @throws AppException
-	 */
 	public List<ConBusiModel> getDhqhtList(int userId) throws AppException {
 		// Initialize  conList
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
@@ -236,6 +230,60 @@ public class ContractService {
 		}
 		// Return the set of storage contract business entities
 		return conList;
+	}
+	
+	/**
+	 * 获取已分配的分配信息
+	 * 
+	 * @param userId User id
+	 * @return Query all contracts that to be countersigned
+	 * @throws AppException
+	 */
+	public List<ConDistribute> getConDistributeList() throws AppException {
+		// Initialize  conList
+		List<ConDistribute> conList = new ArrayList<ConDistribute>();
+		try {
+			/*
+			 * 1.从“t_contract”表中获取状态为“起草”的合同id集合 
+			 */
+			List<Integer> conIds = conStateDao.getConIdsByType(Constant.STATE_DRAFTED);
+			
+
+			/* 2.遍历合同id集, 判断其是否在“t_contract_process"表中有相关记录,
+			 * If have records, means the contract has been allocated, otherwise, means have not been allocated
+			 */
+			for (int conId : conIds) {
+				
+				/* 
+				 * 3.如果合同已被分配，保存分配的合同信息
+				 */
+				if (conProcessDao.isExist(conId)) {
+					// Get information of designated contract
+					Contract contract = contractDao.getById(conId);
+					// Get status of designated contract
+					ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+					// Instantiate  conBusiModel object
+					ConDistribute conDistribute = new ConDistribute();
+					if (contract != null) {
+						//Set contract id and name to conBusiModel object
+						conDistribute.setId(contract.getId());
+						conDistribute.setConName(contract.getName());
+					}
+					if (conState != null) {
+						//Set drafting time to conBusiModel object
+						conDistribute.setDrafTime(conState.getTime()); 
+					}
+					conList.add(conDistribute); // Add conBusiModel to contractList
+				}
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("service.ContractService.getDfphtList");
+		}
+		// Return contractList
+		return conList;
+		
+		
 	}
 	
 	/**
