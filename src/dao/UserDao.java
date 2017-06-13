@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import model.Customer;
+import model.Log;
 import model.User;
 import utils.AppException;
 
@@ -80,4 +81,7 @@ public interface UserDao {
 	
 	//删除顾客，Del属性设为1
 	public boolean setCustomerDel(int id) throws AppException;
+	
+	//获取日志
+	public List<Log> getLogs() throws AppException;
 }
