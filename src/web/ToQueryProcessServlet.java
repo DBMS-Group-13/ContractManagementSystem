@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.ConBusiModel;
+import model.Role;
 import service.ContractService;
+import service.UserService;
 import utils.AppException;
 
 /**
@@ -29,7 +31,6 @@ public class ToQueryProcessServlet extends HttpServlet{
 		
 		// Declare session
 		HttpSession session = null;
-		// Get session by using request
 		session = request.getSession();
 		Integer userId = (Integer)session.getAttribute("userId");
 		
@@ -39,6 +40,12 @@ public class ToQueryProcessServlet extends HttpServlet{
 		}else {
 			
 			try {
+				UserService userService = new UserService();
+				Role role = new Role();
+				role = userService.getUserRole(userId);
+				if(role.getName().equals("admin")){
+					userId = -1;
+				}
 				// Initialize contractService
 				ContractService contractService = new ContractService();
 				// Initialize contractList
@@ -48,7 +55,7 @@ public class ToQueryProcessServlet extends HttpServlet{
 				// Save contractList to request
 				request.setAttribute("contractList", contractList);
 				// Forward to page of contract to be approved
-				request.getRequestDispatcher("/queryprocess.jsp").forward(request, response);
+				request.getRequestDispatcher("/queryProcess.jsp").forward(request, response);
 			} catch (AppException e) {
 				e.printStackTrace();
 				// Redirect to the exception page
