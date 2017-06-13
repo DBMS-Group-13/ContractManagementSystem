@@ -13,7 +13,7 @@ public class Customer {
 	private String fax;			//Customer fax
 	private String code;		//Customer postcode
 	private String bank;		//Bank name
-	private String accout;		//Bank account
+	private String account;		//Bank account
 	private int del;			//Delete status(0-Not deleted, 1-Deleted)
 	
 	/**
@@ -28,7 +28,7 @@ public class Customer {
 		this.fax = "";
 		this.code = "";
 		this.bank = "";
-		this.accout = "";
+		this.account = "";
 		this.del = 0;
 	}
 
@@ -101,11 +101,11 @@ public class Customer {
 	}
 
 	public String getAccount() {
-		return accout;
+		return account;
 	}
 
 	public void setAccount(String accout) {
-		this.accout = accout;
+		this.account = accout;
 	}
 
 	public int getDel() {
