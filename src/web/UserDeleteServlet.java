@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import model.User;
 import service.UserService;
 import utils.AppException;
@@ -15,7 +16,7 @@ import utils.AppException;
 /**
  * Login Servlet
  */
-public class ToUserManagementServlet extends HttpServlet {
+public class UserDeleteServlet extends HttpServlet {
 
 	/**
 	 *  Process the POST login request
@@ -24,17 +25,34 @@ public class ToUserManagementServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// Set request's character encoding
 		request.setCharacterEncoding("UTF-8");
-		
+		String message = null;
 		/*
 		 *  Call methods in business logic layer to process business logic 
 		 */
 		try{
-			UserService us = new UserService();
 			List<User> users = new ArrayList<User>();
-			users= us.getUsers();
-			request.setAttribute("users", users);
-			request.getRequestDispatcher("/userManagement.jsp").forward(request,
+			UserService us = new UserService();
+			int userId = (int) request.getAttribute("userId");
+			if(us.deleteUser(userId)){
+				users= us.getUsers();
+				request.setAttribute("users", users);
+				request.getRequestDispatcher("/userManagement.jsp").forward(request,
+							response);
+				message = "Delete successfully";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("/userManagement.jsp").forward(request,
 						response);
+				}
+			else{
+				users= us.getUsers();
+				request.setAttribute("users", users);
+				request.getRequestDispatcher("/userManagement.jsp").forward(request,
+						response);
+				message = "Delete failed";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("/userManagement.jsp").forward(request,
+						response);
+			}
 		// Save prompt message into request
 		// Save user name into request	
 		// Forward to login page
