@@ -16,7 +16,7 @@ import utils.AppException;
 /**
  * Login Servlet
  */
-public class UserDeleteServlet extends HttpServlet {
+public class UpdateUserServlet extends HttpServlet {
 
 	/**
 	 *  Process the POST login request
@@ -32,23 +32,23 @@ public class UserDeleteServlet extends HttpServlet {
 		try{
 			List<User> users = new ArrayList<User>();
 			UserService us = new UserService();
-			int userId = (int) request.getAttribute("userId");
-			if(us.deleteUser(userId)){
-				users= us.getUsers();
-				request.setAttribute("users", users);
-				message = "Delete successfully";
-				request.setAttribute("message", message);
-				request.getRequestDispatcher("/userManagement.jsp").forward(request,
-						response);
-				}
-			else{
-				users= us.getUsers();
-				request.setAttribute("users", users);
-				message = "Delete failed";
-				request.setAttribute("message", message);
-				request.getRequestDispatcher("/userManagement.jsp").forward(request,
-						response);
-			}
+			String beforeEmail = (String) request.getAttribute("beforeEmail");
+			String afterEmail = (String) request.getAttribute("afterEmail");
+			String name = (String) request.getAttribute("name");
+			String password = (String) request.getAttribute("password");
+			User user = new User();
+			user = us.loadByEmail(beforeEmail);
+			user.setName(name);
+			user.setPassword(password);
+			user.setEmail(afterEmail);
+			us.updateUser(user);
+			users= us.getUsers();
+			request.setAttribute("users", users);
+			message = "Update successfully";
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("/userManagement.jsp").forward(request,
+						response);			
+			
 		// Save prompt message into request
 		// Save user name into request	
 		// Forward to login page
