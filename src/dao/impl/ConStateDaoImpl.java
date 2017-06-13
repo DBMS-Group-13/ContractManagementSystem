@@ -43,7 +43,7 @@ public class ConStateDaoImpl implements ConStateDao {
 			psmt.setInt(1, conState.getConId());
 			psmt.setInt(2, conState.getType());
 		
-			int result = psmt.executeUpdate();// Execute update 
+            int result = psmt.executeUpdate();// Execute update 
 			
 			if(result > 0){// If affected lines greater than 0, so operation success
 				flag = true;

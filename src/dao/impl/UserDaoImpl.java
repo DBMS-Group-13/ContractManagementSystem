@@ -70,7 +70,6 @@ public class UserDaoImpl implements UserDao {
 		PreparedStatement psmt = null;// Define PreparedStatement object
 		
 		boolean flag = false;// Operation flag
-		int result = -1;
 		try {
 			conn = DBUtil.getConnection();// Create database connection
 			// Declare operation statement,save user information into database, "?" is a placeholder
@@ -87,9 +86,8 @@ public class UserDaoImpl implements UserDao {
 			psmt.setLong(6, user.getActivateTime());
 			psmt.setString(7, user.getCreateDate());
 			psmt.setInt(8, user.getStatus());
-			result = psmt.executeUpdate();// Execute the update operation,return the affected rows
-			if (result > 0) {
-				flag = true;
+			flag = psmt.execute();// Execute the update operation,return the affected rows
+			if (flag == true) {
 				String content = "User" + user.getId() + "insert data into t_user";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); // pre-compiled sql
@@ -173,7 +171,7 @@ public class UserDaoImpl implements UserDao {
 			// Create database connection
 			conn = DBUtil.getConnection();
 			// Declare operation statement:query user information according to the user id , "?" is a placeholder
-			String sql = "select id,name,password "
+			String sql = "select *"
 					+"from t_user "
 					+"where id = ? and del = 0";
 			// pre-compiled sql
@@ -408,7 +406,7 @@ public class UserDaoImpl implements UserDao {
 			// Create database connection
 			conn = DBUtil.getConnection();
 			// Declare operation statement:query user information according to the user id , "?" is a placeholder
-			String sql = "update t_user set name = ?,password = ?,sec_password = ?"
+			String sql = "update t_user set name = ?,password = ?,sec_password = ?,"
 					+ "email = ?,token = ? ,activateTime = ?,createdate = ?,status = ?,del = ? "
 					+ "where id = ?";
 			// pre-compiled sql
@@ -425,11 +423,10 @@ public class UserDaoImpl implements UserDao {
 			psmt.setInt(9, user.getDel());
 			psmt.setInt(10, user.getId());
 			// Query resultSet
-			rs = psmt.executeQuery();
+			flag = psmt.execute();
 			
 			// Save user information in Pole entity object when queried out resultSet
-			if (rs.next()) {
-				flag = true;
+			if (flag == true) {
 				String content = "User" + user.getId() + "update data in t_user";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); // pre-compiled sql
@@ -495,7 +492,6 @@ public class UserDaoImpl implements UserDao {
 		PreparedStatement psmt = null;// Define PreparedStatement object
 		
 		boolean flag = false;// Operation flag
-		int result = -1;
 		try {
 			conn = DBUtil.getConnection();// Create database connection
 			// Declare operation statement,save user information into database, "?" is a placeholder
@@ -514,9 +510,8 @@ public class UserDaoImpl implements UserDao {
 			psmt.setString(8, customer.getBank());
 			psmt.setString(9, customer.getAccount());
 			psmt.setInt(10, customer.getDel());
-			result = psmt.executeUpdate();// Execute the update operation,return the affected rows
-			if (result > 0) {
-				flag = true;
+			flag = psmt.execute();// Execute the update operation,return the affected rows
+			if (flag == true) {
 				String content = "User insert data into t_customer";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?)";
 				psmt = conn.prepareStatement(sql2); // pre-compiled sql
@@ -555,10 +550,9 @@ public class UserDaoImpl implements UserDao {
 			psmt.setInt(1, user_id);
 
 			// Execute update,return affected rows
-			int count = psmt.executeUpdate();
+			flag = psmt.execute();
 			
-			if (count > 0) {// If affected lines greater than 0, so update success
-				flag = true;
+			if (flag == true) {// If affected lines greater than 0, so update success
 				String content = "User" + user_id + " update data in t_user";
 				String sql5 = "insert into t_log(time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql5); // pre-compiled sql
@@ -620,11 +614,10 @@ public class UserDaoImpl implements UserDao {
 			psmt.setInt(6, del);
 			psmt.setInt(7, id);
 			// Query resultSet
-			rs = psmt.executeQuery();
+			flag = psmt.execute();
 			
 			// Save user information in Pole entity object when queried out resultSet
-			if (rs.next()) {
-				flag = true;
+			if (flag == true) {
 				String content = "User update data in t_customer";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?)";
 				psmt = conn.prepareStatement(sql2); // pre-compiled sql
@@ -664,10 +657,9 @@ public class UserDaoImpl implements UserDao {
 			psmt.setInt(1, id);
 
 			// Execute update,return affected rows
-			int count = psmt.executeUpdate();
+			flag = psmt.execute();
 			
-			if (count > 0) {// If affected lines greater than 0, so update success
-				flag = true;
+			if (flag == true) {// If affected lines greater than 0, so update success
 				String content = "User  update data in t_customer";
 				String sql5 = "insert into t_log(time,content)values(?,?)";
 				psmt = conn.prepareStatement(sql5); // pre-compiled sql

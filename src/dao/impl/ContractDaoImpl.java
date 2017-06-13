@@ -220,10 +220,9 @@ public class ContractDaoImpl implements ContractDao {
 			psmt.setInt(6, contract.getId());
 
 			// Execute update,return affected rows
-			int count = psmt.executeUpdate();
+			flag = psmt.execute();
 			
-			if (count > 0) {// If affected lines greater than 0, so update success
-				flag = true;
+			if (flag == true) {// If affected lines greater than 0, so update success
 				String content = "User" + contract.getUserId() + "update data in t_contract";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); // pre-compiled sql
@@ -321,10 +320,9 @@ public class ContractDaoImpl implements ContractDao {
 			psmt.setInt(1, con_id);
 
 			// Execute update,return affected rows
-			int count = psmt.executeUpdate();
+			flag = psmt.execute();
 			
-			if (count > 0) {// If affected lines greater than 0, so update success
-				flag = true;
+			if (flag == true) {// If affected lines greater than 0, so update success
 				String content = "User update data in t_contract,t_contract_attachment,"
 						+ "t_contract_process,t_contract_state";
 				String sql5 = "insert into t_log(time,content)values(?,?)";
