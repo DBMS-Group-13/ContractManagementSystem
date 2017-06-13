@@ -61,3 +61,26 @@ body{
     background: linear-gradient(top, #00b7ea 0%,#009ec3 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00b7ea', endColorstr='#009ec3',GradientType=0 ); /* IE6-9 */
 }
+
+select{
+	appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+	width:100px;
+	height:25px;
+	border-radius: 25px;
+	border-radius: 42px;
+    border: 2px solid #324b4e;
+    background: #F9F0DA;
+    outline: none;
+    position: relative;
+    transition: .3s linear;
+}
+
+select:hover{
+	background: #a8a8a8;
+}
+
+select:focus{
+	width: 300px;
+}

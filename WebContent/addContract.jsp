@@ -5,8 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Draft contract</title>
-<link href="css/style.css" rel="stylesheet" media="screen"
-	type="text/css" />
+<link href="css/style.css" rel="stylesheet" media="screen" type="text/css" />
 <script type="text/javascript">
 			function check(){
 				var name = document.getElementById('name');
@@ -69,7 +68,19 @@
 
 			<tr height="28">
 				<td>Customer:</td>
-				<td><input type="text" name="customer" class="textF" value="" /></td>
+				<!-- <td><input type="text" name="customer" class="textF" value="" /></td> -->
+				<td>
+				<select>
+                <option>caffe</option>
+                <option>food beverage</option>
+                <option>restaurant</option>
+                <option>shopping</option>
+                <option>taxi limo</option>
+                <option>theatre</option>
+                <option>museum</option>
+                <option>computers</option>
+            </select>
+			</td>
 			</tr>
 			<tr>
 				<td>Begin time:</td>

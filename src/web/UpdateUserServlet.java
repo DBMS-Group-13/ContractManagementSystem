@@ -32,10 +32,10 @@ public class UpdateUserServlet extends HttpServlet {
 		try{
 			List<User> users = new ArrayList<User>();
 			UserService us = new UserService();
-			String beforeEmail = (String) request.getAttribute("beforeEmail");
-			String afterEmail = (String) request.getAttribute("afterEmail");
-			String name = (String) request.getAttribute("name");
-			String password = (String) request.getAttribute("password");
+			String beforeEmail =  request.getParameter("beforeEmail");
+			String afterEmail =  request.getParameter("afterEmail");
+			String name =  request.getParameter("name");
+			String password =  request.getParameter("password");
 			User user = new User();
 			user = us.loadByEmail(beforeEmail);
 			user.setName(name);

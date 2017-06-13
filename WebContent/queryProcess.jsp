@@ -40,7 +40,7 @@
 		        for (ConBusiModel cbm : contractList) {
        	 	%>
 			<tr>
-				<td class="tdname" ><a href="javascript:void(0)"><%=cbm.getConName()%></a>
+				<td class="tdname" ><a href="javascript:preview('contractDetail?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
 				</td>
 				<td align="center"><%=cbm.getDrafTime()%></td>
 				<td align="center"><%=cbm.getState() %></td>

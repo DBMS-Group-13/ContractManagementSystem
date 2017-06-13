@@ -41,7 +41,7 @@
 								<ul class="nav">
 									<li><a href="toDfphtList" target="main">Process Configuration</a></li>
 									<li><a href="#" target="main" class="">Assigned Contract</a></li>
-									<li><a href="#" target="main" class="">Query Process</a></li>
+									<li><a href="toQueryProcess" target="main" class="">Query Process</a></li>
 									<li><a href="#" target="main" class="">Contract Info</a></li>
 									<li><a href="#" target="main" class="">Customer Info</a></li>
 								</ul>
