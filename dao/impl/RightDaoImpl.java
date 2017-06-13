@@ -50,7 +50,7 @@ public class RightDaoImpl implements RightDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.RightDaoImpl.getRoleIdByUserId");
+			throw new AppException("dao.impl.RightDaoImpl.getRoleIdByUserId");
 		} finally {
 			// Close the database operation object, release resources
 			DBUtil.closeResultSet(rs);
@@ -93,7 +93,7 @@ public class RightDaoImpl implements RightDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.dao.impl.RightDaoImpl.getUserIdsByRoleId");
+					"dao.impl.RightDaoImpl.getUserIdsByRoleId");
 		} finally {
 			// Close the database operation object, release resources
 			DBUtil.closeResultSet(rs);
@@ -136,7 +136,7 @@ public class RightDaoImpl implements RightDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.RightDaoImpl.getIdByUserId");
+			throw new AppException("dao.impl.RightDaoImpl.getIdByUserId");
 		} finally {
 			// Close the database operation object, release resources
 			DBUtil.closeResultSet(rs);
@@ -181,7 +181,7 @@ public class RightDaoImpl implements RightDao {
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.RightDaoImpl.updateById");
+			throw new AppException("dao.impl.RightDaoImpl.updateById");
 		} finally {
 			// Close the database operation object, release resources
 			DBUtil.closeStatement(psmt);
@@ -222,7 +222,7 @@ public class RightDaoImpl implements RightDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.RightDaoImpl.add");
+			throw new AppException("dao.impl.RightDaoImpl.add");
 		} finally {
 			// Close the database operation object, release resources
 			DBUtil.closeStatement(psmt);

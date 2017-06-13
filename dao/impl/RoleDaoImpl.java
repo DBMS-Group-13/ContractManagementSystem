@@ -56,7 +56,7 @@ public class RoleDaoImpl implements RoleDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.RoleDaoImpl.getById");
+			throw new AppException("dao.impl.RoleDaoImpl.getById");
 		} finally {
 			// Close the database operation object, release resources
 			DBUtil.closeResultSet(rs);
@@ -104,7 +104,7 @@ public class RoleDaoImpl implements RoleDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.dao.impl.RoleDaoImpl.getAll");
+					"dao.impl.RoleDaoImpl.getAll");
 		} finally {
 			// Close the database operation object, release resources
 			DBUtil.closeResultSet(rs);

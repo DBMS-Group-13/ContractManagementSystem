@@ -97,7 +97,7 @@ public class ConProcessDaoImpl implements ConProcessDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-			"com.ruanko.dao.impl.ConProcessDaoImpl.add");
+			"dao.impl.ConProcessDaoImpl.add");
 		} finally {
 			// Close database object operation, release resources
 			DBUtil.closeStatement(psmt);
@@ -145,7 +145,7 @@ public class ConProcessDaoImpl implements ConProcessDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-			"com.ruanko.dao.impl.ConProcessDaoImpl.getConIds");
+			"dao.impl.ConProcessDaoImpl.getConIds");
 		} finally {
 			// Close database object operation, release resources
 			DBUtil.closeResultSet(rs);
@@ -197,7 +197,7 @@ public class ConProcessDaoImpl implements ConProcessDao{
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.ConProcessDaoImpl.update");
+			throw new AppException("dao.impl.ConProcessDaoImpl.update");
 		} finally {
 			// Close the database operation object 
 			DBUtil.closeStatement(psmt);
@@ -243,7 +243,7 @@ public class ConProcessDaoImpl implements ConProcessDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-			"com.ruanko.dao.impl.ConProcessDaoImpl.getTotalCount");
+			"dao.impl.ConProcessDaoImpl.getTotalCount");
 		} finally {
 			// Close database object operation, release resources
 			DBUtil.closeResultSet(rs);
@@ -294,7 +294,7 @@ public class ConProcessDaoImpl implements ConProcessDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-			"com.ruanko.dao.impl.ConProcessDaoImpl.getIds");
+			"dao.impl.ConProcessDaoImpl.getIds");
 		} finally {
 			// Close database object operation, release resources
 			DBUtil.closeResultSet(rs);
@@ -350,7 +350,7 @@ public class ConProcessDaoImpl implements ConProcessDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.dao.impl.ConProcessDaoImpl.getById");
+					"dao.impl.ConProcessDaoImpl.getById");
 		} finally {
 			// Close database operation object 
 			DBUtil.closeResultSet(rs);

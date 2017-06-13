@@ -53,7 +53,7 @@ public class ContractDaoImpl implements ContractDao {
 			psmt.setDate(5, beginTime);
 			psmt.setDate(6, endTime);
 			psmt.setString(7, contract.getContent());
-			System.out.println(1);
+			
 			psmt.executeUpdate();// Execute update 
 			rs = psmt.getGeneratedKeys();  //Get primary key in  insert row,only one record in result set
 
@@ -65,7 +65,7 @@ public class ContractDaoImpl implements ContractDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-			"com.ruanko.dao.impl.ContractDaoImpl.add");
+			"dao.impl.ContractDaoImpl.add");
 		} finally {
 			// Close database object operation, release resources
 			DBUtil.closeResultSet(rs);
@@ -122,7 +122,7 @@ public class ContractDaoImpl implements ContractDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.dao.impl.ContractDaoImpl.getById");
+					"dao.impl.ContractDaoImpl.getById");
 		} finally {
 			//  Close the database operation object
 			DBUtil.closeResultSet(rs);
@@ -166,7 +166,7 @@ public class ContractDaoImpl implements ContractDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.ContractDaoImpl.getIdsByUserId");
+			throw new AppException("dao.impl.ContractDaoImpl.getIdsByUserId");
 		} finally {
 			// Close database object operation, release resources
 			DBUtil.closeResultSet(rs);
@@ -215,7 +215,7 @@ public class ContractDaoImpl implements ContractDao {
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.ContractDaoImpl.updateById");
+			throw new AppException("dao.impl.ContractDaoImpl.updateById");
 		} finally {
 			// Close database operation object
 			DBUtil.closeStatement(psmt);

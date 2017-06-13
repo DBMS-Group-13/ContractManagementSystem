@@ -45,7 +45,7 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.dao.impl.UserDaoImpl.isExist");
+					"dao.impl.UserDaoImpl.isExist");
 		} finally {
 			DBUtil.closeResultSet(rs);// Close database query result set
 			DBUtil.closeStatement(psmt);//  Close database object pretreatment
@@ -84,7 +84,7 @@ public class UserDaoImpl implements UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.UserDaoImpl.add");
+			throw new AppException("dao.impl.UserDaoImpl.add");
 		} finally {
 			DBUtil.closeStatement(psmt);//  Close database object pretreatment
 			DBUtil.closeConnection(conn);// Close database connection object
@@ -120,16 +120,13 @@ public class UserDaoImpl implements UserDao {
 			// Execute the query operation
 			rs = psmt.executeQuery();
 			// Query record and get  user id
-			System.out.println(name);
-			System.out.println(password);
 			if (rs.next()) {
 				userId = rs.getInt("id");
-				System.out.println(userId);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.UserDaoImpl.login");
+			throw new AppException("dao.impl.UserDaoImpl.login");
 		} finally {
 			// Close database object operation, release resources
 			DBUtil.closeResultSet(rs);
@@ -177,7 +174,7 @@ public class UserDaoImpl implements UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.UserDaoImpl.getById");
+			throw new AppException("dao.impl.UserDaoImpl.getById");
 		} finally {
 			// Close database object operation, release resources
 			DBUtil.closeResultSet(rs);
@@ -218,7 +215,7 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.dao.impl.UserDaoImpl.getIds");
+					"dao.impl.UserDaoImpl.getIds");
 		} finally {
 			// Close database operation object, release resources
 			DBUtil.closeResultSet(rs);

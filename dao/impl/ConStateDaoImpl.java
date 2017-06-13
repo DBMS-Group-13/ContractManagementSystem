@@ -49,7 +49,7 @@ public class ConStateDaoImpl implements ConStateDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-			"com.ruanko.dao.impl.ConStateDaoImpl.add");
+			"dao.impl.ConStateDaoImpl.add");
 		} finally {
 			// Close database operation object, release resources
 			DBUtil.closeStatement(psmt);
@@ -94,7 +94,7 @@ public class ConStateDaoImpl implements ConStateDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-			"com.ruanko.dao.impl.ConStateDaoImpl.getConIdsByType");
+			"dao.impl.ConStateDaoImpl.getConIdsByType");
 		} finally {
 			// Close database operation object, release resources
 			DBUtil.closeResultSet(rs);
@@ -149,7 +149,7 @@ public class ConStateDaoImpl implements ConStateDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.dao.impl.ConStateDaoImpl.getByConId");
+					"dao.impl.ConStateDaoImpl.getByConId");
 		} finally {
 			// Close the database operation object, release resources
 			DBUtil.closeResultSet(rs);
@@ -200,7 +200,7 @@ public class ConStateDaoImpl implements ConStateDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-			"com.ruanko.dao.impl.ConStateDaoImpl.isExist");
+			"dao.impl.ConStateDaoImpl.isExist");
 		} finally {
 			// Close database operation object, release resources
 			DBUtil.closeResultSet(rs);
