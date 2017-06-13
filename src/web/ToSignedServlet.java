@@ -17,7 +17,7 @@ import utils.AppException;
 /**
  * Access page of contract to be countersigned
  */
-public class ToDraftedServlet extends HttpServlet{
+public class ToSignedServlet extends HttpServlet{
 
 	/**
 	 * Jump to page of contract to be countersigned
@@ -43,12 +43,12 @@ public class ToDraftedServlet extends HttpServlet{
 				ContractService contractService = new ContractService();
 				// Initialize contractList
 				List<ConBusiModel> contractList = new ArrayList<ConBusiModel>();
-				// Call business logic layer to get list of contract to be countersigned 
-				contractList = contractService.getProcess_FinalizeList(userId);
+				// Call business logic layer to get list of contract to be approved 
+				contractList = contractService.getProcess_SignedList(userId);
 				// Save contractList to request
 				request.setAttribute("contractList", contractList);
-				// Forward to page of contract to be countersigned
-				request.getRequestDispatcher("/drafted.jsp").forward(request, response);
+				// Forward to page of contract to be approved
+				request.getRequestDispatcher("/approved.jsp").forward(request, response);
 			} catch (AppException e) {
 				e.printStackTrace();
 				// Redirect to the exception page
