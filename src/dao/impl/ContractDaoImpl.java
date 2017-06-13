@@ -260,7 +260,7 @@ public class ContractDaoImpl implements ContractDao {
 			// Create database connection
 			conn = DBUtil.getConnection();
 			//Define SQL statement: query contract information according to the contract id 
-			String sql = "select id from t_contract ";
+			String sql = "select id from t_contract where del = 0";
 
 			// Pre-compiled sql, and set the parameter values
 			psmt = conn.prepareStatement(sql);
