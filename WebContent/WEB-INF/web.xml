@@ -344,6 +344,16 @@
 		<url-pattern>/toYhqxList</url-pattern>
 	</servlet-mapping>
 
+	<!-- Configure the access of toUpdateUserServlet -->
+	<servlet>
+		<servlet-name>toUpdateUser</servlet-name>
+		<servlet-class>userUpdate.jsp</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>toUpdateUser</servlet-name>
+		<url-pattern>/toUpdateUser</url-pattern>
+	</servlet-mapping>
+
 	<!-- Configure the access of ToAssignPermServlet -->
 	<servlet>
 		<servlet-name>toAssignPerm</servlet-name>
@@ -354,10 +364,20 @@
 		<url-pattern>/toAssignPerm</url-pattern>
 	</servlet-mapping>
 
+	<!-- Configure the access of ToActivate -->
+	<servlet>
+		<servlet-name>toActivate</servlet-name>
+		<servlet-class>web.ToActivateUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>toActivate</servlet-name>
+		<url-pattern>/toActivate</url-pattern>
+	</servlet-mapping>
+
 	<!-- Configure the access of ToDeleteUserServlet -->
 	<servlet>
 		<servlet-name>toDeleteUser</servlet-name>
-		<servlet-class>web.ToDeleteUserServlet</servlet-class>
+		<servlet-class>web.UserDeleteServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>toDeleteUser</servlet-name>
