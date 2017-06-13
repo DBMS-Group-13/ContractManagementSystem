@@ -37,8 +37,9 @@
 				<td align="center"><%=pbm.getRoleName()%></td>
 				<td align="center"><a
 					href="toAssignPerm?userId=<%=pbm.getUserId()%>&uName=<%=pbm.getUserName()%>&roleId=<%=pbm.getRoleId()%>">
-						<img src="images/cog_edit.png" alt="Authorize" /> Authorize
-				</a></td>
+						<img src="images/cog_edit.png" alt="Authorize" /> Authorize </a>| 
+						<a href="toDeleteUser?userId=<%=pbm.getUserId()%>"><img alt="delete" src="images/delete.png">Del</a>
+				</td>
 			</tr>
 			<%
 					}
@@ -50,7 +51,7 @@
 	</div>
 
 	<div align="left" class="pagelist">
-		 Total&nbsp;<strong><%=permissionList.size()%></strong>&nbsp;Contracts
+		 Total&nbsp;<strong><%=permissionList.size()%></strong>&nbsp;Users
 	</div>
 </body>
 </html>

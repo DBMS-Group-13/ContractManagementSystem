@@ -354,6 +354,26 @@
 		<url-pattern>/toAssignPerm</url-pattern>
 	</servlet-mapping>
 
+	<!-- Configure the access of ToDeleteUserServlet -->
+	<servlet>
+		<servlet-name>toDeleteUser</servlet-name>
+		<servlet-class>web.ToDeleteUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>toDeleteUser</servlet-name>
+		<url-pattern>/toDeleteUser</url-pattern>
+	</servlet-mapping>
+
+	<!-- Configure the access of ToDeleteUserServlet -->
+	<servlet>
+		<servlet-name>toUserManagement</servlet-name>
+		<servlet-class>web.ToUserManagementServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>toUserManagement</servlet-name>
+		<url-pattern>/toUserManagement</url-pattern>
+	</servlet-mapping>
+
 	<!-- Configure the access of AssignPermServlet -->
 	<servlet>
 		<servlet-name>assignPerm</servlet-name>

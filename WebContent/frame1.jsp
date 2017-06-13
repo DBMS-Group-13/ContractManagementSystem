@@ -29,8 +29,7 @@
 							<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>System Management</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse ">
 								<ul class="nav">
-									<li><a href="#" target="main" class="">User Management</a></li>
-									<li><a href="#" target="main" class="">Role Management</a></li>
+									<li><a href="toUserManagement" target="main" class="">User Management</a></li>
 									<li><a href="toYhqxList" target="main" class="">Configure Permission</a></li>
 									<li><a href="#" target="main" class="">Log Management</a></li>
 								</ul>
