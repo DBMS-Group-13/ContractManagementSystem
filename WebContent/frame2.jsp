@@ -41,7 +41,7 @@
 							<div id="subPages2" class="collapse ">
 								<ul class="nav">
 									<li><a href="toDhqhtList" target="main">Contract to be countersigned</a></li>
-									<li><a href="#" target="main" class="">Countersigned Contract</a></li>
+									<li><a href="toCountersigned" target="main" class="">Countersigned Contract</a></li>
 								</ul>
 							</div>
 						</li>
