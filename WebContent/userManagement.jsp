@@ -32,8 +32,7 @@
 				<th width="400px">Options</th>
 			</tr>
 			<%
-					List<User> userList = (List<User>) request
-							.getAttribute("users");
+					List<User> userList = (List<User>) request.getAttribute("users");
 					for (User pbm : userList) {
 				%>
 			<tr>

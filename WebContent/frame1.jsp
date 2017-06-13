@@ -31,7 +31,7 @@
 								<ul class="nav">
 									<li><a href="toUserManagement" target="main" class="">User Management</a></li>
 									<li><a href="toYhqxList" target="main" class="">Configure Permission</a></li>
-									<li><a href="#" target="main" class="">Log Management</a></li>
+									<li><a href="toLogManagement" target="main" class="">Log Management</a></li>
 								</ul>
 							</div>
 						</li>
