@@ -1,4 +1,4 @@
-package model;
+﻿package model;
 
 import java.util.Date;
 
@@ -11,7 +11,9 @@ public class ConBusiModel {
 	private String conName; 	//Contract name
 	private int DONENum;        //完成人数
 	private int DistributeENum; //分配人数
-	private Date drafTime;		//Draft time
+	private String state;
+	private boolean isRefuse; //是否审批被拒
+	private Date drafTime;	  //Draft time
 	
 	/**
 	 * No-arg constructor assigns initial values to object attributes
@@ -21,6 +23,7 @@ public class ConBusiModel {
 		this.conName = "";
 		this.DONENum = 0;
 		this.DistributeENum = 0;
+		this.state="";
 		this.drafTime = new Date();
 	}
 
@@ -58,6 +61,24 @@ public class ConBusiModel {
 	
 	public void setDistributeENum(int DistributeENum) {
 		this.DistributeENum = DistributeENum;
+	}
+	
+	public String getState() {
+		return state;
+	}
+	
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	public boolean getIsRefuse()
+	{
+		return isRefuse;
+	}
+	
+	public void setIsRefuse(boolean isRefuse)
+	{
+		this.isRefuse=isRefuse;
 	}
 
 	public Date getDrafTime() {
