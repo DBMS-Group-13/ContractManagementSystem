@@ -726,4 +726,41 @@ public class UserDaoImpl implements UserDao {
 		}
 		return logs;
 	}
+	
+	//给定用户名和密码，判断是否激活
+	public int JudgeUser(String name,String password) throws AppException {
+		int status = 0;
+		//Declare database connection object, pre-compiled object and result set object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			// Create database connection
+			conn = DBUtil.getConnection();
+            String sql = "select name,password from t_user where del = 0";
+			
+			psmt = conn.prepareStatement(sql);
+			
+			rs = psmt.executeQuery();// Return result set
+			// Loop to get information in result set,and save in ids
+			while (rs.next()) {
+				String formal_name = rs.getString("name");
+				String formal_passwword = rs.getString("password");
+				if(formal_name != null && formal_passwword != null){
+					if(formal_name.compareTo(name) == 0 && formal_passwword.compareTo(password) == 0){
+						status = rs.getInt("status");
+						}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.UserDaoImpl.getById");
+		} finally {
+			// Close database object operation, release resources
+			DBUtil.closeResultSet(rs);
+			DBUtil.closeStatement(psmt);
+			DBUtil.closeConnection(conn);
+		}
+		return status;
+	}
 }
