@@ -16,7 +16,7 @@ import utils.AppException;
 /**
  * Login Servlet
  */
-public class ToCustomerManagementServlet extends HttpServlet {
+public class CustomerDeleteServlet extends HttpServlet {
 
 	/**
 	 *  Process the POST login request
@@ -25,17 +25,30 @@ public class ToCustomerManagementServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// Set request's character encoding
 		request.setCharacterEncoding("UTF-8");
-		
+		String message = null;
 		/*
 		 *  Call methods in business logic layer to process business logic 
 		 */
 		try{
-			UserService us = new UserService();
 			List<Customer> customers = new ArrayList<Customer>();
-			customers= us.getCustomers();
-			request.setAttribute("customers", customers);
-			request.getRequestDispatcher("/customerManagement.jsp").forward(request,
+			UserService us = new UserService();
+			int customerId =  Integer.parseInt(request.getParameter("delCustomerId"));
+			if(us.deleteCustomer(customerId)){
+				customers= us.getCustomers();
+				request.setAttribute("customers", customers);
+				message = "Delete successfully";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("/customerManagement.jsp").forward(request,
 						response);
+				}
+			else{
+				customers= us.getCustomers();
+				request.setAttribute("customers", customers);
+				message = "Delete failed";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("/customerManagement.jsp").forward(request,
+						response);
+			}
 		// Save prompt message into request
 		// Save user name into request	
 		// Forward to login page

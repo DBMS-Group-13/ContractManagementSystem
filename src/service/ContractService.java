@@ -1566,5 +1566,28 @@ public class ContractService {
 			throw new AppException("service.ContractService.getLog");
 		}
 	}
-
+	
+	public List<ConDetailBusiModel> getConBusis() throws AppException{
+		List<Integer> conIds = new ArrayList<Integer>();
+		List<ConDetailBusiModel> conList = new ArrayList<ConDetailBusiModel>();
+		try {
+			conIds = contractDao.getIds();
+			for(int conId:conIds){
+				conList.add(getContractDetail(conId));
+			}
+			return conList;
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("service.ContractService.getConBusis");
+		}
+	}
+	
+	public boolean deleteCon(int conId) throws AppException{
+		try{
+		return contractDao.setDel(conId);
+		}catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("service.ContractService.getConBusis");
+		}
+	}
 }

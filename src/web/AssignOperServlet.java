@@ -47,7 +47,6 @@ public class AssignOperServlet extends HttpServlet {
 		String[] spht = request.getParameterValues("spht");
 		// Get assigned signer's id
 		String[] qdht = request.getParameterValues("qdht");
-
 		try {
 			//  Initialize contractService
 			ContractService contractService = new ContractService();

@@ -239,7 +239,7 @@ public class UserService {
 				// Set permission id to right object
 				right.setId(rightId);
 				right.setDescription("update");
-				// Update permission information
+				// Update permission inforx	mation
 				flag = rightDao.updateById(right);
 			} else {
 				flag = rightDao.add(right);

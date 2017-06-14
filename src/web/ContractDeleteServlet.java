@@ -9,14 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Customer;
+import model.ConDetailBusiModel;
+import model.User;
+import service.ContractService;
 import service.UserService;
 import utils.AppException;
 
 /**
  * Login Servlet
  */
-public class ToCustomerManagementServlet extends HttpServlet {
+public class ContractDeleteServlet extends HttpServlet {
 
 	/**
 	 *  Process the POST login request
@@ -25,17 +27,30 @@ public class ToCustomerManagementServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// Set request's character encoding
 		request.setCharacterEncoding("UTF-8");
-		
+		String message = null;
 		/*
 		 *  Call methods in business logic layer to process business logic 
 		 */
 		try{
-			UserService us = new UserService();
-			List<Customer> customers = new ArrayList<Customer>();
-			customers= us.getCustomers();
-			request.setAttribute("customers", customers);
-			request.getRequestDispatcher("/customerManagement.jsp").forward(request,
+			ContractService cs = new ContractService();
+			List<ConDetailBusiModel> conds = new ArrayList<ConDetailBusiModel>();
+			int conId =  Integer.parseInt(request.getParameter("delConId"));
+			if(cs.deleteCon(conId)){
+				conds= cs.getConBusis();
+				request.setAttribute("conds", conds);
+				message = "Delete successfully";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("/contractInfo.jsp").forward(request,
 						response);
+				}
+			else{
+				conds= cs.getConBusis();
+				request.setAttribute("conds", conds);
+				message = "Delete failed";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("/contractInfo.jsp").forward(request,
+						response);
+			}
 		// Save prompt message into request
 		// Save user name into request	
 		// Forward to login page

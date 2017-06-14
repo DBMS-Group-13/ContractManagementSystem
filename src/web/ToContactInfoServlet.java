@@ -9,14 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.ConDetailBusiModel;
 import model.Customer;
+import service.ContractService;
 import service.UserService;
 import utils.AppException;
 
 /**
  * Login Servlet
  */
-public class ToCustomerManagementServlet extends HttpServlet {
+public class ToContactInfoServlet extends HttpServlet {
 
 	/**
 	 *  Process the POST login request
@@ -30,11 +32,11 @@ public class ToCustomerManagementServlet extends HttpServlet {
 		 *  Call methods in business logic layer to process business logic 
 		 */
 		try{
-			UserService us = new UserService();
-			List<Customer> customers = new ArrayList<Customer>();
-			customers= us.getCustomers();
-			request.setAttribute("customers", customers);
-			request.getRequestDispatcher("/customerManagement.jsp").forward(request,
+			ContractService cs = new ContractService();
+			List<ConDetailBusiModel> conds = new ArrayList<ConDetailBusiModel>();
+			conds= cs.getConBusis();
+			request.setAttribute("conds", conds);
+			request.getRequestDispatcher("/contractInfo.jsp").forward(request,
 						response);
 		// Save prompt message into request
 		// Save user name into request	
