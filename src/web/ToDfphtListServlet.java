@@ -54,29 +54,6 @@ public class ToDfphtListServlet extends HttpServlet{
 					//  Redirect to new user page
 					response.sendRedirect("toNewUser");
 				}else {
-					//  Get function id string
-					String funcIds = role.getFuncIds();
-					// Define opration flag,respectively identify whether have "assign countersign", "assign approval", "assign sign" permission
-					boolean flag1 = false;
-					boolean flag2 = false;
-					boolean flag3 = false;
-					
-					// Separate the function id string with comma to be string array,and traverse it
-					for (String id : funcIds.split(",")) {
-						if (id.equals("008")) {// Have "assign countersign" permission
-							flag1 = true;
-						}
-						if (id.equals("009")) {//  Have "assign approval" permission
-							flag2 = true;
-						}
-						if (id.equals("010")) {// Have "assign sign" permission
-							flag3 = true;
-						}
-					}
-					
-					// Only when have the three permissions can do the operation to assign contract
-					if (flag1 && flag2 && flag3) {
-						System.out.println(5);
 						// Initialize contractService
 						ContractService contractService = new ContractService();
 						// Initialize contractList
@@ -86,14 +63,9 @@ public class ToDfphtListServlet extends HttpServlet{
 						// Save contractList to request
 						request.setAttribute("contractList", contractList);
 						// Forward to page of contract to be distributed
-						System.out.println(7);
 						request.getRequestDispatcher("/dfphtList.jsp").forward(request, response);
-					}else {// Otherwise can not do the operation to assign contract
-						PrintWriter out = response.getWriter();// Get output object
-						out.println("<script language = javascript>alert('You don't have the permission!')");
-						out.println("window.history.go(-1)</script>");
 					}
-				}
+				
 			} catch (AppException e) {
 				e.printStackTrace();
 				//Redirect to the exception page

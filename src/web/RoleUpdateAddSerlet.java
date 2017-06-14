@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Customer;
 import model.Role;
 import service.UserService;
 import utils.AppException;
@@ -37,8 +36,14 @@ public class RoleUpdateAddSerlet extends HttpServlet {
 			r.setId(Integer.parseInt(request.getParameter("id")));
 			r.setName(request.getParameter("name"));
 			r.setDescription(request.getParameter("description"));
-			r.setFuncIds(request.getParameter("funcIds"));
-			r.setDel(Integer.parseInt(request.getParameter("del")));
+			String[] funcs = request.getParameterValues("funcIds");
+			String funcids = null;
+			for(int i = 0;i<funcs.length;i++){
+				if(i == funcs.length -1)
+					funcids = funcids+funcs[i];
+				funcids = funcids+funcs[i]+",";
+			}
+			r.setFuncIds(funcids);
 			if(r.getId() == -1)
 				us.addRole(r);
 			else
