@@ -59,9 +59,17 @@ public class ToAssignOperServlet extends HttpServlet {
 			int roleId = 2;
 			// Initialize userList
 			List<User> userList = new ArrayList<User>();
+			List<User> userCCList = new ArrayList<User>();
+			List<User> userACList = new ArrayList<User>();
+			List<User> userSCList = new ArrayList<User>();
 			// Get user list according to role id
 			userList = userService.getUserListByRoleId(roleId);
-			
+			userCCList = userService.getCsigners();
+			userACList = userService.getApprovers();
+			userSCList = userService.getSigners();
+			request.setAttribute("userCCList", userCCList);
+			request.setAttribute("userACList", userACList);
+			request.setAttribute("userSCList", userSCList);
 			// Save contract to request
 			request.setAttribute("contract", contract);
 			// Save userList to request
