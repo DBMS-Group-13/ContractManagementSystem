@@ -31,7 +31,8 @@ public class SearchListServlet extends HttpServlet {
 		ContractService cs = new ContractService();
 		List<User> users = new ArrayList<User>();
 		List<User> usersRes = new ArrayList<User>();
-		String name = (String) request.getAttribute("name");
+		users = (List<User>) request.getAttribute("users");
+		String name =  (String) request.getAttribute("name");
 		usersRes = cs.SearchUser(users, name);
 		// Save user name into request
 		request.setAttribute("users", usersRes);	

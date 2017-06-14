@@ -32,7 +32,7 @@
 			<tr>
 				<th width="200px">Index</th>
 				<th width="200px">Time</th>
-				<th width="200px">Content</th>
+				<th width="600px">Content</th>
 			</tr>
 			<%
 			    List<Log> logList = (List<Log>)request.getAttribute("logList");  

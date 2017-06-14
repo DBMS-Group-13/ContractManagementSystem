@@ -706,7 +706,7 @@ public class UserDaoImpl implements UserDao {
 			while (rs.next()) {
 				log = new Log();
 				log.setId(rs.getInt("id"));
-				log.setUserId(rs.getInt("userId"));
+				log.setUserId(rs.getInt("user_Id"));
 				log.setContent(rs.getString("content"));
 				log.setTime(rs.getDate("time"));
 				log.setDel(rs.getInt("del"));

@@ -14,7 +14,7 @@
 
 	<div class="search">
 		<form>
-			Search user: <input value="Enter search conditions.." />
+			Search user: <input placeholder="Enter search conditions.." class="textF" />
 			&nbsp;&nbsp; <input type="submit" value="Search"
 				class="search-submit" /> <br />
 		</form>

@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Assign operator</title>
-<link href="css/style.css" rel="stylesheet" media="screen"
+<link href="css/styleAssign.css" rel="stylesheet" media="screen"
 	type="text/css" />
 <script type="text/javascript">
 			function moveOption(s1,s2){
@@ -85,10 +85,10 @@
 			<img src="images/cog_edit.png" alt="Assign countersign people" />
 			Assign countersign operator
 		</h3>
-		<table border="0" width="200" class="update">
+		<table>
 			<tr>
-				<td width="45%">operator to be assigned: <select
-					height="800" multiple name="dfphqht" size="12">
+				<td>operator to be assigned: <select
+					style="WIDTH: 100%" multiple name="dfphqht" size="12">
 						<%  
 						    	for (User user : userList) {
 			       	 		%>

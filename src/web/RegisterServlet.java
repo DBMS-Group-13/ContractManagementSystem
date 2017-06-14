@@ -60,8 +60,8 @@ public class RegisterServlet extends HttpServlet {
 				
 				user = MailUtil.activateMail(user);
 				// Call business logic layer for user registration 
-				flag = userService.register(user);
-				}
+				userService.register(user);
+				flag = true;				}
 			else{
 				user = MailUtil.activateMail(user);
 				userService.updateUser(user);

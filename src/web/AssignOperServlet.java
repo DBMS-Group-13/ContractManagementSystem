@@ -55,6 +55,9 @@ public class AssignOperServlet extends HttpServlet {
 			 */ 
 			// Assigned cuntersign people
 			for (String hq : hqht) {
+				System.out.println(hq);
+			}
+			for (String hq : hqht) {
 				contractService.distribute(conId, Integer.parseInt(hq),Constant.PROCESS_CSIGN);
 			}
 			
