@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `contractsystem` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `contractsystem`;
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: contractsystem
 -- ------------------------------------------------------
--- Server version	5.7.14-log
+-- Server version	8.0.0-dmr-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -195,7 +195,7 @@ CREATE TABLE `t_function` (
 
 LOCK TABLES `t_function` WRITE;
 /*!40000 ALTER TABLE `t_function` DISABLE KEYS */;
-INSERT INTO `t_function` VALUES (1,'001','QCHT',NULL,NULL,0),(2,'002','DGHT',NULL,NULL,0),(3,'003','CXHT',NULL,NULL,0),(4,'004','SCHT',NULL,NULL,0),(5,'005','HQHT',NULL,NULL,0),(6,'006','SPHT',NULL,NULL,0),(7,'007','QDHT',NULL,NULL,0),(8,'008','FPHQ',NULL,NULL,0),(9,'009','FPSP',NULL,NULL,0),(10,'010','FPQD',NULL,NULL,0),(11,'011','LCCX',NULL,NULL,0),(12,'012','XZYH',NULL,NULL,0),(13,'013','BJYH',NULL,NULL,0),(14,'014','CXYH',NULL,NULL,0),(15,'015','SCYH',NULL,NULL,0),(16,'016','XZJS',NULL,NULL,0),(17,'017','BJJS',NULL,NULL,0),(18,'018','CXJS',NULL,NULL,0),(19,'019','SCJS',NULL,NULL,0),(20,'020','XZGN',NULL,NULL,0),(21,'021','BJGN',NULL,NULL,0),(22,'022','CXGN',NULL,NULL,0),(23,'023','SCGN',NULL,NULL,0),(24,'024','PZQX',NULL,NULL,0),(25,'025','XZKH',NULL,NULL,0),(26,'026','BJKH',NULL,NULL,0),(27,'027','CXKH',NULL,NULL,0),(28,'028','SCKH',NULL,NULL,0),(29,'029','CXRZ',NULL,NULL,0),(30,'030','SCRZ',NULL,NULL,0);
+INSERT INTO `t_function` VALUES (1,'001','SM',NULL,NULL,0),(2,'002','CM',NULL,NULL,0),(3,'003','DC',NULL,NULL,0),(4,'004','CC',NULL,NULL,0),(5,'005','AC',NULL,NULL,0),(6,'006','SC',NULL,NULL,0);
 /*!40000 ALTER TABLE `t_function` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,7 +280,7 @@ CREATE TABLE `t_role` (
 
 LOCK TABLES `t_role` WRITE;
 /*!40000 ALTER TABLE `t_role` DISABLE KEYS */;
-INSERT INTO `t_role` VALUES (1,'admin','To implement the system management and contract management','003,004,008,009,010,011,012,013,014,015,016,017,018, 019,020,021,022,023,024,025,026,027,028,029,030',0),(2,'operator','operate contract','001,002,003,005,006,007,011,027',0);
+INSERT INTO `t_role` VALUES (1,'admin','To implement the system management and contract management','001,002',0),(2,'operator','operate contract','003,004,005,006',0);
 /*!40000 ALTER TABLE `t_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -333,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-14  9:16:40
+-- Dump completed on 2017-06-14 11:46:40
