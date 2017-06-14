@@ -728,7 +728,7 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	//给定用户名和密码，判断是否激活
-	public int JudgeUser(String name,String password) throws AppException {
+	public int JudgeUser(String name) throws AppException {
 		int status = 0;
 		//Declare database connection object, pre-compiled object and result set object
 		Connection conn = null;
@@ -737,7 +737,7 @@ public class UserDaoImpl implements UserDao {
 		try {
 			// Create database connection
 			conn = DBUtil.getConnection();
-            String sql = "select name,password from t_user where del = 0";
+            String sql = "select name from t_user where del = 0";
 			
 			psmt = conn.prepareStatement(sql);
 			
@@ -745,9 +745,8 @@ public class UserDaoImpl implements UserDao {
 			// Loop to get information in result set,and save in ids
 			while (rs.next()) {
 				String formal_name = rs.getString("name");
-				String formal_passwword = rs.getString("password");
-				if(formal_name != null && formal_passwword != null){
-					if(formal_name.compareTo(name) == 0 && formal_passwword.compareTo(password) == 0){
+				if(formal_name != null){
+					if(formal_name.compareTo(name) == 0){
 						status = rs.getInt("status");
 						}
 				}
