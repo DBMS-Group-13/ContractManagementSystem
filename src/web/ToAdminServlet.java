@@ -26,7 +26,7 @@ public class ToAdminServlet extends HttpServlet {
 		// Get session by using request object
 		session = request.getSession();
 		Integer userId = (Integer)session.getAttribute("userId");
-		
+
 		// If the user is not login, then jump to login page
 		if (userId == null) {
 			response.sendRedirect("toLogin");

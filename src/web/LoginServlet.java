@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.PermissionDetailModel;
 import model.Role;
 import service.UserService;
 import utils.AppException;
@@ -74,13 +75,17 @@ public class LoginServlet extends HttpServlet {
 				
 				// Process page jump according to the user's role
 				if ( role == null) {
-					//Redirect to new user page					
+					//Redirect to new user page
 					response.sendRedirect("toNewUser");
 				} else if (role.getName().equals("admin")) {
 					//Redirect to administrator page
+					PermissionDetailModel pdm = userService.getPermissionDetail(userId);
+					session.setAttribute("pdm", pdm);
 					response.sendRedirect("toAdmin");
 				} else if (role.getName().equals("operator")) {
 					//Redirect to operator page 
+					PermissionDetailModel pdm = userService.getPermissionDetail(userId);
+					session.setAttribute("pdm", pdm);
 					response.sendRedirect("toOperator");
 				}
 			} else {// Login failed

@@ -37,11 +37,12 @@ public class RoleUpdateAddSerlet extends HttpServlet {
 			r.setName(request.getParameter("name"));
 			r.setDescription(request.getParameter("description"));
 			String[] funcs = request.getParameterValues("funcIds");
-			String funcids = null;
+			String funcids = "";
 			for(int i = 0;i<funcs.length;i++){
 				if(i == funcs.length -1)
 					funcids = funcids+funcs[i];
-				funcids = funcids+funcs[i]+",";
+				else
+					funcids = funcids+funcs[i]+",";
 			}
 			r.setFuncIds(funcids);
 			if(r.getId() == -1)
