@@ -40,7 +40,7 @@
 								</ul>
 							</div>
 						</li>
-						<%}else if(pm.getContractMge() == true){%>
+						<%}if(pm.getContractMge() == true){%>
 						<li>
 							<a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Contract Management</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages2" class="collapse ">

@@ -92,7 +92,7 @@ public class DraftServlet extends HttpServlet {
 			// Save message to request
 			request.setAttribute("message", message);
 			// Forward to draft page 
-			request.getRequestDispatcher("/addContract.jsp").forward(request, response);
+			request.getRequestDispatcher("/result.jsp").forward(request, response);
 		}
 	}
 	

@@ -102,10 +102,6 @@
 				</td>
 			</tr>
 			<tr height="28">
-				<td>Attachment:</td>
-				<td><input type="file"/></td>
-			</tr>
-			<tr height="28">
 				<td><input type="submit" value="Submit" class="button" onclick="return check()"></td><td><input type="reset" value="Reset" class="button"></td>
 			</tr>
 		</table>

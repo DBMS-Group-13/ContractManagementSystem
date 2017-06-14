@@ -88,7 +88,7 @@
 		<table border="0" width="200" class="update">
 			<tr>
 				<td width="45%">operator to be assigned: <select
-					style="WIDTH: 100%" multiple name="dfphqht" size="12">
+					height="800" multiple name="dfphqht" size="12">
 						<%  
 						    	for (User user : userList) {
 			       	 		%>

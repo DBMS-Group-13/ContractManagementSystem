@@ -292,7 +292,8 @@ public class ContractService {
 						int userId=conProcessDao.getById(id).getUserId();
 						names=userDao.getById(userId).getName()+",";
 					}
-					names=names.substring(0, names.length()-1);
+					if(names.length() > 0)
+						names=names.substring(0, names.length()-1);
 					conDistribute.setCsign(names);
 					
 					//会签人名单
@@ -305,7 +306,8 @@ public class ContractService {
 						int userId=conProcessDao.getById(id).getUserId();
 						names=userDao.getById(userId).getName()+",";
 					}
-					names=names.substring(0, names.length()-1);
+					if(names.length() > 0)
+						names=names.substring(0, names.length()-1);
 					conDistribute.setApprove(names);
 					
 					//会签人名单
@@ -317,7 +319,8 @@ public class ContractService {
 						int userId=conProcessDao.getById(id).getUserId();
 						names=userDao.getById(userId).getName()+",";
 					}
-					names=names.substring(0, names.length()-1);
+					if(names.length() > 0)
+						names=names.substring(0, names.length()-1);
 					conDistribute.setSign(names);
 					
 					conList.add(conDistribute); // Add conBusiModel to contractList

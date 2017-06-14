@@ -49,7 +49,7 @@ public class ToAssignedContractServlet extends HttpServlet{
 				// Save contractList to request
 				request.setAttribute("conDistributeList", conDistributeList);
 				// Forward to page of contract to be countersigned
-				request.getRequestDispatcher("/conDistributeList.jsp").forward(request, response);
+				request.getRequestDispatcher("/assignedContract.jsp").forward(request, response);
 			} catch (AppException e) {
 				e.printStackTrace();
 				// Redirect to the exception page

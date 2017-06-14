@@ -39,7 +39,7 @@
 								</ul>
 							</div>
 						</li>
-						<%}else if(pm.getCsign() == true){%>
+						<%}if(pm.getCsign() == true){%>
 						<li>
 							<a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Countersign</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages2" class="collapse ">
@@ -49,7 +49,7 @@
 								</ul>
 							</div>
 						</li>
-						<%}else if(pm.getApprove()){ %>
+						<%}if(pm.getApprove()){ %>
 						<li>
 							<a href="#subPages3" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Approve</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages3" class="collapse ">
@@ -59,7 +59,7 @@
 								</ul>
 							</div>
 						</li>
-						<%}else if(pm.getSign() == true){ %>
+						<%}if(pm.getSign() == true){ %>
 						<li>
 							<a href="#subPages4" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Sign</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages4" class="collapse ">
