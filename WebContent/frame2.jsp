@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page import="model.PermissionDetailModel" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html lang="en">
 
@@ -25,6 +26,8 @@
 			<div class="sidebar-scroll">
 				<nav>
 					<ul class="nav">
+					<%PermissionDetailModel pm = (PermissionDetailModel)session.getAttribute("pdm"); 
+					if(pm.getDraft() == true){%>
 						<li>
 							<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Draft</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse ">
@@ -36,6 +39,7 @@
 								</ul>
 							</div>
 						</li>
+						<%}else if(pm.getCsign() == true){%>
 						<li>
 							<a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Countersign</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages2" class="collapse ">
@@ -45,6 +49,7 @@
 								</ul>
 							</div>
 						</li>
+						<%}else if(pm.getApprove()){ %>
 						<li>
 							<a href="#subPages3" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Approve</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages3" class="collapse ">
@@ -54,6 +59,7 @@
 								</ul>
 							</div>
 						</li>
+						<%}else if(pm.getSign() == true){ %>
 						<li>
 							<a href="#subPages4" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Sign</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages4" class="collapse ">
@@ -63,6 +69,7 @@
 								</ul>
 							</div>
 						</li>
+						<%} %>
 						<li><a href="toLogin" class=""><i class="lnr lnr-home"></i> <span>log out</span></a></li>
 					</ul>
 				</nav>
@@ -70,7 +77,7 @@
 		</div>
 		<!-- END LEFT SIDEBAR -->
 		<!-- MAIN -->
-		<iframe src="addContract.jsp" name="main" scrolling="auto" style="position:absolute;left:260;" height="100%" width="100%"></iframe>
+		<iframe src="result.jsp" name="main" scrolling="auto" style="position:absolute;left:260;" height="100%" width="100%"></iframe>
 		<!-- END MAIN -->
 		<div class="clearfix"></div>
 		<footer>

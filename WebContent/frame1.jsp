@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page import="model.PermissionDetailModel" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html lang="en">
 
@@ -25,28 +26,33 @@
 			<div class="sidebar-scroll">
 				<nav>
 					<ul class="nav">
+					<%PermissionDetailModel pm = (PermissionDetailModel)session.getAttribute("pdm"); 
+					if(pm.getSystemMge() == true){%>
 						<li>
 							<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>System Management</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse ">
 								<ul class="nav">
 									<li><a href="toUserManagement" target="main" class="">User Management</a></li>
+									<li><a href="toRoleManagement" target="main" class="">Role Management</a></li>
+									<li><a href="toCustomer" target="main" class="">Customer Management</a></li>
 									<li><a href="toYhqxList" target="main" class="">Configure Permission</a></li>
 									<li><a href="toLogManagement" target="main" class="">Log Management</a></li>
 								</ul>
 							</div>
 						</li>
+						<%}else if(pm.getContractMge() == true){%>
 						<li>
 							<a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Contract Management</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages2" class="collapse ">
 								<ul class="nav">
 									<li><a href="toDfphtList" target="main">Process Configuration</a></li>
-									<li><a href="#" target="main" class="">Assigned Contract</a></li>
+									<li><a href="toAssigned" target="main" class="">Assigned Contract</a></li>
 									<li><a href="toQueryProcess" target="main" class="">Query Process</a></li>
-									<li><a href="#" target="main" class="">Contract Info</a></li>
-									<li><a href="#" target="main" class="">Customer Info</a></li>
+									<li><a href="toContractInf" target="main" class="">Contract Info</a></li>
 								</ul>
 							</div>
 						</li>
+						<%} %>
 						<li><a href="toLogin" class=""><i class="lnr lnr-home"></i> <span>log out</span></a></li>
 					</ul>
 				</nav>
@@ -54,7 +60,7 @@
 		</div>
 		<!-- END LEFT SIDEBAR -->
 		<!-- MAIN -->
-		<iframe src="addContract.jsp" name="main" scrolling="auto" style="position:absolute;left:260;" height="100%" width="100%"></iframe>
+		<iframe src="result.jsp" name="main" scrolling="auto" style="position:absolute;left:260;" height="100%" width="100%"></iframe>
 		<!-- END MAIN -->
 		<div class="clearfix"></div>
 		<footer>

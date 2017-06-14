@@ -1,5 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List"%>
 <%@page import="model.Contract"%>
+<%@page import="model.Customer"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -70,15 +72,11 @@
 				<td>Customer:</td>
 				<!-- <td><input type="text" name="customer" class="textF" value="" /></td> -->
 				<td>
-				<select>
-                <option>caffe</option>
-                <option>food beverage</option>
-                <option>restaurant</option>
-                <option>shopping</option>
-                <option>taxi limo</option>
-                <option>theatre</option>
-                <option>museum</option>
-                <option>computers</option>
+				<select id="customer" name="customer">
+                <% List<Customer> contractList = (List<Customer>)request.getAttribute("customers");  
+		        for (Customer cbm : contractList) { %>
+		        <option><%=cbm.getName()%></option>
+		        <%} %>
             </select>
 			</td>
 			</tr>
