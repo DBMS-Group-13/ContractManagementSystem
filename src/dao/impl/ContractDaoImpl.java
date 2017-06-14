@@ -297,26 +297,26 @@ public class ContractDaoImpl implements ContractDao {
 			// Create database connection
 			conn = DBUtil.getConnection();
 			// Declare sql:update contract information according to contract id
-			String sql = "update t_contract set del = 1"
-					+ "where con_id = ?";
+			String sql = "update t_contract set del = 1 "
+					+ "where id = ?";
 			// Pre-compiled sql, and set the parameter values
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, con_id);
 			flag =psmt.execute();
-			String sql2 = "update t_contract_attachment set del = 1"
-					+ "where con_id = ?";
+			/*String sql2 = "update t_contract_attachment set del = 1 "
+					+ "where id = ?";
 			// Pre-compiled sql, and set the parameter values
 			psmt = conn.prepareStatement(sql2);
 			psmt.setInt(1, con_id);
-			flag =psmt.execute();
-			String sql3 = "update t_contract_process set del = 1"
-					+ "where con_id = ?";
+			flag =psmt.execute();*/
+			String sql3 = "update t_contract_process set del = 1 "
+					+ "where id = ?";
 			// Pre-compiled sql, and set the parameter values
 			psmt = conn.prepareStatement(sql3);
 			psmt.setInt(1, con_id);
 			flag =psmt.execute();
-			String sql4 = "update t_contract_state set del = 1"
-					+ "where con_id = ?";
+			String sql4 = "update t_contract_state set del = 1 "
+					+ "where id = ?";
 			// Pre-compiled sql, and set the parameter values
 			psmt = conn.prepareStatement(sql4);
 			psmt.setInt(1, con_id);

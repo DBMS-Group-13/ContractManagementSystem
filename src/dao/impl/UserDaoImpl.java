@@ -497,7 +497,7 @@ public class UserDaoImpl implements UserDao {
 		try {
 			conn = DBUtil.getConnection();// Create database connection
 			// Declare operation statement,save user information into database, "?" is a placeholder
-			String sql = "insert into t_customer (inum,name,address,tel,fax,code,bank,account)"
+			String sql = "insert into t_customer (num,name,address,tel,fax,code,bank,account)"
 					+ " values (?,?,?,?,?,?,?,?)";
 			
 			psmt = conn.prepareStatement(sql);// Pre-compiled sql
