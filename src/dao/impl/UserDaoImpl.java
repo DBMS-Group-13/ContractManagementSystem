@@ -737,7 +737,7 @@ public class UserDaoImpl implements UserDao {
 		try {
 			// Create database connection
 			conn = DBUtil.getConnection();
-            String sql = "select name from t_user where del = 0";
+            String sql = "select name,status from t_user where del = 0";
 			
 			psmt = conn.prepareStatement(sql);
 			

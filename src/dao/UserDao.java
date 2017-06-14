@@ -86,5 +86,5 @@ public interface UserDao {
 	public List<Log> getLogs() throws AppException;
 	
 	//给定用户名和密码，判断是否激活
-	public int JudgeUser(String name,String password) throws AppException;
+	public int JudgeUser(String name) throws AppException;
 }
