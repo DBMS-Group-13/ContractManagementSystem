@@ -2,6 +2,7 @@ package service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import dao.RightDao;
 import dao.RoleDao;
@@ -11,6 +12,7 @@ import dao.impl.RoleDaoImpl;
 import dao.impl.UserDaoImpl;
 import model.Customer;
 import model.PermissionBusiModel;
+import model.PermissionDetailModel;
 import model.Right;
 import model.Role;
 import model.User;
@@ -305,5 +307,161 @@ public class UserService {
 			return false;
 		}
 	}
+	
+	public PermissionDetailModel getPermissionDetail(int userId)
+	{
+		PermissionDetailModel permissionDetailModel=new PermissionDetailModel();
+		try {
+			int role_id=rightDao.getRoleIdByUserId(userId);
+			Role role=roleDao.getById(role_id);
+			permissionDetailModel=getPBMByRole(role);
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return permissionDetailModel;
+	}
 
+	public List<User> getCsigners()
+	{
+		try {
+			List<Integer> userIds=new ArrayList<Integer>();
+			List<Role> roleList=roleDao.getAll();
+			for(Role role:roleList)
+			{
+				PermissionDetailModel permissionDetailModel=getPBMByRole(role);
+				if(permissionDetailModel.getCsign())
+					userIds.addAll(rightDao.getUserIdsByRoleId(role.getId()));
+			}
+			
+			for ( int i = 0 ; i < userIds.size() - 1 ; i ++ ) 
+			{   //从左向右循环  
+			     for ( int j = userIds.size() - 1 ; j > i; j -- ) 
+			     {  //从右往左内循环  
+			    	 if (userIds.get(j).equals(userIds.get(i))) {  
+			    		 userIds.remove(j);                              //相等则移除  
+			    	 }   
+			     }   
+			}   
+			
+			List<User> users=new ArrayList<User>();
+			for(int userId:userIds)
+			{
+				users.add(userDao.getById(userId));
+			}
+			
+			return users;
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<User> getSigners()
+	{
+		try {
+			List<Integer> userIds=new ArrayList<Integer>();
+			List<Role> roleList=roleDao.getAll();
+			for(Role role:roleList)
+			{
+				PermissionDetailModel permissionDetailModel=getPBMByRole(role);
+				if(permissionDetailModel.getSign())
+					userIds.addAll(rightDao.getUserIdsByRoleId(role.getId()));
+			}
+			
+			for ( int i = 0 ; i < userIds.size() - 1 ; i ++ ) 
+			{   //从左向右循环  
+			     for ( int j = userIds.size() - 1 ; j > i; j -- ) 
+			     {  //从右往左内循环  
+			    	 if (userIds.get(j).equals(userIds.get(i))) {  
+			    		 userIds.remove(j);                              //相等则移除  
+			    	 }   
+			     }   
+			}   
+			
+			List<User> users=new ArrayList<User>();
+			for(int userId:userIds)
+			{
+				users.add(userDao.getById(userId));
+			}
+			
+			return users;
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<User> getApprovers()
+	{
+		try {
+			List<Integer> userIds=new ArrayList<Integer>();
+			List<Role> roleList=roleDao.getAll();
+			for(Role role:roleList)
+			{
+				PermissionDetailModel permissionDetailModel=getPBMByRole(role);
+				if(permissionDetailModel.getApprove())
+					userIds.addAll(rightDao.getUserIdsByRoleId(role.getId()));
+			}
+			
+			for ( int i = 0 ; i < userIds.size() - 1 ; i ++ ) 
+			{   //从左向右循环  
+			     for ( int j = userIds.size() - 1 ; j > i; j -- ) 
+			     {  //从右往左内循环  
+			    	 if (userIds.get(j).equals(userIds.get(i))) {  
+			    		 userIds.remove(j);                              //相等则移除  
+			    	 }   
+			     }   
+			}   
+			
+			List<User> users=new ArrayList<User>();
+			for(int userId:userIds)
+			{
+				users.add(userDao.getById(userId));
+			}
+			
+			return users;
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public PermissionDetailModel getPBMByRole(Role role)
+	{
+		PermissionDetailModel permissionDetailModel=new PermissionDetailModel();
+		String functions_ids=role.getFuncIds();
+		String[] split=functions_ids.split(",");
+		for(String function:split)
+		{
+			int function_id=Integer.parseInt(function);
+			switch(function_id)
+			{
+			case 1:
+				permissionDetailModel.setSystemMge(true);
+				break;
+			case 2:
+				permissionDetailModel.setContractMge(true);
+				break;
+			case 3:
+				permissionDetailModel.setDraft(true);
+				break;
+			case 4:
+				permissionDetailModel.setCsign(true);
+				break;
+			case 5:
+				permissionDetailModel.setApprove(true);
+				break;
+			case 6:
+				permissionDetailModel.setSign(true);
+			default:
+				break;
+			}
+			
+		}
+		return permissionDetailModel;
+	}
 }
