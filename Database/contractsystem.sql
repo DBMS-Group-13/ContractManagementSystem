@@ -35,7 +35,7 @@ CREATE TABLE `t_contract` (
   `endTime` date DEFAULT NULL,
   `del` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `t_contract` (
 
 LOCK TABLES `t_contract` WRITE;
 /*!40000 ALTER TABLE `t_contract` DISABLE KEYS */;
-INSERT INTO `t_contract` VALUES (1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(2,'2017061005113161419','hello',2,'you','呵呵哒！真是有趣！！aaa','2017-06-07','2017-06-08',0),(3,'2017061111493934859','MU',2,'you','12131','2017-06-07','2017-06-08',0),(4,'2017061212105513680','mu',2,'123','rnm','2017-06-07','2017-06-08',0),(5,'2017061212133718173','admin',2,'123','123','2017-06-07','2017-06-08',0);
+INSERT INTO `t_contract` VALUES (1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0),(2,'2017061005113161419','hello',2,'you','呵呵哒！真是有趣！！aaa','2017-06-07','2017-06-08',0),(3,'2017061111493934859','MU',2,'you','12131','2017-06-07','2017-06-08',0),(4,'2017061212105513680','mu',2,'123','rnm','2017-06-07','2017-06-08',0),(5,'2017061212133718173','admin',2,'123','123','2017-06-07','2017-06-08',0),(6,'2017061401530542462','1',2,NULL,'1132','2017-06-07','2017-06-08',0),(7,'2017061401565651472','1',3,NULL,'123','2017-06-07','2017-06-08',0);
 /*!40000 ALTER TABLE `t_contract` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +97,7 @@ CREATE TABLE `t_contract_process` (
   KEY `fk_operate` (`user_id`),
   CONSTRAINT `t_contract_process_ibfk_1` FOREIGN KEY (`con_id`) REFERENCES `t_contract` (`id`),
   CONSTRAINT `t_contract_process_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +106,7 @@ CREATE TABLE `t_contract_process` (
 
 LOCK TABLES `t_contract_process` WRITE;
 /*!40000 ALTER TABLE `t_contract_process` DISABLE KEYS */;
-INSERT INTO `t_contract_process` VALUES (1,2,2,1,1,'Agree!','2017-06-10 15:52:23',0),(2,2,2,2,1,'123','2017-06-10 16:11:58',0),(3,2,2,3,1,'123','2017-06-10 16:14:46',0),(4,3,2,1,1,'OK','2017-06-11 15:51:09',0),(5,3,2,2,1,'123456','2017-06-11 15:53:00',0),(6,3,2,3,1,'123456','2017-06-11 15:53:07',0),(7,4,2,1,1,'123','2017-06-11 16:12:00',0),(8,4,2,2,1,'123','2017-06-11 16:12:10',0),(9,4,2,3,1,'123','2017-06-11 16:12:15',0),(10,5,2,1,0,'','2017-06-11 16:14:01',0),(11,5,2,2,0,'','2017-06-11 16:14:01',0),(12,5,2,3,0,'','2017-06-11 16:14:01',0);
+INSERT INTO `t_contract_process` VALUES (1,2,2,1,1,'Agree!','2017-06-10 15:52:23',0),(2,2,2,2,1,'123','2017-06-10 16:11:58',0),(3,2,2,3,1,'123','2017-06-10 16:14:46',0),(4,3,2,1,1,'OK','2017-06-11 15:51:09',0),(5,3,2,2,1,'123456','2017-06-11 15:53:00',0),(6,3,2,3,1,'123456','2017-06-11 15:53:07',0),(7,4,2,1,1,'123','2017-06-11 16:12:00',0),(8,4,2,2,1,'123','2017-06-11 16:12:10',0),(9,4,2,3,1,'123','2017-06-11 16:12:15',0),(10,5,2,1,0,'','2017-06-11 16:14:01',0),(11,5,2,2,0,'','2017-06-11 16:14:01',0),(12,5,2,3,0,'','2017-06-11 16:14:01',0),(13,6,2,1,0,'','2017-06-13 17:54:19',0),(14,6,2,2,0,'','2017-06-13 17:54:19',0),(15,6,2,3,0,'','2017-06-13 17:54:19',0),(16,7,2,1,0,'','2017-06-13 17:59:28',0),(17,7,2,2,0,'','2017-06-13 17:59:28',0),(18,7,2,3,0,'','2017-06-13 17:59:28',0);
 /*!40000 ALTER TABLE `t_contract_process` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +126,7 @@ CREATE TABLE `t_contract_state` (
   PRIMARY KEY (`id`),
   KEY `fk_belong` (`con_id`),
   CONSTRAINT `t_contract_state_ibfk_1` FOREIGN KEY (`con_id`) REFERENCES `t_contract` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +135,7 @@ CREATE TABLE `t_contract_state` (
 
 LOCK TABLES `t_contract_state` WRITE;
 /*!40000 ALTER TABLE `t_contract_state` DISABLE KEYS */;
-INSERT INTO `t_contract_state` VALUES (1,2,1,'2017-06-10 15:49:09',0),(2,2,2,'2017-06-10 15:54:58',0),(3,2,3,'2017-06-10 15:58:57',0),(4,2,4,'2017-06-10 15:58:57',0),(5,2,5,'2017-06-10 16:15:06',0),(6,3,1,'2017-06-11 15:49:39',0),(7,3,2,'2017-06-11 15:51:09',0),(8,3,3,'2017-06-11 15:52:39',0),(9,3,4,'2017-06-11 15:53:00',0),(10,3,5,'2017-06-11 15:53:06',0),(11,4,1,'2017-06-11 16:10:55',0),(12,4,2,'2017-06-11 16:11:59',0),(13,4,3,'2017-06-11 16:12:04',0),(14,4,4,'2017-06-11 16:12:09',0),(15,4,5,'2017-06-11 16:12:15',0),(16,5,1,'2017-06-11 16:13:37',0);
+INSERT INTO `t_contract_state` VALUES (1,2,1,'2017-06-10 15:49:09',0),(2,2,2,'2017-06-10 15:54:58',0),(3,2,3,'2017-06-10 15:58:57',0),(4,2,4,'2017-06-10 15:58:57',0),(5,2,5,'2017-06-10 16:15:06',0),(6,3,1,'2017-06-11 15:49:39',0),(7,3,2,'2017-06-11 15:51:09',0),(8,3,3,'2017-06-11 15:52:39',0),(9,3,4,'2017-06-11 15:53:00',0),(10,3,5,'2017-06-11 15:53:06',0),(11,4,1,'2017-06-11 16:10:55',0),(12,4,2,'2017-06-11 16:11:59',0),(13,4,3,'2017-06-11 16:12:04',0),(14,4,4,'2017-06-11 16:12:09',0),(15,4,5,'2017-06-11 16:12:15',0),(16,5,1,'2017-06-11 16:13:37',0),(17,6,1,'2017-06-13 17:53:05',0),(18,7,1,'2017-06-13 17:56:56',0);
 /*!40000 ALTER TABLE `t_contract_state` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,7 +213,7 @@ CREATE TABLE `t_log` (
   `content` text,
   `del` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,6 +222,7 @@ CREATE TABLE `t_log` (
 
 LOCK TABLES `t_log` WRITE;
 /*!40000 ALTER TABLE `t_log` DISABLE KEYS */;
+INSERT INTO `t_log` VALUES (1,2,'2017-06-13 17:53:05','User2insert data into t_contract',0),(2,NULL,'2017-06-13 17:53:05','User insert data into t_contract_state',0),(3,2,'2017-06-13 17:54:19','User2insert data into t_contract_process',0),(4,2,'2017-06-13 17:54:19','User2insert data into t_contract_process',0),(5,2,'2017-06-13 17:54:19','User2insert data into t_contract_process',0),(6,3,'2017-06-13 17:56:56','User3insert data into t_contract',0),(7,NULL,'2017-06-13 17:56:56','User insert data into t_contract_state',0),(8,2,'2017-06-13 17:59:28','User2insert data into t_contract_process',0),(9,2,'2017-06-13 17:59:28','User2insert data into t_contract_process',0),(10,2,'2017-06-13 17:59:28','User2insert data into t_contract_process',0);
 /*!40000 ALTER TABLE `t_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -311,7 +312,7 @@ CREATE TABLE `t_user` (
 
 LOCK TABLES `t_user` WRITE;
 /*!40000 ALTER TABLE `t_user` DISABLE KEYS */;
-INSERT INTO `t_user` VALUES (1,'admin','123456','123456',NULL,NULL,0,NULL,0,0),(2,'tom','123456','123456',NULL,NULL,0,NULL,0,0),(3,'lucy','123456','123456',NULL,NULL,0,NULL,0,0),(4,'lily','123456','123456',NULL,NULL,0,NULL,0,0),(5,'jack','123456','123456',NULL,NULL,0,NULL,0,0),(6,'sanri','123456','123456',NULL,NULL,0,NULL,0,0),(7,'y','1',NULL,NULL,NULL,0,NULL,0,0),(8,'You','123456','','garciiaa@163.com','86eb18a9fcdf5f721549e8de813329bf',1497434538767,'Tue Jun 13 18:02:18 CST 2017',0,0);
+INSERT INTO `t_user` VALUES (1,'admin','123456','123456',NULL,NULL,0,NULL,0,0),(2,'tom','123456','123456',NULL,NULL,0,NULL,0,0),(3,'lucy','123456','123456',NULL,NULL,0,NULL,0,0),(4,'lily','123456','123456',NULL,NULL,0,NULL,0,0),(5,'jack','123456','123456',NULL,NULL,0,NULL,0,0),(6,'sanri','123456','123456',NULL,NULL,0,NULL,0,0),(7,'y','1',NULL,NULL,NULL,0,NULL,0,0),(8,'You','123456','','garciiaa@163.com','38566c2b88dccf0a4b97655de33e6bc0',1,'Wed Jun 14 00:04:54 CST 2017',1,0);
 /*!40000 ALTER TABLE `t_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-13 21:47:59
+-- Dump completed on 2017-06-14  9:16:40
