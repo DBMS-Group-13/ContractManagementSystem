@@ -125,15 +125,14 @@ public class RoleDaoImpl implements RoleDao {
 		try {
 			conn = DBUtil.getConnection();// Create database connection
 			// Declare operation statement,save user information into database, "?" is a placeholder
-			String sql = "insert into t_role (id,name,description,function_ids)"
-					+ " values (?,?,?,?)";
+			String sql = "insert into t_role (name,description,function_ids)"
+					+ " values (?,?,?)";
 			
 			psmt = conn.prepareStatement(sql);// Pre-compiled sql
 			// Set values for the placeholder 
-			psmt.setInt(1, role.getId());
-			psmt.setString(2, role.getName());
-			psmt.setString(3, role.getDescription());
-			psmt.setString(4, role.getFuncIds());
+			psmt.setString(1, role.getName());
+			psmt.setString(2, role.getDescription());
+			psmt.setString(3, role.getFuncIds());
 			flag = psmt.execute();// Execute the update operation,return the affected rows
 			if (flag == true) {
 				String content = "User insert data into t_role";
@@ -167,19 +166,26 @@ public class RoleDaoImpl implements RoleDao {
 		try {
 			// Create database connection
 			conn = DBUtil.getConnection();
+			
 			// Declare sql:update contract information according to contract id
-			String sql = "update t_user set del = 1 where id = ?";
+			String sql = "update t_role set del = 1 where id = ?";
 			// Pre-compiled sql, and set the parameter values
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, role_id);
-
+			// Execute update,return affected rows
+			flag = psmt.execute();
+			
+			String sql2 = "update t_right set del = 1 where role_id = ?";
+			// Pre-compiled sql, and set the parameter values
+			psmt = conn.prepareStatement(sql2);
+			psmt.setInt(1, role_id);
 			// Execute update,return affected rows
 			flag = psmt.execute();
 			
 			if (flag == true) {// If affected lines greater than 0, so update success
-				String content = "User  update data in t_role";
-				String sql5 = "insert into t_log(time,content)values(?,?)";
-				psmt = conn.prepareStatement(sql5); // pre-compiled sql
+				String content = "User  update data in t_role,t_right";
+				String sql3 = "insert into t_log(time,content)values(?,?)";
+				psmt = conn.prepareStatement(sql3); // pre-compiled sql
 				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
 				String date = sDateFormat.format(new java.util.Date());  
 				psmt.setString(1, date);

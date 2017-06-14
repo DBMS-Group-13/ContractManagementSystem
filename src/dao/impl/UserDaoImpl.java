@@ -497,21 +497,19 @@ public class UserDaoImpl implements UserDao {
 		try {
 			conn = DBUtil.getConnection();// Create database connection
 			// Declare operation statement,save user information into database, "?" is a placeholder
-			String sql = "insert into t_customer (id,num,name,address,tel,fax,code,bank,account,del)"
-					+ " values (?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into t_customer (inum,name,address,tel,fax,code,bank,account)"
+					+ " values (?,?,?,?,?,?,?,?)";
 			
 			psmt = conn.prepareStatement(sql);// Pre-compiled sql
 			// Set values for the placeholder 
-			psmt.setInt(1, customer.getId());
-			psmt.setString(2, customer.getNum());
-			psmt.setString(3, customer.getName());
-			psmt.setString(4, customer.getAddress());
-			psmt.setString(5, customer.getTel());
-			psmt.setString(6, customer.getFax());
-			psmt.setString(7, customer.getCode());
-			psmt.setString(8, customer.getBank());
-			psmt.setString(9, customer.getAccount());
-			psmt.setInt(10, customer.getDel());
+			psmt.setString(1, customer.getNum());
+			psmt.setString(2, customer.getName());
+			psmt.setString(3, customer.getAddress());
+			psmt.setString(4, customer.getTel());
+			psmt.setString(5, customer.getFax());
+			psmt.setString(6, customer.getCode());
+			psmt.setString(7, customer.getBank());
+			psmt.setString(8, customer.getAccount());
 			flag = psmt.execute();// Execute the update operation,return the affected rows
 			if (flag == true) {
 				String content = "User insert data into t_customer";
