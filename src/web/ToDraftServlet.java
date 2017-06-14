@@ -1,6 +1,12 @@
 package web;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Customer;
+import service.UserService;
+import utils.AppException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,8 +37,16 @@ public class ToDraftServlet extends HttpServlet {
 		if (userId == null) {
 			response.sendRedirect("toLogin");
 		}else {
-			// Forward to draft page			
-			request.getRequestDispatcher("/addContract.jsp").forward(request, response);
+			// Forward to draft page
+			List<Customer> customers = new ArrayList<Customer>();
+			UserService us = new UserService();
+			try {
+				customers = us.getCustomers();
+				request.setAttribute("customers",customers);
+				request.getRequestDispatcher("/addContract.jsp").forward(request, response);
+			} catch (AppException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

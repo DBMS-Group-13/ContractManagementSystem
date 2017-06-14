@@ -38,6 +38,24 @@ public class LoginServlet extends HttpServlet {
 		try {
 			// Initialize the user business logic class
 			UserService userService = new UserService();
+			if(!userService.isExistUser(name)){
+				message = "This user does not exist!";
+				request.setAttribute("message", message); // Save prompt message into request
+				// Save user name into request
+				request.setAttribute("userName", name);	
+				// Forward to login page
+				request.getRequestDispatcher("/login.jsp").forward(request,
+						response);
+			}
+			if(userService.isActivateUser(name) == 0){
+				message = "This user does not activate!Please go to you emailbox!";
+				request.setAttribute("message", message); // Save prompt message into request
+				// Save user name into request
+				request.setAttribute("userName", name);	
+				// Forward to login page
+				request.getRequestDispatcher("/login.jsp").forward(request,
+						response);
+			}
 			// Call business logic layer for user login
 			userId = userService.login(name, password);
 			

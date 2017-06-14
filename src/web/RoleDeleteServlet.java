@@ -9,14 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Customer;
+import model.Role;
+import model.User;
 import service.UserService;
 import utils.AppException;
 
 /**
  * Login Servlet
  */
-public class CustomerUpdateAddServlet extends HttpServlet {
+public class RoleDeleteServlet extends HttpServlet {
 
 	/**
 	 *  Process the POST login request
@@ -30,29 +31,25 @@ public class CustomerUpdateAddServlet extends HttpServlet {
 		 *  Call methods in business logic layer to process business logic 
 		 */
 		try{
-			List<Customer> customers = new ArrayList<Customer>();
-			Customer cs = new Customer();
+			List<Role> roles = new ArrayList<Role>();
 			UserService us = new UserService();
-			cs.setId(Integer.parseInt(request.getParameter("id")));
-			cs.setNum(request.getParameter("num"));
-			cs.setName(request.getParameter("name"));
-			cs.setAddress(request.getParameter("address"));
-			cs.setTel(request.getParameter("tel"));
-			cs.setFax(request.getParameter("fax"));
-			cs.setCode(request.getParameter("code"));
-			cs.setBank(request.getParameter("bank"));
-			cs.setAccount(request.getParameter("accout"));
-			if(cs.getId() == -1)
-				us.add(cs);
-			else
-				us.update(cs);
-			customers= us.getCustomers();
-			request.setAttribute("customers", customers);
-			message = "Update successfully";
-			request.setAttribute("message", message);
-			request.getRequestDispatcher("/customerManagement.jsp").forward(request,
-						response);			
-			
+			int roleID =  Integer.parseInt(request.getParameter("delRoleId"));
+			if(us.deleteRole(roleID)){
+				roles= us.getRoleList();
+				request.setAttribute("roles", roles);
+				message = "Delete successfully";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("/roleManagement.jsp").forward(request,
+						response);
+				}
+			else{
+				roles= us.getRoleList();
+				request.setAttribute("roles", roles);
+				message = "Delete failed";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("/roleManagement.jsp").forward(request,
+						response);
+			}
 		// Save prompt message into request
 		// Save user name into request	
 		// Forward to login page

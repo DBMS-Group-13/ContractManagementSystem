@@ -10,13 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Customer;
+import model.Role;
 import service.UserService;
 import utils.AppException;
 
 /**
  * Login Servlet
  */
-public class CustomerUpdateAddServlet extends HttpServlet {
+public class RoleUpdateAddSerlet extends HttpServlet {
 
 	/**
 	 *  Process the POST login request
@@ -30,27 +31,23 @@ public class CustomerUpdateAddServlet extends HttpServlet {
 		 *  Call methods in business logic layer to process business logic 
 		 */
 		try{
-			List<Customer> customers = new ArrayList<Customer>();
-			Customer cs = new Customer();
+			List<Role> roles = new ArrayList<Role>();
+			Role r = new Role();
 			UserService us = new UserService();
-			cs.setId(Integer.parseInt(request.getParameter("id")));
-			cs.setNum(request.getParameter("num"));
-			cs.setName(request.getParameter("name"));
-			cs.setAddress(request.getParameter("address"));
-			cs.setTel(request.getParameter("tel"));
-			cs.setFax(request.getParameter("fax"));
-			cs.setCode(request.getParameter("code"));
-			cs.setBank(request.getParameter("bank"));
-			cs.setAccount(request.getParameter("accout"));
-			if(cs.getId() == -1)
-				us.add(cs);
+			r.setId(Integer.parseInt(request.getParameter("id")));
+			r.setName(request.getParameter("name"));
+			r.setDescription(request.getParameter("description"));
+			r.setFuncIds(request.getParameter("funcIds"));
+			r.setDel(Integer.parseInt(request.getParameter("del")));
+			if(r.getId() == -1)
+				us.addRole(r);
 			else
-				us.update(cs);
-			customers= us.getCustomers();
-			request.setAttribute("customers", customers);
+				us.updateRole(r);
+			roles= us.getRoleList();
+			request.setAttribute("roles", roles);
 			message = "Update successfully";
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("/customerManagement.jsp").forward(request,
+			request.getRequestDispatcher("/roleManagement.jsp").forward(request,
 						response);			
 			
 		// Save prompt message into request

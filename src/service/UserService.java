@@ -2,7 +2,6 @@ package service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import dao.RightDao;
 import dao.RoleDao;
@@ -308,6 +307,21 @@ public class UserService {
 		}
 	}
 	
+	public boolean isExistUser(String name)  throws AppException{
+		return userDao.isExist(name);
+	}
+	public int isActivateUser(String name) throws AppException{
+		return userDao.JudgeUser(name);
+	}
+	public boolean deleteRole(int roleId) throws AppException{
+		return roleDao.setRoleDel(roleId);
+	}
+	public boolean addRole(Role role) throws AppException{
+		return roleDao.add(role);
+	}
+	public boolean updateRole(Role role) throws AppException{
+		return roleDao.UpdateRole(role);
+	}
 	public PermissionDetailModel getPermissionDetail(int userId)
 	{
 		PermissionDetailModel permissionDetailModel=new PermissionDetailModel();
@@ -463,5 +477,5 @@ public class UserService {
 			
 		}
 		return permissionDetailModel;
-	}
+	}	
 }
