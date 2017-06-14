@@ -611,11 +611,11 @@ public class UserDaoImpl implements UserDao {
 			psmt.setString(3, address);
 			psmt.setString(4, tel);
 			psmt.setString(5, fax);
-			psmt.setString(5, code);
-			psmt.setString(5, bank);
-			psmt.setString(5, account);
-			psmt.setInt(6, del);
-			psmt.setInt(7, id);
+			psmt.setString(6, code);
+			psmt.setString(7, bank);
+			psmt.setString(8, account);
+			psmt.setInt(9, del);
+			psmt.setInt(10, id);
 			// Query resultSet
 			flag = psmt.execute();
 			
