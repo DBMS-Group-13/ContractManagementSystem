@@ -27,4 +27,13 @@ public interface RoleDao {
 	 */
 	public List<Role> getAll() throws AppException;
 	
+	//添加角色
+	public boolean add(Role role) throws AppException;
+	
+	//删除角色，Del属性设为1
+	public boolean setRoleDel(int role_id) throws AppException;
+	
+	//修改角色信息
+	public boolean UpdateRole(Role role) throws AppException;
+	
 }

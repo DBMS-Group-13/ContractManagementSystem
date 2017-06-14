@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,4 +115,135 @@ public class RoleDaoImpl implements RoleDao {
 		return roleList;
 	}
 
+	//添加角色
+	@SuppressWarnings("resource")
+	public boolean add(Role role) throws AppException {
+		Connection conn = null; // Define database connection object
+		PreparedStatement psmt = null;// Define PreparedStatement object
+		
+		boolean flag = false;// Operation flag
+		try {
+			conn = DBUtil.getConnection();// Create database connection
+			// Declare operation statement,save user information into database, "?" is a placeholder
+			String sql = "insert into t_role (id,name,description,function_ids)"
+					+ " values (?,?,?,?)";
+			
+			psmt = conn.prepareStatement(sql);// Pre-compiled sql
+			// Set values for the placeholder 
+			psmt.setInt(1, role.getId());
+			psmt.setString(2, role.getName());
+			psmt.setString(3, role.getDescription());
+			psmt.setString(4, role.getFuncIds());
+			flag = psmt.execute();// Execute the update operation,return the affected rows
+			if (flag == true) {
+				String content = "User insert data into t_role";
+				String sql2 = "insert into t_log(user_id,time,content)values(?,?)";
+				psmt = conn.prepareStatement(sql2); // pre-compiled sql
+				
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				// Set values for the placeholder
+				psmt.setString(1, date);
+				psmt.setString(2, content);
+				psmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.UserDaoImpl.add");
+		} finally {
+			DBUtil.closeStatement(psmt);//  Close database object pretreatment
+			DBUtil.closeConnection(conn);// Close database connection object
+		}
+		return flag;
+	}
+	
+	//删除角色，Del属性设为1
+	@SuppressWarnings("resource")
+	public boolean setRoleDel(int role_id) throws AppException {
+		boolean flag = false;// Operation flag
+		// Declare database connection object, pre-compiled object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			// Create database connection
+			conn = DBUtil.getConnection();
+			// Declare sql:update contract information according to contract id
+			String sql = "update t_user set del = 1 where id = ?";
+			// Pre-compiled sql, and set the parameter values
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, role_id);
+
+			// Execute update,return affected rows
+			flag = psmt.execute();
+			
+			if (flag == true) {// If affected lines greater than 0, so update success
+				String content = "User  update data in t_role";
+				String sql5 = "insert into t_log(time,content)values(?,?)";
+				psmt = conn.prepareStatement(sql5); // pre-compiled sql
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				psmt.setString(1, date);
+				psmt.setString(2, content);
+				psmt.executeUpdate();
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.ContractDaoImpl.updateById");
+		} finally {
+			// Close database operation object
+			DBUtil.closeStatement(psmt);
+			DBUtil.closeConnection(conn);
+		}
+		return flag;
+	}
+	
+	//修改角色信息
+	@SuppressWarnings("resource")
+	public boolean UpdateRole(Role role) throws AppException {
+		boolean flag = false;// Operation flag
+		//Declare database connection object, pre-compiled object and result set object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			
+			// Create database connection
+			conn = DBUtil.getConnection();
+			// Declare operation statement:query user information according to the user id , "?" is a placeholder
+			String sql = "update t_role set name = ?, description = ?,funcIds = ?,del = ? "
+					+ "where id = ?";
+			// pre-compiled sql
+			psmt = conn.prepareStatement(sql);
+			// Set values for the placeholder
+			psmt.setInt(1, role.getId());
+			psmt.setString(2, role.getName());
+			psmt.setString(3, role.getDescription());
+			psmt.setString(4, role.getFuncIds());
+			psmt.setInt(5, role.getDel());
+			// Query resultSet
+			flag = psmt.execute();
+			
+			// Save user information in Pole entity object when queried out resultSet
+			if (flag == true) {
+				String content = "User update data in t_role";
+				String sql2 = "insert into t_log(user_id,time,content)values(?,?)";
+				psmt = conn.prepareStatement(sql2); // pre-compiled sql
+				// Set values for the placeholder
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
+				String date = sDateFormat.format(new java.util.Date());  
+				psmt.setString(1, date);
+				psmt.setString(2, content);
+				psmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.UserDaoImpl.getById");
+		} finally {
+			// Close database object operation, release resources
+			DBUtil.closeResultSet(rs);
+			DBUtil.closeStatement(psmt);
+			DBUtil.closeConnection(conn);
+		}
+		return flag;
+	}
 }
