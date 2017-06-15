@@ -40,6 +40,7 @@
     <servlet-name>toNewUser</servlet-name>
     <url-pattern>/toNewUser</url-pattern>
   </servlet-mapping>
+
   <servlet>
     <servlet-name>toError</servlet-name>
     <servlet-class>web.ToErrorServlet</servlet-class>
@@ -48,6 +49,7 @@
     <servlet-name>toError</servlet-name>
     <url-pattern>/toError</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>login</servlet-name>
     <servlet-class>web.LoginServlet</servlet-class>

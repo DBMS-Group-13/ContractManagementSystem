@@ -304,7 +304,8 @@ public class ContractService {
 					for(int id:processIds)
 					{
 						int userId=conProcessDao.getById(id).getUserId();
-						names=userDao.getById(userId).getName()+",";
+						if(userDao.getById(userId) != null && userDao.getById(userId).getName() != null)
+							names= userDao.getById(userId).getName()+",";
 					}
 					if(names.length() > 0)
 						names=names.substring(0, names.length()-1);
@@ -476,8 +477,8 @@ public class ContractService {
 			conDetailBusiModel.setEndTime(contract.getEndTime());
 			conDetailBusiModel.setContent(contract.getContent());
 			// Set draftman's name to conDetailBusiModel object
-			conDetailBusiModel.setDraftsman(user.getName());
-			
+			if(user != null &&user.getName() != null)
+				conDetailBusiModel.setDraftsman(user.getName());
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(

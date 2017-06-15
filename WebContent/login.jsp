@@ -44,6 +44,7 @@
 </head>
 
 <body>
+<img class="logo" src="./images/logo_title.png"></img>
 <div class="cotn_principal">
   <div class="cont_centrar">
     <div class="cont_login">

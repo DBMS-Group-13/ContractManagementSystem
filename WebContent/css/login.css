@@ -6,12 +6,32 @@
 font-family: 'Lato', sans-serif;
 }
 
+.logo{
+	position: absolute;
+	left:10%;
+	top:10%;
+	width:292.5px;
+	height:56px;
+	z-index:1000;
+	transition: .3s linear;
+}
+.logo:hover{
+	position: absolute;
+	left:8%;
+	top:10%;
+	width:390px;
+	height:75px;
+	transition: .3s linear;
+}
+
 .cotn_principal {
   position: absolute;
   width: 100%;
   height: 100%;
 /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cfd8dc+0,607d8b+100,b0bec5+100 */
-  background:url(../assets/img/backgroundf2.jpg);
+  background:url(../assets/img/background1.jpg);
+  -moz-background-size:100% 100%;
+  background-size:100% 100%;
 }
 
 .textF{

@@ -14,12 +14,12 @@ import javax.mail.internet.MimeMessage;
 import model.User;
 public class MailUtil {
 	//--------------参数---------------------
-    private static final String FROM = "garciiaa@163.com";//发件人的email
-    private static final String PWD = "CS123456";//发件人密码--邮箱密码
+    private static final String FROM = "augustwar@yeah.net";//发件人的email
+    private static final String PWD = "mzhstc";//发件人密码--邮箱密码
     private static final String URL = "http://localhost:8080/ContractSystem";//项目主页
     private static final int TIMELIMIT = 1000*60*60*24; //激活邮件过期时间24小时
     private static final String TITLE = "ContractSystem账户激活邮件";
-    private static final String HOST = "smtp.163.com";
+    private static final String HOST = "smtp.yeah.net";
     private static final String SMTP = "smtp";
 
     public static User activateMail(User u) throws AddressException, MessagingException, NoSuchAlgorithmException {
