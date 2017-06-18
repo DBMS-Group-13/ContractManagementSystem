@@ -1,8 +1,6 @@
 package model;
 
-/**
- * Function entity classes
- */
+
 public class Function {
 	
 	private int id;			    //ID
@@ -12,9 +10,7 @@ public class Function {
 	private String description;	//Description
 	private int del;			//Delete status(0-Not deleted, 1-Deleted)
 	
-	/**
-	 * No-arg constructor assigns initial values to object attributes
-	 */
+	
 	public Function(){
 		this.id = 0;
 		this.num = "";
@@ -24,10 +20,7 @@ public class Function {
 		this.del = 0;
 	}
 
-	/*
-	 * Provide setter and getter methods for attributes
-	 * setter is used for setting the attribute's value, getter is used for getting the attribute's value
-	 */
+	
 	public int getId() {
 		return id;
 	}

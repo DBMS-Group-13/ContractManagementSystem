@@ -2,9 +2,7 @@ package model;
 
 import java.util.Date;
 
-/**
- * Contract operation status entity classes
- */
+
 public class ConState {
 	
 	private int id;			    //ID 
@@ -13,9 +11,7 @@ public class ConState {
 	private Date time;			// Operation time 
 	private int del;			// Delete status(0-Not deleted, 1-Deleted)
 	
-	/**
-	 * No-arg constructor assigns initial values to object attributes
-	 */
+
 	public ConState(){
 		this.id = 0;
 		this.conId = 0;
@@ -24,10 +20,7 @@ public class ConState {
 		this.del = 0;
 	}
 
-	/*
-	 * Provide setter and getter methods for attributes
-	 * setter is used for setting the attribute's value, getter is used for getting the attribute's value
-	 */
+
 	public int getId() {
 		return id;
 	}

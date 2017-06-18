@@ -1,8 +1,6 @@
 package model;
 
-/**
- * Permissions entity class
- */
+
 public class Right {
 	
 	private int id;			    //ID
@@ -11,9 +9,7 @@ public class Right {
 	private String description; //Description
 	private int del;			//Delete status(0-Not deleted, 1-Deleted)
 	
-	/**
-	 * No-arg constructor assigns initial values to object attributes
-	 */
+
 	public Right() {
 		this.id = 0;
 		this.userId = 0;
@@ -22,10 +18,6 @@ public class Right {
 		this.del = 0;
 	}
 
-	/*
-	 * Provide setter and getter methods for attributes
-	 * setter is used for setting the attribute's value, getter is used for getting the attribute's value
-	 */
 	public int getId() {
 		return id;
 	}

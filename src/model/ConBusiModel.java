@@ -2,9 +2,7 @@
 
 import java.util.Date;
 
-/**
- * Contract business entity class
- */
+ 
 public class ConBusiModel {
 
 	private int conId; 			//Contract id
@@ -15,9 +13,7 @@ public class ConBusiModel {
 	private boolean isRefuse; //是否审批被拒
 	private Date drafTime;	  //Draft time
 	
-	/**
-	 * No-arg constructor assigns initial values to object attributes
-	 */
+	 
 	public ConBusiModel() {
 		this.conId = 0;
 		this.conName = "";

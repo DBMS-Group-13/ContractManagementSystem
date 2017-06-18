@@ -2,9 +2,6 @@ package model;
 
 import java.util.Date;
 
-/**
- * Contract entity classes
- */
 public class Contract {
 	private int id; 			//ID
 	private int userId; 		// User id
@@ -16,9 +13,6 @@ public class Contract {
 	private String content; 	// Contract content
 	private int del; 			// Delete status(0-Not deleted, 1-Deleted)
 
-	/**
-	 * No-arg constructor assigns initial values to object attributes
-	 */
 	public Contract() {
 		this.id = 0;
 		this.userId = 0;
@@ -31,9 +25,7 @@ public class Contract {
 		this.del = 0;
 	}
 
-	/*
-	 * Provide setter and getter methods for attributes,setter is used for setting the attribute's value, getter is used for getting the attribute's value
-	 */
+	
 	public int getId() {
 		return id;
 	}

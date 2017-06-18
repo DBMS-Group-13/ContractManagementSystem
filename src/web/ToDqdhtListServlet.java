@@ -44,7 +44,7 @@ public class ToDqdhtListServlet extends HttpServlet{
 				// Initialize contractList
 				List<ConBusiModel> contractList = new ArrayList<ConBusiModel>();
 				// Call business logic layer to get list of contract to be signed
-				contractList = contractService.getDqdhtList(userId);
+				contractList = contractService.getUNSignList(userId);
 				// Save contractList to request
 				request.setAttribute("contractList", contractList);
 				// Forward to contract to be signed page

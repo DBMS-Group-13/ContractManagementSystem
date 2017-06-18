@@ -44,7 +44,7 @@ public class ToDshphtListServlet extends HttpServlet{
 				// Initialize contractList
 				List<ConBusiModel> contractList = new ArrayList<ConBusiModel>();
 				// Call business logic layer to get list of contract to be approved
-				contractList = contractService.getDshphtList(userId);
+				contractList = contractService.getUNApprovetList(userId);
 				// Save contractList to request
 				request.setAttribute("contractList", contractList);
 				// Forward to page of contract to be approved

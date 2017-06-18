@@ -10,10 +10,6 @@ import dao.ConProcessDao;
 import dao.ConStateDao;
 import dao.ContractDao;
 import dao.UserDao;
-import dao.impl.ConProcessDaoImpl;
-import dao.impl.ConStateDaoImpl;
-import dao.impl.ContractDaoImpl;
-import dao.impl.UserDaoImpl;
 import model.CSignatureOpinion;
 import model.ConBusiModel;
 import model.ConDetailBusiModel;
@@ -28,23 +24,23 @@ import utils.AppException;
 import utils.Constant;
 
 /**
- *	Contract business logic class
+ *	合同服务层
  */
 public class ContractService {
 	
-	private ContractDao contractDao = null;// Define a contractDao interface object
-	private ConStateDao conStateDao = null;// Define a conStateDao interface object
-	private ConProcessDao conProcessDao = null;// Define a conProcessDao interface object
-	private UserDao userDao = null;//Define a userDao interface object
+	private ContractDao contractDao = null;    //ContractDao实例
+	private ConStateDao conStateDao = null;    //conStateDao实例
+	private ConProcessDao conProcessDao = null;//ConProcessDao实例
+	private UserDao userDao = null;            //UserDao实例
 
 	/**
-	 * No-arg constructor method is used to initialize instance in data access layer
+	 * 构造函数
 	 */
 	public ContractService() {
-		contractDao = new ContractDaoImpl();
-		conStateDao = new ConStateDaoImpl();
-		conProcessDao = new ConProcessDaoImpl();
-		userDao = new UserDaoImpl();
+		contractDao = new ContractDao();
+		conStateDao = new ConStateDao();
+		conProcessDao = new ConProcessDao();
+		userDao = new UserDao();
 	}
 	
 	/**
@@ -55,7 +51,7 @@ public class ContractService {
 	 * @throws AppException
 	 */
 	public boolean draft(Contract contract) throws AppException {
-		boolean flag = false;// Define flag
+		boolean flag = false;//成功标志
 		
 		/*
 		 * 1.调用generateConNum()函数生成合同编号（contract number）,将其导入到contract对象中
@@ -68,12 +64,11 @@ public class ContractService {
 			 * 注：保存合同信息的同时会更新合同id（详情可见contractDao.add（）函数中的psmt.getGeneratedKeys()语句）
 			 */
 			if (contractDao.add(contract)) {
-				// Instantiate conState object
+				//实例化一个状态为"STATE_DRAFTED"的ConState对象
 				ConState conState = new ConState();
-				conState.setConId(contract.getId());  // Get contract ID, and set it into conState object
-				// Set type of contract status to "STATE_DRAFTED"
+				conState.setConId(contract.getId());  
 				conState.setType(Constant.STATE_DRAFTED);
-				// Save contract status information, the operating result is assigned to flag
+				//将合同状态保存到数据库中
 				flag = conStateDao.add(conState);
 			}
 		} catch (AppException e) {
@@ -90,8 +85,8 @@ public class ContractService {
 	 * @return Query all contracts that need to be allocated; Otherwise return null
 	 * @throws AppException
 	 */
-	public List<ConBusiModel> getDfphtList() throws AppException {
-		// Initialize contractList
+	public List<ConBusiModel> getUNDistributeList() throws AppException {
+		//合同简略信息列表
 		List<ConBusiModel> contractList = new ArrayList<ConBusiModel>();
 	
 		try {
@@ -102,38 +97,23 @@ public class ContractService {
 			
 
 			/* 2.遍历合同id集, 判断其是否在“t_contract_process"表中有相关记录,
-			 * If have records, means the contract has been allocated, otherwise, means have not been allocated
+			 * 有记录说明以分配
 			 */
 			for (int conId : conIds) {
 				
 				/* 
-				 * 3.如果合同没有被分配，把需要被分配的合同信息保存到“contract business entity”
+				 * 3.如果合同没有被分配，把需要被分配的合同信息保存到“ConBusiModel”实例
 				 * 并且把实体存入conList列表中
 				 */
 				if (!conProcessDao.isExist(conId)) {
-					// Get information of designated contract
-					Contract contract = contractDao.getById(conId);
-					// Get status of designated contract
-					ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
-					// Instantiate  conBusiModel object
-					ConBusiModel conBusiModel = new ConBusiModel();
-					if (contract != null) {
-						//Set contract id and name to conBusiModel object
-						conBusiModel.setConId(contract.getId());
-						conBusiModel.setConName(contract.getName());
-					}
-					if (conState != null) {
-						//Set drafting time to conBusiModel object
-						conBusiModel.setDrafTime(conState.getTime()); 
-					}
-					contractList.add(conBusiModel); // Add conBusiModel to contractList
+					ConBusiModel conBusiModel=getConBusiModel(conId);
+					contractList.add(conBusiModel); 
 				}
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("service.ContractService.getDfphtList");
 		}
-		// Return contractList
 		return contractList;
 	}
 	
@@ -145,11 +125,9 @@ public class ContractService {
 	 * @throws AppException
 	 */
 	public Contract getContract(int id) throws AppException {
-		// Declare contract
 		Contract contract = null;
 		
 		try {
-			// Get designated contract's information 
 			contract = contractDao.getById(id);
 		} catch (AppException e) {
 			e.printStackTrace();
@@ -170,16 +148,16 @@ public class ContractService {
 	 */
 	public boolean distribute(int conId, int userId, int type)
 			throws AppException {
-		boolean flag = false;// Define flag
+		boolean flag = false;
 		try {
 			ConProcess conProcess = new ConProcess();
-			// Assign value to contract process object
+			//分配合同流程
 			conProcess.setConId(conId);
 			conProcess.setType(type);
-			// Set status to "UNDONE"
+			//流程状态为未做
 			conProcess.setState(Constant.UNDONE);
 			conProcess.setUserId(userId);
-			// Save contract information,return operation result to flag
+			
 			flag = conProcessDao.add(conProcess);
 		} catch (AppException e) {
 			e.printStackTrace();
@@ -196,48 +174,26 @@ public class ContractService {
 	 * @return Query all countersigned contracts 
 	 * @throws AppException
 	 */
-	public List<ConBusiModel> getDhqhtList(int userId) throws AppException {
-		// Initialize  conList
+	public List<ConBusiModel> getUNCsignList(int userId) throws AppException {
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
-		ConProcess conProcess = new ConProcess();
-		// Set values to contract process object
-		conProcess.setUserId(userId);
-		// Set process's operation type to "PROCESS_CSIGN"
-		conProcess.setType(Constant.PROCESS_CSIGN);
-		// Set corresponding state of "PROCESS_CSIGN" type  is "UNDONE"
-		conProcess.setState(Constant.UNDONE);
 		try {
 			/*
 			 * 1.获取特定用户所有会签未完成的合同id
 			 */
-			List<Integer> conIds = conProcessDao.getConIds(conProcess);
+			List<Integer> conIds = conProcessDao.getConIds(userId,Constant.PROCESS_CSIGN,Constant.UNDONE);
 
 			/* 
 			 * 2.保存到conList数组
 			 */
 			for (int conId : conIds) {
-				// 閼撅拷 Get information from  specified contract
-				Contract contract = contractDao.getById(conId);
-				// Get status of designated contract
-				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
-				// Initialize conBusiModel
-				ConBusiModel conBusiModel = new ConBusiModel();
-				if (contract != null) {
-					// Set contract id and name into conBusiModel object
-					conBusiModel.setConId(contract.getId());
-					conBusiModel.setConName(contract.getName());
-				}
-				if (conState != null) {
-					// Set Drafting time into conBusiModel object
-					conBusiModel.setDrafTime(conState.getTime()); 
-				}
+				ConBusiModel conBusiModel=getConBusiModel(conId);
 				conList.add(conBusiModel);
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("service.ContractService.getDhqhtList");
 		}
-		// Return the set of storage contract business entities
+		
 		return conList;
 	}
 	
@@ -249,7 +205,6 @@ public class ContractService {
 	 * @throws AppException
 	 */
 	public List<ConDistribute> getConDistributeList() throws AppException {
-		// Initialize  conList
 		List<ConDistribute> conList = new ArrayList<ConDistribute>();
 		try {
 			/*
@@ -259,7 +214,7 @@ public class ContractService {
 			
 
 			/* 2.遍历合同id集, 判断其是否在“t_contract_process"表中有相关记录,
-			 * If have records, means the contract has been allocated, otherwise, means have not been allocated
+			 * 若有记录，则说明已经分配
 			 */
 			for (int conId : conIds) {
 				
@@ -267,19 +222,15 @@ public class ContractService {
 				 * 3.如果合同已被分配，保存分配信息
 				 */
 				if (conProcessDao.isExist(conId)) {
-					// Get information of designated contract
 					Contract contract = contractDao.getById(conId);
-					// Get status of designated contract
 					ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
-					// Instantiate  conBusiModel object
+					
 					ConDistribute conDistribute = new ConDistribute();
 					if (contract != null) {
-						//Set contract id and name to conBusiModel object
 						conDistribute.setId(contract.getId());
 						conDistribute.setConName(contract.getName());
 					}
 					if (conState != null) {
-						//Set drafting time to conBusiModel object
 						conDistribute.setDrafTime(conState.getTime()); 
 					}
 					
@@ -304,8 +255,7 @@ public class ContractService {
 					for(int id:processIds)
 					{
 						int userId=conProcessDao.getById(id).getUserId();
-						if(userDao.getById(userId) != null && userDao.getById(userId).getName() != null)
-							names= userDao.getById(userId).getName()+",";
+						names=userDao.getById(userId).getName()+",";
 					}
 					if(names.length() > 0)
 						names=names.substring(0, names.length()-1);
@@ -324,7 +274,7 @@ public class ContractService {
 						names=names.substring(0, names.length()-1);
 					conDistribute.setSign(names);
 					
-					conList.add(conDistribute); // Add conBusiModel to contractList
+					conList.add(conDistribute); 
 				}
 			}
 		} catch (AppException e) {
@@ -346,29 +296,20 @@ public class ContractService {
 	 */
 	public List<ConBusiModel> getProcess_CounteredList(int userId)throws AppException{
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
-		ConProcess conProcess = new ConProcess();
-		// Set values to contract process object
-		conProcess.setUserId(userId);
-		// Set process's operation type to "PROCESS_CSIGN"
-		conProcess.setType(Constant.PROCESS_CSIGN);
-		// Set corresponding state of "PROCESS_CSIGN" type  is "DONE"
-		conProcess.setState(Constant.DONE);
 		
 		try {
 			/*
 			 * 1.获取特定用户所有会签完成的合同id
 			 */
-			List<Integer> conIds = conProcessDao.getConIds(conProcess);
+			List<Integer> conIds = conProcessDao.getConIds(userId,Constant.PROCESS_CSIGN,Constant.DONE);
 
 			/* 
 			 * 2.保存到conList数组
 			 */
 			for (int conId : conIds) {
-				// Get information from  specified contract
-				Contract contract = contractDao.getById(conId);
-				// Get status of designated contract
-				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
-				// 该合同已会签人数
+				ConBusiModel conBusiModel=getConBusiModel(conId);
+				
+				//获取会签完成比
 				ConProcess CSIGN_Done=new ConProcess();
 				CSIGN_Done.setConId(conId);
 				CSIGN_Done.setState(Constant.DONE);
@@ -381,26 +322,17 @@ public class ContractService {
 				CSIGN_UNDone.setType(Constant.PROCESS_CSIGN);
 				// 该合同会签人数
 				int totalCount=totalDoneCount+conProcessDao.getTotalCount(CSIGN_UNDone);
-				// Initialize conBusiModel
-				ConBusiModel conBusiModel = new ConBusiModel();
-				if (contract != null) {
-					// Set contract id and name into conBusiModel object
-					conBusiModel.setConId(contract.getId());
-					conBusiModel.setConName(contract.getName());
-				}
+				
 				conBusiModel.setDONENum(totalDoneCount);
 				conBusiModel.setDistributeENum(totalCount);
-				if (conState != null) {
-					// Set Drafting time into conBusiModel object
-					conBusiModel.setDrafTime(conState.getTime()); 
-				}
+				
 				conList.add(conBusiModel);
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("service.ContractService.getProcess_CounteredList");
 		}
-		// Return the set of storage contract business entities
+		
 		return conList;
 	}
 	
@@ -409,36 +341,29 @@ public class ContractService {
 	 * 判断未会签人数是否为0，若为0则添加“会签完成”的state
 	 * 
 	 * @param conProcess contract process object
-	 * @return boolean Return true if operation successfully閿涘therwise return false
+	 * @return boolean Return true if operation successfully otherwise return false
 	 * @throws AppException
 	 */
 	public boolean counterSign(ConProcess conProcess) throws AppException {
 		boolean flag = false;// Define flag 
 		
-		// Set process's operation type to "PROCESS_CSIGN"
+		
 		conProcess.setType(Constant.PROCESS_CSIGN);
-		// Set corresponding state of "PROCESS_CSIGN" type  is "DONE"
 		conProcess.setState(Constant.DONE);
 		
 		try {
 			if (conProcessDao.update(conProcess)) { //更新数据库记录
-				/*
-				 * After countersign successful, statistics total number of persons to be countersigned, if the total number is 0, then all people have completed countersign
-				 * and set contract process state to "STATE_CSIGNED"
-				 */
-				// Pass parameters  through conProcess to statistics the number of persons to be countersigned,set state to "UNDONE"
+				
+				//获取未会签完成的人数
 				conProcess.setState(Constant.UNDONE);
-
-				// 未会签人数
 				int totalCount = conProcessDao.getTotalCount(conProcess);
 				
-				// if the number of persons to be countersigned is 0, then all people have completed countersign
+				//如果未会签人数为0 添加会签完成的状态
 				if (totalCount == 0) {
 					ConState conState = new ConState();
 					conState.setConId(conProcess.getConId());
-					// Set contract state to "STATE_CSIGNED"
 					conState.setType(Constant.STATE_CSIGNED);
-					// Save contract state information
+					
 					flag = conStateDao.add(conState);
 				}
 			}
@@ -457,18 +382,17 @@ public class ContractService {
 	 * @return Contract details business entity
 	 * @throws AppException
 	 */
-	public ConDetailBusiModel getContractDetail(int id) throws AppException {
-		// Declare conDetailBusiModel
+	public ConDetailBusiModel getContractDetail(int conId) throws AppException {
+		
 		ConDetailBusiModel conDetailBusiModel = null;
 		
 		try {
-			// Get details of designated contract
-			Contract contract = contractDao.getById(id);
-			// Get draftman's information that corresponding to the contract
+			//获取合同信息
+			Contract contract = contractDao.getById(conId);
+			//获取合同起草者信息
 			User user = userDao.getById(contract.getUserId());
 
 			conDetailBusiModel = new ConDetailBusiModel();
-			// Set basic information to conDetailBusiModel object
 			conDetailBusiModel.setId(contract.getId());
 			conDetailBusiModel.setNum(contract.getNum());
 			conDetailBusiModel.setName(contract.getName());
@@ -476,9 +400,8 @@ public class ContractService {
 			conDetailBusiModel.setBeginTime(contract.getBeginTime());
 			conDetailBusiModel.setEndTime(contract.getEndTime());
 			conDetailBusiModel.setContent(contract.getContent());
-			// Set draftman's name to conDetailBusiModel object
-			if(user != null &&user.getName() != null)
-				conDetailBusiModel.setDraftsman(user.getName());
+			conDetailBusiModel.setDraftsman(user.getName());
+			
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
@@ -495,7 +418,7 @@ public class ContractService {
 	 * @throws AppException
 	 */
 	public List<ConDetailBusiModel> getContractDetailList() throws AppException {
-		// Declare conDetailBusiModel
+		
 		List<ConDetailBusiModel> conList=new ArrayList<ConDetailBusiModel>();
 		
 		List<Integer> conIds=contractDao.getIds();
@@ -515,17 +438,13 @@ public class ContractService {
 	 * @return Query all contracts that to be finalized
 	 * @throws AppException
 	 */
-	public List<ConBusiModel> getDdghtList(int userId) throws AppException {
-		// Initialize conList
+	public List<ConBusiModel> getUNFinalizedList(int userId) throws AppException {
+		
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
-		// Initialize conIds,for saving id set of contracts that to be finalized
+		
 		List<Integer> conIds = new ArrayList<Integer>();
 		
 		try {
-			/*
-			 * Get drafted and to be finalized contract ,contract to be finalized exist "STATE_CSIGNED" state
-			 * And do not exist "STATE_FINALIZED" state at the same time
-			 */
 			/*
 			 * 1.获取特定用户的起草的所有合同id
 			 */
@@ -545,28 +464,14 @@ public class ContractService {
 			 * 3.获取合同信息
 			 */
 			for (int conId : conIds) {
-				// Get information of designated contract
-				Contract contract = contractDao.getById(conId);
-				// Get status of designated contract
-				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
-				// Initialize conBusiModel
-				ConBusiModel conBusiModel = new ConBusiModel();
-				if (contract != null) {
-					// Set contract id and name to conBusiModel object
-					conBusiModel.setConId(contract.getId());
-					conBusiModel.setConName(contract.getName());
-				}
-				if (conState != null) {
-					// Set draft time to conBusiModel object
-					conBusiModel.setDrafTime(conState.getTime()); 
-				}
+				ConBusiModel conBusiModel=getConBusiModel(conId);
 				conList.add(conBusiModel);
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("service.ContractService.getDdghtList");
 		}
-		// Return conList
+		
 		return conList;
 	}
 	
@@ -578,22 +483,17 @@ public class ContractService {
 	 * @throws AppException
 	 */
 	public boolean finalize(Contract contract) throws AppException {
-		boolean flag = false;// Define flag 
+		boolean flag = false;
 
 		try {
-			// Finalize contract:update contract's content
+			
 			if (contractDao.updateById(contract)) {
-				/*
-				 * After finalize contract successfully, set contract's state to "STATE_FINALIZED"
-				 */
-				// Instantiation conState object, for encapsulate contract state information
+				// 定稿成功，添加状态为"STATE_FINALIZED"的合同状态信息
 				ConState conState = new ConState();
 
 				conState.setConId(contract.getId());
-				// Set contract state type to "STATE_FINALIZED"
 				conState.setType(Constant.STATE_FINALIZED);
 				
-				// Save contract state information,assign result to flag
 				flag = conStateDao.add(conState);
 			}
 		} catch (AppException e) {
@@ -629,28 +529,14 @@ public class ContractService {
 			 * 2.保存到conList数组
 			 */
 			for (int conId : conIds) {
-				// Get information from  specified contract
-				Contract contract = contractDao.getById(conId);
-				// Get status of designated contract
-				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
-				// Initialize conBusiModel
-				ConBusiModel conBusiModel = new ConBusiModel();
-				if (contract != null) {
-					// Set contract id and name into conBusiModel object
-					conBusiModel.setConId(contract.getId());
-					conBusiModel.setConName(contract.getName());
-				}
-				if (conState != null) {
-					// Set Drafting time into conBusiModel object
-					conBusiModel.setDrafTime(conState.getTime()); 
-				}
+				ConBusiModel conBusiModel=getConBusiModel(conId);
 				conList.add(conBusiModel);
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("service.ContractService.getProcess_FinalizeList");
 		}
-		// Return the set of storage contract business entities
+		
 		return conList;
 	}
 	
@@ -662,7 +548,7 @@ public class ContractService {
 	 * @throws AppException
 	 */
 	public List<CSignatureOpinion> showHQOpinion(int conId) throws AppException {
-		// Initialize csOpinionList
+		
 		List<CSignatureOpinion> csOpinionList = new ArrayList<CSignatureOpinion>();
 		
 		try {
@@ -672,23 +558,18 @@ public class ContractService {
 			 */
 			List<Integer> conProcessIds = conProcessDao.getIds(conId, Constant.PROCESS_CSIGN, Constant.DONE);
 			/*
-			 * 2.Get countersign people and countersign ideas, and designate contract process type to "PROCESS_CSIGN",corresponding "STATE_FINALIZED" state
+			 * 2.获取会签意见以及会签人信息
 			 */ 
 			for (int id : conProcessIds) {
-				// Get contract process information
 				ConProcess conProcess = conProcessDao.getById(id);
-				// Get countersign people's information
 				User user = userDao.getById(conProcess.getUserId());
-				// Initialize csOpinion
+				
 				CSignatureOpinion csOpinion = new CSignatureOpinion();
-				// Set contract id to csOpinion object 
 				csOpinion.setConId(conId);
 				if (conProcess != null) {
-					// Set signature opinion to conBusiModel object
 					csOpinion.setOpinion(conProcess.getContent());
 				}
 				if (user != null) {
-					// Set countersign people to csOpinion object
 					csOpinion.setCsOperator(user.getName());
 				}
 				csOpinionList.add(csOpinion);
@@ -708,29 +589,19 @@ public class ContractService {
 	 * @return Query all contracts to be approved,otherwise return null
 	 * @throws AppException
 	 */
-	public List<ConBusiModel> getDshphtList(int userId) throws AppException {
-		// Initialize conList
+	public List<ConBusiModel> getUNApprovetList(int userId) throws AppException {
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
-		// Initialize conList for saving id set of contract to be approved
 		List<Integer> conIds = new ArrayList<Integer>();
 		
-		ConProcess conProcess = new ConProcess();
-		// Set values to contract process object
-		conProcess.setUserId(userId);
-		// Set process's operation type to "PROCESS_APPROVE"
-		conProcess.setType(Constant.PROCESS_APPROVE);
-		// Set corresponding state of "PROCESS_APPROVE" type  is "UNDONE"
-		conProcess.setState(Constant.UNDONE);
 		
 		try {
 			/*
-			 * 1. Get contract id set that to be approved
+			 * 1.获取未审批的合同id（此时合同状态未定）
 			 */
-			List<Integer> myConIds = conProcessDao.getConIds(conProcess);
+			List<Integer> myConIds = conProcessDao.getConIds(userId,Constant.PROCESS_APPROVE,Constant.UNDONE);
 
 			/*
-			 * 2.Screen out id set of contract to be approved from distributed contract,and save to conIds
-			 * Contract to be approved: exist "STATE_FINALIZED" state in t_contract_state
+			 * 2.筛选出已定稿的的合同id
 			 */
 			for (int conId : myConIds) {
 				if (conStateDao.isExist(conId, Constant.STATE_FINALIZED)) {
@@ -739,24 +610,10 @@ public class ContractService {
 			}
 			
 			/*
-			 * 3.Get approve conteact's information,and save to contract business entity object,and put entity class to conList
+			 * 3.获取合同简略信息
 			 */
 			for (int conId : conIds) {
-				// Get information of designated contract
-				Contract contract = contractDao.getById(conId);
-				// Get status of designated contract
-				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
-				// Initialize conBusiModel object
-				ConBusiModel conBusiModel = new ConBusiModel();
-				if (contract != null) {
-					// Set contract id to conBusiModel object
-					conBusiModel.setConId(contract.getId());
-					conBusiModel.setConName(contract.getName());
-				}
-				if (conState != null) {
-					// Set draft time to conBusiModel object
-					conBusiModel.setDrafTime(conState.getTime());
-				}
+				ConBusiModel conBusiModel=getConBusiModel(conId);
 				conList.add(conBusiModel);
 			}
 		} catch (AppException e) {
@@ -764,7 +621,6 @@ public class ContractService {
 			throw new AppException(
 					"service.ContractService.getDshphtList");
 		}
-		// Return conList
 		return conList;
 	}
 	
@@ -777,28 +633,18 @@ public class ContractService {
 	 */
 	public List<ConBusiModel> getProcess_ApproveList(int userId)throws AppException{
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
-		ConProcess conProcess = new ConProcess();
-		// Set values to contract process object
-		conProcess.setUserId(userId);
-		// Set process's operation type to "PROCESS_CSIGN"
-		conProcess.setType(Constant.PROCESS_APPROVE);
-		// Set corresponding state of "PROCESS_CSIGN" type  is "DONE"
-		conProcess.setState(Constant.DONE);
 		
 		try {
 			/*
 			 * 1.获取特定用户所有审批同意的合同id
 			 */
-			List<Integer> conIds = conProcessDao.getConIds(conProcess);
+			List<Integer> conIds = conProcessDao.getConIds(userId,Constant.PROCESS_APPROVE,Constant.DONE);
 
 			/* 
 			 * 2.保存到conList数组
 			 */
 			for (int conId : conIds) {
-				// Get information from  specified contract
-				Contract contract = contractDao.getById(conId);
-				// Get status of designated contract
-				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				ConBusiModel conBusiModel=getConBusiModel(conId);
 				// 该合同已会签人数
 				ConProcess APPROVE_Done=new ConProcess();
 				APPROVE_Done.setConId(conId);
@@ -817,20 +663,11 @@ public class ContractService {
 				APPROVE_VETOED.setType(Constant.PROCESS_APPROVE);
 				// 该合同会签人数
 				int totalCount=totalDoneCount+conProcessDao.getTotalCount(APPROVE_UNDone)+conProcessDao.getTotalCount(APPROVE_VETOED);
-				// Initialize conBusiModel
-				ConBusiModel conBusiModel = new ConBusiModel();
-				if (contract != null) {
-					// Set contract id and name into conBusiModel object
-					conBusiModel.setConId(contract.getId());
-					conBusiModel.setConName(contract.getName());
-				}
+
 				conBusiModel.setDONENum(totalDoneCount);
 				conBusiModel.setDistributeENum(totalCount);
 				conBusiModel.setIsRefuse(false);
-				if (conState != null) {
-					// Set Drafting time into conBusiModel object
-					conBusiModel.setDrafTime(conState.getTime()); 
-				}
+				
 				conList.add(conBusiModel);
 			}
 			
@@ -839,17 +676,13 @@ public class ContractService {
 			/*
 			 * 1.获取特定用户所有审批否定的合同id
 			 */
-			conProcess.setState(Constant.VETOED);
-			conIds = conProcessDao.getConIds(conProcess);
+			conIds = conProcessDao.getConIds(userId,Constant.PROCESS_APPROVE,Constant.VETOED);
 
 			/* 
 			 * 2.保存到conList数组
 			 */
 			for (int conId : conIds) {
-				// Get information from  specified contract
-				Contract contract = contractDao.getById(conId);
-				// Get status of designated contract
-				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				ConBusiModel conBusiModel=getConBusiModel(conId);
 				// 该合同已会签人数
 				ConProcess APPROVE_Done=new ConProcess();
 				APPROVE_Done.setConId(conId);
@@ -868,27 +701,17 @@ public class ContractService {
 				APPROVE_VETOED.setType(Constant.PROCESS_APPROVE);
 				// 该合同会签人数
 				int totalCount=totalDoneCount+conProcessDao.getTotalCount(APPROVE_UNDone)+conProcessDao.getTotalCount(APPROVE_VETOED);
-				// Initialize conBusiModel
-				ConBusiModel conBusiModel = new ConBusiModel();
-				if (contract != null) {
-					// Set contract id and name into conBusiModel object
-					conBusiModel.setConId(contract.getId());
-					conBusiModel.setConName(contract.getName());
-				}
+				
 				conBusiModel.setDONENum(totalDoneCount);
 				conBusiModel.setDistributeENum(totalCount);
 				conBusiModel.setIsRefuse(true);
-				if (conState != null) {
-					// Set Drafting time into conBusiModel object
-					conBusiModel.setDrafTime(conState.getTime()); 
-				}
+				
 				conList.add(conBusiModel);
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("service.ContractService.getProcess_ApproveList");
 		}
-		// Return the set of storage contract business entities
 		return conList;
 	}
 	
@@ -901,28 +724,18 @@ public class ContractService {
 	 */
 	public List<ConBusiModel> getProcess_ApproveDONEList(int userId)throws AppException{
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
-		ConProcess conProcess = new ConProcess();
-		// Set values to contract process object
-		conProcess.setUserId(userId);
-		// Set process's operation type to "PROCESS_CSIGN"
-		conProcess.setType(Constant.PROCESS_APPROVE);
-		// Set corresponding state of "PROCESS_CSIGN" type  is "DONE"
-		conProcess.setState(Constant.DONE);
 		
 		try {
 			/*
 			 * 1.获取特定用户所有会签完成的合同id
 			 */
-			List<Integer> conIds = conProcessDao.getConIds(conProcess);
+			List<Integer> conIds = conProcessDao.getConIds(userId,Constant.PROCESS_APPROVE,Constant.DONE);
 
 			/* 
 			 * 2.保存到conList数组
 			 */
 			for (int conId : conIds) {
-				// Get information from  specified contract
-				Contract contract = contractDao.getById(conId);
-				// Get status of designated contract
-				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				ConBusiModel conBusiModel=getConBusiModel(conId);
 				// 该合同已会签人数
 				ConProcess APPROVE_Done=new ConProcess();
 				APPROVE_Done.setConId(conId);
@@ -941,26 +754,16 @@ public class ContractService {
 				APPROVE_VETOED.setType(Constant.PROCESS_APPROVE);
 				// 该合同会签人数
 				int totalCount=totalDoneCount+conProcessDao.getTotalCount(APPROVE_UNDone)+conProcessDao.getTotalCount(APPROVE_VETOED);
-				// Initialize conBusiModel
-				ConBusiModel conBusiModel = new ConBusiModel();
-				if (contract != null) {
-					// Set contract id and name into conBusiModel object
-					conBusiModel.setConId(contract.getId());
-					conBusiModel.setConName(contract.getName());
-				}
+				
 				conBusiModel.setDONENum(totalDoneCount);
 				conBusiModel.setDistributeENum(totalCount);
-				if (conState != null) {
-					// Set Drafting time into conBusiModel object
-					conBusiModel.setDrafTime(conState.getTime()); 
-				}
+				
 				conList.add(conBusiModel);
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("service.ContractService.getProcess_ApproveList");
 		}
-		// Return the set of storage contract business entities
 		return conList;
 	}
 
@@ -973,28 +776,18 @@ public class ContractService {
 	 */
 	public List<ConBusiModel> getProcess_ApproveVETOEDList(int userId)throws AppException{
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
-		ConProcess conProcess = new ConProcess();
-		// Set values to contract process object
-		conProcess.setUserId(userId);
-		// Set process's operation type to "PROCESS_CSIGN"
-		conProcess.setType(Constant.PROCESS_APPROVE);
-		// Set corresponding state of "PROCESS_CSIGN" type  is "DONE"
-		conProcess.setState(Constant.VETOED);
 		
 		try {
 			/*
 			 * 1.获取特定用户所有会签完成的合同id
 			 */
-			List<Integer> conIds = conProcessDao.getConIds(conProcess);
+			List<Integer> conIds = conProcessDao.getConIds(userId,Constant.PROCESS_APPROVE,Constant.VETOED);
 
 			/* 
 			 * 2.保存到conList数组
 			 */
 			for (int conId : conIds) {
-				// Get information from  specified contract
-				Contract contract = contractDao.getById(conId);
-				// Get status of designated contract
-				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				ConBusiModel conBusiModel=getConBusiModel(conId);
 				// 该合同已会签人数
 				ConProcess APPROVE_Done=new ConProcess();
 				APPROVE_Done.setConId(conId);
@@ -1013,26 +806,16 @@ public class ContractService {
 				APPROVE_VETOED.setType(Constant.PROCESS_APPROVE);
 				// 该合同会签人数
 				int totalCount=totalDoneCount+conProcessDao.getTotalCount(APPROVE_UNDone)+conProcessDao.getTotalCount(APPROVE_VETOED);
-				// Initialize conBusiModel
-				ConBusiModel conBusiModel = new ConBusiModel();
-				if (contract != null) {
-					// Set contract id and name into conBusiModel object
-					conBusiModel.setConId(contract.getId());
-					conBusiModel.setConName(contract.getName());
-				}
+				
 				conBusiModel.setDONENum(totalDoneCount);
 				conBusiModel.setDistributeENum(totalCount);
-				if (conState != null) {
-					// Set Drafting time into conBusiModel object
-					conBusiModel.setDrafTime(conState.getTime()); 
-				}
+				
 				conList.add(conBusiModel);
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("service.ContractService.getProcess_ApproveList");
 		}
-		// Return the set of storage contract business entities
 		return conList;
 	}
 	
@@ -1044,43 +827,29 @@ public class ContractService {
 	 * @throws AppException
 	 */
 	public boolean approve(ConProcess conProcess) throws AppException {
-		boolean flag = false;// Define flag
+		boolean flag = false;
 		
-		// Set process's operation type to "PROCESS_APPROVE"
 		conProcess.setType(Constant.PROCESS_APPROVE);
 
 		try {
-			/*
-			 * First to do approve operation,then count all the number of persons to be approved and persons approved as "refuse",
-			 * if the number of persons to be approved is 0,and the number of persons approved as "refuse" is 0,
-			 * so all the approver have complete the approval and pass the approval,
-			 * and now set contract process state to "STATE_APPROVED"
-			 */
-			if (conProcessDao.update(conProcess)) { // To approve contract,enter approval information 
-				// Pass Parameter through conProcess to count number of approver,set state to "UNDONE"
+			if (conProcessDao.update(conProcess)) {
+				//审批完成，获取未审批人数以及否决人数
 				conProcess.setState(Constant.UNDONE);
-				// Get total number of persons to be approved
 				int tbApprovedCount = conProcessDao.getTotalCount(conProcess);
 				
-				// Pass Parameter through conProcess to count number of refused approver,set state to "VETOED"
 				conProcess.setState(Constant.VETOED);
-				// Get total number of persons approved as "refuse"
 				int refusedCount = conProcessDao.getTotalCount(conProcess);
 
-				/*
-				 * If the number of persons to be approved is 0, then all the approver have been complete approval,
-				 * and all passed approval, so save contract state as "STATE_APPROVED"
-				 */
+				
 				if (tbApprovedCount == 0) {
-					if(refusedCount == 0)
+					if(refusedCount == 0)  //如果所有人均审批通过，则添加审批完成的合同状态
 					{
 						ConState conState = new ConState();
 						conState.setConId(conProcess.getConId());
-						// Set contract state type to "STATE_APPROVED"
 						conState.setType(Constant.STATE_APPROVED);
-						// Save contract state information
+						
 						flag = conStateDao.add(conState);
-					}else
+					}else   //如果所有人都审批完成但有人投了否决，该合同作废
 					{
 						contractDao.setDel(conProcess.getConId());
 					}
@@ -1102,7 +871,6 @@ public class ContractService {
 	 * @throws AppException
 	 */
 	public List<CSignatureOpinion> showAPOpinion(int conId) throws AppException {
-		// Initialize csOpinionList
 		List<CSignatureOpinion> csOpinionList = new ArrayList<CSignatureOpinion>();
 		
 		try {
@@ -1111,24 +879,17 @@ public class ContractService {
 			 * 1.获取特点合同已审批的conProcess的id
 			 */
 			List<Integer> conProcessIds = conProcessDao.getIds(conId, Constant.PROCESS_APPROVE, Constant.DONE);
-			/*
-			 * 2.Get countersign people and countersign ideas, and designate contract process type to "PROCESS_CSIGN",corresponding "STATE_FINALIZED" state
-			 */ 
+			
 			for (int id : conProcessIds) {
-				// Get contract process information
 				ConProcess conProcess = conProcessDao.getById(id);
-				// Get countersign people's information
 				User user = userDao.getById(conProcess.getUserId());
-				// Initialize csOpinion
+				
 				CSignatureOpinion csOpinion = new CSignatureOpinion();
-				// Set contract id to csOpinion object 
 				csOpinion.setConId(conId);
 				if (conProcess != null) {
-					// Set signature opinion to conBusiModel object
 					csOpinion.setOpinion(conProcess.getContent());
 				}
 				if (user != null) {
-					// Set countersign people to csOpinion object
 					csOpinion.setCsOperator(user.getName());
 				}
 				csOpinionList.add(csOpinion);
@@ -1149,7 +910,7 @@ public class ContractService {
 	 * @throws AppException
 	 */
 	public List<CSignatureOpinion> showAPVETOEDOpinion(int conId) throws AppException {
-		// Initialize csOpinionList
+		
 		List<CSignatureOpinion> csOpinionList = new ArrayList<CSignatureOpinion>();
 		
 		try {
@@ -1158,24 +919,17 @@ public class ContractService {
 			 * 1.获取特点合同已审批的conProcess的id
 			 */
 			List<Integer> conProcessIds = conProcessDao.getIds(conId, Constant.PROCESS_APPROVE, Constant.VETOED);
-			/*
-			 * 2.Get countersign people and countersign ideas, and designate contract process type to "PROCESS_CSIGN",corresponding "STATE_FINALIZED" state
-			 */ 
+			
 			for (int id : conProcessIds) {
-				// Get contract process information
 				ConProcess conProcess = conProcessDao.getById(id);
-				// Get countersign people's information
 				User user = userDao.getById(conProcess.getUserId());
-				// Initialize csOpinion
+				
 				CSignatureOpinion csOpinion = new CSignatureOpinion();
-				// Set contract id to csOpinion object 
 				csOpinion.setConId(conId);
 				if (conProcess != null) {
-					// Set signature opinion to conBusiModel object
 					csOpinion.setOpinion(conProcess.getContent());
 				}
 				if (user != null) {
-					// Set countersign people to csOpinion object
 					csOpinion.setCsOperator(user.getName());
 				}
 				csOpinionList.add(csOpinion);
@@ -1195,55 +949,32 @@ public class ContractService {
 	 * @return Query all contracts to be signed,otherwise return false
 	 * @throws AppException
 	 */
-	public List<ConBusiModel> getDqdhtList(int userId) throws AppException {
-		// Initialize conList
+	public List<ConBusiModel> getUNSignList(int userId) throws AppException {
+		
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
-		// nitialize conIds for saving contract id set that to be signed
 		List<Integer> conIds = new ArrayList<Integer>();
 		
 		ConProcess conProcess = new ConProcess();
-		// Set values to contract process object
 		conProcess.setUserId(userId);
-		// Set process's operation type to "PROCESS_SIGN"
 		conProcess.setType(Constant.PROCESS_SIGN);
-		// Set corresponding state of "PROCESS_SIGN" type  is "UNDONE"
 		conProcess.setState(Constant.UNDONE);
 		
 		try {
 			/*
-			 * 1.Get contract id set that to be approved
+			 * 1.获取未签订的合同id
 			 */
-			List<Integer> myConIds = conProcessDao.getConIds(conProcess);
+			List<Integer> myConIds = conProcessDao.getConIds(userId,Constant.PROCESS_SIGN,Constant.UNDONE);
 
-			/*
-			 * 2.Screen out id set of contract to be signed from distributed contract,and save to conIds
-			 * Contract to be signed: exist "STATE_APPROVED" state in t_contract_state
-			 */
+			//筛选已审批完成的
 			for (int conId : myConIds) {
 				if (conStateDao.isExist(conId, Constant.STATE_APPROVED)) {
 					conIds.add(conId);
 				}
 			}
 			
-			/*
-			 * 3. Get information of signed contract,and save to contract business entity object,and put the entity class to conList
-			 */
+			
 			for (int conId : conIds) {
-				// Get information of designated contract
-				Contract contract = contractDao.getById(conId);
-				// Get status of designated contract
-				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
-				// Initialize conBusiModel
-				ConBusiModel conBusiModel = new ConBusiModel();
-				if (contract != null) {
-					// Set contract id and name to conBusiModel object
-					conBusiModel.setConId(contract.getId());
-					conBusiModel.setConName(contract.getName());
-				}
-				if (conState != null) {
-					// Set draft time to conBusiModel object
-					conBusiModel.setDrafTime(conState.getTime());
-				}
+				ConBusiModel conBusiModel=getConBusiModel(conId);
 				conList.add(conBusiModel);
 			}
 		} catch (AppException e) {
@@ -1251,7 +982,6 @@ public class ContractService {
 			throw new AppException(
 					"service.ContractService.getDqdhtList");
 		}
-		// Return conList
 		return conList;
 	}
 	
@@ -1263,26 +993,21 @@ public class ContractService {
 	 * @throws AppException
 	 */
 	public boolean sign(ConProcess conProcess) throws AppException {
-		boolean flag = false;// Define flag
-		
-		// Set process's operation type to "PROCESS_SIGN"
+		boolean flag = false;
 		conProcess.setType(Constant.PROCESS_SIGN);
-		// Set "PROCESS_SIGN" type corresponding state to "DONE"
 		conProcess.setState(Constant.DONE);
 		
 		try {
-			if (conProcessDao.update(conProcess)) {// Sign contract:update contract process information
-				
-				// Instantiation conState object, for encapsulate contract state information
+			if (conProcessDao.update(conProcess)) {
+				//签订成功，获取已签订人数
 				conProcess.setState(Constant.UNDONE);
                 int totalCount = conProcessDao.getTotalCount(conProcess);
 				
+                //若所有人已签订，添加签到完成状态
 				if (totalCount == 0) {
 					ConState conState = new ConState();
 					conState.setConId(conProcess.getConId());
-					// Set contract state to "STATE_CSIGNED"
 					conState.setType(Constant.STATE_SIGNED);
-					// Save contract state information
 					flag = conStateDao.add(conState);
 				}
 			}
@@ -1320,10 +1045,7 @@ public class ContractService {
 			 * 2.保存到conList数组
 			 */
 			for (int conId : conIds) {
-				// Get information from  specified contract
-				Contract contract = contractDao.getById(conId);
-				// Get status of designated contract
-				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				ConBusiModel conBusiModel=getConBusiModel(conId);
 				
 				ConProcess SIGN_Done=new ConProcess();
 				SIGN_Done.setConId(conId);
@@ -1338,26 +1060,16 @@ public class ContractService {
 
 				// 该合同签订人数
 				int totalCount=totalDoneCount+conProcessDao.getTotalCount(SIGN_UNDone);
-				// Initialize conBusiModel
-				ConBusiModel conBusiModel = new ConBusiModel();
-				if (contract != null) {
-					// Set contract id and name into conBusiModel object
-					conBusiModel.setConId(contract.getId());
-					conBusiModel.setConName(contract.getName());
-				}
+				
 				conBusiModel.setDONENum(totalDoneCount);
 				conBusiModel.setDistributeENum(totalCount);
-				if (conState != null) {
-					// Set Drafting time into conBusiModel object
-					conBusiModel.setDrafTime(conState.getTime()); 
-				}
+				
 				conList.add(conBusiModel);
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("service.ContractService.getProcess_SignedList");
 		}
-		// Return the set of storage contract business entities
 		return conList;
 	}
 	
@@ -1381,12 +1093,8 @@ public class ContractService {
 		
 		try {
 			for (int conId : drafConIds) {
-				ConBusiModel conBusiModel = new ConBusiModel();
-				// Get information from  specified contract
-				Contract contract = contractDao.getById(conId);
-				// Get status of designated contract
-				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
-				// get state of contract
+				ConBusiModel conBusiModel=getConBusiModel(conId);
+				
 				int state=-1;
 				if(conStateDao.isExist(conId, Constant.STATE_SIGNED))
 				{
@@ -1476,30 +1184,22 @@ public class ContractService {
 					conBusiModel.setDONENum(totalDoneCount);
 					conBusiModel.setDistributeENum(totalCount);
 				}
-				
-				
-				// Initialize conBusiModel
-				
-				if (contract != null) {
-					// Set contract id and name into conBusiModel object
-					conBusiModel.setConId(contract.getId());
-					conBusiModel.setConName(contract.getName());
-				}
-				
-				if (conState != null) {
-					// Set Drafting time into conBusiModel object
-					conBusiModel.setDrafTime(conState.getTime()); 
-				}
+			
 				conList.add(conBusiModel);
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("service.ContractService.getProcess_SignedList");
 		}
-		// Return the set of storage contract business entities
 		return conList;
 	}
 	
+	/**
+	 * 根据合同名称查询合同简略信息
+	 * @param list
+	 * @param userName
+	 * @return
+	 */
 	public List<ConBusiModel> SearchConBusiModel(List<ConBusiModel> list,String conName)
 	{
 		List<ConBusiModel> CBMList=new ArrayList<ConBusiModel>();
@@ -1513,6 +1213,12 @@ public class ContractService {
 		return CBMList;
 	}
 	
+	/**
+	 * 根据姓名查询用户信息
+	 * @param list
+	 * @param userName
+	 * @return
+	 */
 	public List<User> SearchUser(List<User> list,String userName)
 	{
 		List<User> userList=new ArrayList<User>();
@@ -1526,6 +1232,12 @@ public class ContractService {
 		return userList;
 	}
 	
+	/**
+	 * 根据姓名查询客户信息
+	 * @param list
+	 * @param userName
+	 * @return
+	 */
 	public List<Customer> SearchCustomer(List<Customer> list,String userName)
 	{
 		List<Customer> customerList=new ArrayList<Customer>();
@@ -1540,27 +1252,28 @@ public class ContractService {
 	}
 	
 	/**
-	 * Generated contract number, the rule is: year month day hour minute second+5 random numbers when drafting contract,
-	 * Will generate a unique number stored in the database, but the contract number is not the primary key in the table.
+	 * 生成合同编号
 	 */
 	public String generateConNum() {
-		// Initialize date
 		Date date = new Date();
-		// Define date format
 		SimpleDateFormat sft = new SimpleDateFormat("yyyyMMddhhmmss");
 		
-		// Generate a number make up by 5 random numbers
+		
 		int rd = new Random().nextInt(99999);
 		String rand = "00000" + rd;
 		rand = rand.substring(rand.length() - 5);
 		
-		// Generate contract number is current date and time + 5 random numbers
 		String contractNum = sft.format(date) + rand;
 		return contractNum;
 	}
 	
+	/**
+	 * 获取日志
+	 * @return
+	 * @throws AppException
+	 */
 	public List<Log> getLog() throws AppException{
-		UserDao ud = new UserDaoImpl();
+		UserDao ud = new UserDao();
 		List<Log> logList=new ArrayList<Log>();
 		try {
 			logList = ud.getLogs();
@@ -1571,6 +1284,11 @@ public class ContractService {
 		}
 	}
 	
+	/**
+	 * 获取所有合同的细节
+	 * @return
+	 * @throws AppException
+	 */
 	public List<ConDetailBusiModel> getConBusis() throws AppException{
 		List<Integer> conIds = new ArrayList<Integer>();
 		List<ConDetailBusiModel> conList = new ArrayList<ConDetailBusiModel>();
@@ -1586,6 +1304,12 @@ public class ContractService {
 		}
 	}
 	
+	/**
+	 * 删除合同
+	 * @param conId
+	 * @return
+	 * @throws AppException
+	 */
 	public boolean deleteCon(int conId) throws AppException{
 		try{
 		return contractDao.setDel(conId);
@@ -1593,5 +1317,26 @@ public class ContractService {
 			e.printStackTrace();
 			throw new AppException("service.ContractService.getConBusis");
 		}
+	}
+	
+	/**
+	 * 获取合同简略信息，包括（id、名称、起草时间）
+	 * @param conId
+	 * @return
+	 * @throws AppException
+	 */
+	public ConBusiModel getConBusiModel(int conId) throws AppException{
+		Contract contract = contractDao.getById(conId);
+		ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+		ConBusiModel conBusiModel = new ConBusiModel();
+		if (contract != null) {
+			conBusiModel.setConId(contract.getId());
+			conBusiModel.setConName(contract.getName());
+		}
+		if (conState != null) {
+			conBusiModel.setDrafTime(conState.getTime()); 
+		}
+		return conBusiModel;
+		
 	}
 }

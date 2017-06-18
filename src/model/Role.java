@@ -1,8 +1,6 @@
 package model;
 
-/**
- * Role entity class
- */
+
 public class Role {
 	
 	private int id;			    //ID
@@ -11,9 +9,7 @@ public class Role {
 	private String funcIds;		//Function number combination(Split multiple function number with ",")
 	private int del;			//Delete status(0-Not deleted, 1-Deleted)
 	
-	/**
-	 * No-arg constructor assigns initial values to object attributes
-	 */
+
 	public Role() {
 		this.id = 0;
 		this.name = "";
@@ -22,10 +18,7 @@ public class Role {
 		this.del = 0;
 	}
 
-	/*
-	 *  Provide setter and getter methods for attributes
-	 *  setter is used for setting the attribute's value, getter is used for getting the attribute's value
-	 */
+
 	public int getId() {
 		return id;
 	}

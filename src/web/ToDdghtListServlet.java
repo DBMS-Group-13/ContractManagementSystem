@@ -44,7 +44,7 @@ public class ToDdghtListServlet extends HttpServlet{
 				//  Initialize contractList
 				List<ConBusiModel> contractList = new ArrayList<ConBusiModel>();
 				// Call business logic layer to get list of contract to be finalized
-				contractList = contractService.getDdghtList(userId);
+				contractList = contractService.getUNFinalizedList(userId);
 				// Save contractList to request
 				request.setAttribute("contractList", contractList);
 				// Forward to page of contract to be distributed

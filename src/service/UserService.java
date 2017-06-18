@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.RightDao;
+import dao.RightDao;
+import dao.RoleDao;
 import dao.RoleDao;
 import dao.UserDao;
-import dao.impl.RightDaoImpl;
-import dao.impl.RoleDaoImpl;
-import dao.impl.UserDaoImpl;
 import model.Customer;
 import model.PermissionBusiModel;
 import model.PermissionDetailModel;
@@ -18,21 +17,21 @@ import model.User;
 import utils.AppException;
 
 /**
- * User business logic class
+ * 用户服务层
  */
 public class UserService {
 
-	private UserDao userDao = null;//  Define a userDao interface object
-	private RoleDao roleDao = null;// Define a roleDao interface object
-	private RightDao rightDao = null;// Define a userDao rightDao object
+	private UserDao userDao = null; 
+	private RoleDao roleDao = null; 
+	private RightDao rightDao = null;
 
 	/**
-	 * No-arg constructor method is used to initialize instance in data access layer
+	 * 无参构造函数
 	 */
 	public UserService() {
-		userDao = new UserDaoImpl();
-		roleDao = new RoleDaoImpl();
-		rightDao = new RightDaoImpl();
+		userDao = new UserDao();
+		roleDao = new RoleDao();
+		rightDao = new RightDao();
 	}
 
 	/**
@@ -42,10 +41,10 @@ public class UserService {
 	 * @throws AppException
 	 */
 	public boolean register(User user) throws AppException {
-		boolean flag = false;//  Define flag 
+		boolean flag = false;
 		try {
-			if (!userDao.isExist(user.getName())) {// Execute save operation when the user does not exist
-				flag = userDao.add(user);// Return the operation result back to flag
+			if (!userDao.isExist(user.getName())) {
+				flag = userDao.add(user);
 			}
 		} catch (AppException e) {
 			e.printStackTrace();
@@ -63,15 +62,13 @@ public class UserService {
 	 * @throws AppException
 	 */
 	public int login(String name, String password) throws AppException {
-		int userId = -1; // Declare userId
+		int userId = -1; 
 		try {
-			//Get userId
 			userId = userDao.login(name, password); 
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("com.ruanko.service.UserService.login");
 		}
-		// Return userId
 		return userId;
 	}
 	
@@ -83,13 +80,12 @@ public class UserService {
 	 * @throws AppException
 	 */
 	public Role getUserRole(int userId) throws AppException {	
-		Role role = null;// Declare role
-		int roleId = -1; // Initialize roleId
+		Role role = null;
+		int roleId = -1;
 		try {
-			// Get the roleId that corresponding to the user
+			
 			roleId = rightDao.getRoleIdByUserId(userId);
 			if(roleId > 0){
-				// Get role information
 				role = roleDao.getById(roleId); 
 			}
 		} catch (AppException e) {
@@ -107,22 +103,19 @@ public class UserService {
 	 * @throws AppException
 	 */
 	public List<User> getUserListByRoleId(int roleId) throws AppException {
-		// Initialize  userList
 		List<User> userList = new ArrayList<User>();
-		// Declare userIds
 		List<Integer> userIds = null; 
 		
 		try {
 			/*
-			 * 1.Get designated user's userIds
+			 * 1.权限表中获取拥有特定角色的用户ID
 			 */
 			userIds = rightDao.getUserIdsByRoleId(roleId);
 			
 			/*
-			 * 2.Get user information list according to userIds
+			 * 2.获取用户信息
 			 */ 
 			for (int userId : userIds) {
-				// Get user's information
 				User user = userDao.getById(userId);
 				if (user != null) {
 					userList.add(user); 
@@ -131,8 +124,7 @@ public class UserService {
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("service.UserService.getUserList");
-		}	
-		// Return userList
+		}
 		return userList;
 	}
 	
@@ -143,37 +135,32 @@ public class UserService {
 	 * @throws AppException
 	 */
 	public List<PermissionBusiModel> getYhqxList() throws AppException {
-		// Initialize permissionList
 		List<PermissionBusiModel> permissionList = new ArrayList<PermissionBusiModel>();
-		// Declare userIds
 		List<Integer> userIds = null; 
 		
 		try {
 			/*
-			 * 1.Get user id set
+			 * 1.获取所有用户id
 			 */
 			userIds = userDao.getIds();
 			
 			/*
-			 * 2.Get user permission information: user information and corresponding role information
+			 * 2.获取权限信息
 			 */
 			for (int userId : userIds) {
 			
-				// Initialize business entity class object
 				PermissionBusiModel permission = new PermissionBusiModel();
 				
-				User user = userDao.getById(userId); // Get user information according to user id
+				User user = userDao.getById(userId); 
 				int roleId = -1;
-				roleId = rightDao.getRoleIdByUserId(userId); // Get role id according to user id
+				roleId = rightDao.getRoleIdByUserId(userId); 
 				
 				if (roleId > 0) {
-					Role role = roleDao.getById(roleId); // Get role information according to role id
-					// Save role information to permission
+					Role role = roleDao.getById(roleId); 
 					permission.setRoleId(roleId);
 					permission.setRoleName(role.getName());
 				}
 				
-				// Save user information to permission
 				permission.setUserId(userId);
 				permission.setUserName(user.getName());
 				
@@ -184,7 +171,6 @@ public class UserService {
 			e.printStackTrace();
 			throw new AppException("service.UserService.getYhqxList");
 		}	
-		// Permission business entity set
 		return permissionList;
 	}
 	
@@ -195,11 +181,9 @@ public class UserService {
 	 * @throws AppException
 	 */
 	public List<Role> getRoleList() throws AppException {	
-		// Initialize role set
 		List<Role> roleList = new ArrayList<Role>();
 		
 		try {
-			// Get all role object set
 			roleList = roleDao.getAll();
 			
 		} catch (AppException e) {
@@ -217,30 +201,25 @@ public class UserService {
 	 * @throws AppException
 	 */
 	public boolean assignPermission(Right right) throws AppException {
-		boolean flag = false;// Define flag
+		boolean flag = false;
 		
 		try {
-			//  Get user's role 
-			int roleId = -1; // Initialize roleId
-			// Get user's role id
+			int roleId = -1; 
+			
 			roleId = rightDao.getRoleIdByUserId(right.getUserId());
-			// Declare role object
+			
 			Role role = null;
 			if (roleId > 0) {
-				// Get role information
 				role = roleDao.getById(roleId);
 			}
 		
-			/*
-			 * Judgement role of user owned before,if user has a role before,so change the role,otherwise add a new role
-			 */
+			
 			if (role != null) {
-				// Get user's permission
 				int rightId = rightDao.getIdByUserId(right.getUserId());
-				// Set permission id to right object
+				
 				right.setId(rightId);
 				right.setDescription("update");
-				// Update permission inforx	mation
+				
 				flag = rightDao.updateById(right);
 			} else {
 				flag = rightDao.add(right);
@@ -254,29 +233,65 @@ public class UserService {
 		return flag;
 	}
 	
+	/**
+	 * 获取所有用户信息
+	 * @param name
+	 * @return
+	 * @throws AppException
+	 */
 	public List<User> getUsers() throws AppException{
 		return userDao.getUsers();
 	}
 	
+	/**
+	 * 判断邮箱是否重复
+	 * @param name
+	 * @return
+	 * @throws AppException
+	 */
 	public boolean isEmailExist(String email) throws AppException
 	{
 		return userDao.JudgeEmail(email);
 	}
 	
+	/**
+	 * 通过邮箱获取用户信息
+	 * @param name
+	 * @return
+	 * @throws AppException
+	 */
 	public User loadByEmail(String email) throws AppException
 	{
 		return userDao.getByEmail(email);
 	}
 	
+	/**
+	 * 更新用户
+	 * @param name
+	 * @return
+	 * @throws AppException
+	 */
 	public void updateUser(User user) throws AppException
 	{
 		userDao.UpdateUser(user);
 	}
 	
+	/**
+	 * 获取所有客户
+	 * @param name
+	 * @return
+	 * @throws AppException
+	 */
 	public List<Customer> getCustomers() throws AppException{
 		return userDao.getCustomers();
 	}
 	
+	/**
+	 * 删除用户
+	 * @param name
+	 * @return
+	 * @throws AppException
+	 */
 	public boolean deleteUser(int userId) throws AppException{
 		if(userDao.setUserDel(userId))
 			return true;
@@ -285,11 +300,23 @@ public class UserService {
 		}
 	}
 	
+	/**
+	 * 添加客户
+	 * @param name
+	 * @return
+	 * @throws AppException
+	 */
 	public boolean add(Customer customer) throws AppException{
 		userDao.addCustomer(customer);
 		return true;
 	}
 	
+	/**
+	 * 更新客户信息
+	 * @param name
+	 * @return
+	 * @throws AppException
+	 */
 	public boolean update(Customer customer) throws AppException {
 		if(userDao.UpdateCustomer(customer))
 			return true;
@@ -298,6 +325,12 @@ public class UserService {
 		}
 	}
 	
+	/**
+	 * 删除客户
+	 * @param name
+	 * @return
+	 * @throws AppException
+	 */
 	public boolean deleteCustomer(int customerId) throws AppException
 	{
 		if(userDao.setCustomerDel(customerId))
@@ -307,21 +340,61 @@ public class UserService {
 		}
 	}
 	
+	/**
+	 * 判断用户是否存在
+	 * @param name
+	 * @return
+	 * @throws AppException
+	 */
 	public boolean isExistUser(String name)  throws AppException{
 		return userDao.isExist(name);
 	}
+	
+	/**
+	 * 判断用户是否激活账户
+	 * @param name
+	 * @return
+	 * @throws AppException
+	 */
 	public int isActivateUser(String name) throws AppException{
 		return userDao.JudgeUser(name);
 	}
+	
+	/**
+	 * 删除角色
+	 * @param role
+	 * @return
+	 * @throws AppException
+	 */
 	public boolean deleteRole(int roleId) throws AppException{
 		return roleDao.setRoleDel(roleId);
 	}
+	
+	/**
+	 * 添加角色
+	 * @param role
+	 * @return
+	 * @throws AppException
+	 */
 	public boolean addRole(Role role) throws AppException{
 		return roleDao.add(role);
 	}
+	
+	/**
+	 * 更新角色
+	 * @param role
+	 * @return
+	 * @throws AppException
+	 */
 	public boolean updateRole(Role role) throws AppException{
 		return roleDao.UpdateRole(role);
 	}
+	
+	/**
+	 * 获取用户具体权限细节
+	 * @param userId
+	 * @return
+	 */
 	public PermissionDetailModel getPermissionDetail(int userId)
 	{
 		PermissionDetailModel permissionDetailModel=new PermissionDetailModel();
@@ -336,6 +409,10 @@ public class UserService {
 		return permissionDetailModel;
 	}
 
+	/**
+	 * 获取会签员名单
+	 * @return
+	 */
 	public List<User> getCsigners()
 	{
 		try {
@@ -372,6 +449,10 @@ public class UserService {
 		return null;
 	}
 	
+	/**
+	 * 获取签订员名单
+	 * @return
+	 */
 	public List<User> getSigners()
 	{
 		try {
@@ -408,6 +489,10 @@ public class UserService {
 		return null;
 	}
 	
+	/**
+	 * 获取审批员名单
+	 * @return
+	 */
 	public List<User> getApprovers()
 	{
 		try {
@@ -444,6 +529,11 @@ public class UserService {
 		return null;
 	}
 	
+	/**
+	 * 获取角色的权限细节
+	 * @param role
+	 * @return
+	 */
 	public PermissionDetailModel getPBMByRole(Role role)
 	{
 		PermissionDetailModel permissionDetailModel=new PermissionDetailModel();

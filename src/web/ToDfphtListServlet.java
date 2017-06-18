@@ -59,7 +59,7 @@ public class ToDfphtListServlet extends HttpServlet{
 						// Initialize contractList
 						List<ConBusiModel> contractList = new ArrayList<ConBusiModel>();
 						// Call business logic layer to get list of contract to be distributed 
-						contractList = contractService.getDfphtList();
+						contractList = contractService.getUNDistributeList();
 						// Save contractList to request
 						request.setAttribute("contractList", contractList);
 						// Forward to page of contract to be distributed

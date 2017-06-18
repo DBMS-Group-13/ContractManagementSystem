@@ -44,7 +44,7 @@ public class ToDhqhtListServlet extends HttpServlet{
 				// Initialize contractList
 				List<ConBusiModel> contractList = new ArrayList<ConBusiModel>();
 				// Call business logic layer to get list of contract to be countersigned 
-				contractList = contractService.getDhqhtList(userId);
+				contractList = contractService.getUNCsignList(userId);
 				// Save contractList to request
 				request.setAttribute("contractList", contractList);
 				// Forward to page of contract to be countersigned
