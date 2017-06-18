@@ -86,7 +86,7 @@ public class UserDao {
 			psmt.setString(7, user.getCreateDate());
 			psmt.setInt(8, user.getStatus());
 			flag = psmt.execute();
-			if (flag == true) {
+			//if (flag == true) {
 				String content = "User" + user.getId() + "insert data into t_user";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); 
@@ -98,7 +98,7 @@ public class UserDao {
 				psmt.setString(2, date);
 				psmt.setString(3, content);
 				psmt.executeUpdate();
-			}
+			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.UserDaoImpl.add");
@@ -106,7 +106,7 @@ public class UserDao {
 			DBUtil.closeStatement(psmt);
 			DBUtil.closeConnection(conn);
 		}
-		return flag;
+		return true;
 	}
 	
 	/**
@@ -417,7 +417,7 @@ public class UserDao {
 			flag = psmt.execute();
 			
 			
-			if (flag == true) {
+			//if (flag == true) {
 				String content = "User" + user.getId() + "update data in t_user";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); 
@@ -427,7 +427,7 @@ public class UserDao {
 				psmt.setString(2, date);
 				psmt.setString(3, content);
 				psmt.executeUpdate();
-			}
+			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.UserDaoImpl.getById");
@@ -436,7 +436,7 @@ public class UserDao {
 			DBUtil.closeStatement(psmt);
 			DBUtil.closeConnection(conn);
 		}
-		return flag;
+		return true;
 	}
 	
 	/**
@@ -503,7 +503,7 @@ public class UserDao {
 			psmt.setString(7, customer.getBank());
 			psmt.setString(8, customer.getAccount());
 			flag = psmt.execute(); 
-			if (flag == true) {
+			//if (flag == true) {
 				String content = "User insert data into t_customer";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?)";
 				psmt = conn.prepareStatement(sql2);  
@@ -514,7 +514,7 @@ public class UserDao {
 				psmt.setString(2, date);
 				psmt.setString(3, content);
 				psmt.executeUpdate();
-			}
+			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.UserDaoImpl.add");
@@ -522,7 +522,7 @@ public class UserDao {
 			DBUtil.closeStatement(psmt); 
 			DBUtil.closeConnection(conn); 
 		}
-		return flag;
+		return true;
 	}
 	
 	/**
@@ -548,7 +548,7 @@ public class UserDao {
 			 
 			flag = psmt.execute();
 			
-			if (flag == true) { 
+			//if (flag == true) { 
 				String content = "User" + user_id + " update data in t_user";
 				String sql5 = "insert into t_log(time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql5);  
@@ -558,7 +558,7 @@ public class UserDao {
 				psmt.setString(2, date);
 				psmt.setString(3, content);
 				psmt.executeUpdate();
-			}
+			//}
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ContractDaoImpl.updateById");
@@ -566,7 +566,7 @@ public class UserDao {
 			DBUtil.closeStatement(psmt);
 			DBUtil.closeConnection(conn);
 		}
-		return flag;
+		return true;
 	}
 	
 	/**
@@ -614,7 +614,7 @@ public class UserDao {
 			flag = psmt.execute();
 			
 			 
-			if (flag == true) {
+			//if (flag == true) {
 				String content = "User update data in t_customer";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?)";
 				psmt = conn.prepareStatement(sql2);  
@@ -623,7 +623,7 @@ public class UserDao {
 				psmt.setString(1, date);
 				psmt.setString(2, content);
 				psmt.executeUpdate();
-			}
+			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.UserDaoImpl.getById");
@@ -632,7 +632,7 @@ public class UserDao {
 			DBUtil.closeStatement(psmt);
 			DBUtil.closeConnection(conn);
 		}
-		return flag;
+		return true;
 	}
 	
 	/**
@@ -658,7 +658,7 @@ public class UserDao {
  
 			flag = psmt.execute();
 			
-			if (flag == true) { 
+			//if (flag == true) { 
 				String content = "User  update data in t_customer";
 				String sql5 = "insert into t_log(time,content)values(?,?)";
 				psmt = conn.prepareStatement(sql5); 
@@ -667,7 +667,7 @@ public class UserDao {
 				psmt.setString(1, date);
 				psmt.setString(2, content);
 				psmt.executeUpdate();
-			}
+			//}
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ContractDaoImpl.updateById");
@@ -675,7 +675,7 @@ public class UserDao {
 			DBUtil.closeStatement(psmt);
 			DBUtil.closeConnection(conn);
 		}
-		return flag;
+		return true;
 	}
 	
 	/**

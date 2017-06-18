@@ -133,7 +133,7 @@ public class RoleDao{
 			psmt.setString(2, role.getDescription());
 			psmt.setString(3, role.getFuncIds());
 			flag = psmt.execute();
-			if (flag == true) {
+			//if (flag == true) {
 				String content = "User insert data into t_role";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?)";
 				psmt = conn.prepareStatement(sql2); 
@@ -144,7 +144,7 @@ public class RoleDao{
 				psmt.setString(1, date);
 				psmt.setString(2, content);
 				psmt.executeUpdate();
-			}
+			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.UserDaoImpl.add");
@@ -152,7 +152,7 @@ public class RoleDao{
 			DBUtil.closeStatement(psmt);
 			DBUtil.closeConnection(conn);
 		}
-		return flag;
+		return true;
 	}
 	
 	/**
@@ -186,7 +186,7 @@ public class RoleDao{
 			
 			flag = psmt.execute();
 			
-			if (flag == true) {
+			//if (flag == true) {
 				String content = "User  update data in t_role,t_right";
 				String sql3 = "insert into t_log(time,content)values(?,?)";
 				psmt = conn.prepareStatement(sql3);
@@ -195,7 +195,7 @@ public class RoleDao{
 				psmt.setString(1, date);
 				psmt.setString(2, content);
 				psmt.executeUpdate();
-			}
+			//}
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ContractDaoImpl.updateById");
@@ -203,7 +203,7 @@ public class RoleDao{
 			DBUtil.closeStatement(psmt);
 			DBUtil.closeConnection(conn);
 		}
-		return flag;
+		return true;
 	}
 	
 	/**
@@ -236,7 +236,7 @@ public class RoleDao{
 			flag = psmt.execute();
 			
 			
-			if (flag == true) {
+			//if (flag == true) {
 				String content = "User update data in t_role";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?)";
 				psmt = conn.prepareStatement(sql2);
@@ -246,7 +246,7 @@ public class RoleDao{
 				psmt.setString(1, date);
 				psmt.setString(2, content);
 				psmt.executeUpdate();
-			}
+			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.UserDaoImpl.getById");
@@ -256,6 +256,6 @@ public class RoleDao{
 			DBUtil.closeStatement(psmt);
 			DBUtil.closeConnection(conn);
 		}
-		return flag;
+		return true;
 	}
 }

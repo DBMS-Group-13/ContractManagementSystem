@@ -210,7 +210,7 @@ public class ContractDao{
 			flag = psmt.execute();
 			
 			//写日志
-			if (flag == true) {
+			//if (flag == true) {
 				String content = "User" + contract.getUserId() + "update data in t_contract";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); 
@@ -222,7 +222,7 @@ public class ContractDao{
 				psmt.setString(2, date);
 				psmt.setString(3, content);
 				psmt.executeUpdate();
-			}
+			//}
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ContractDaoImpl.updateById");
@@ -230,7 +230,7 @@ public class ContractDao{
 			DBUtil.closeStatement(psmt);
 			DBUtil.closeConnection(conn);
 		}
-		return flag;
+		return true;
 	}
 	
 	/**
@@ -307,7 +307,7 @@ public class ContractDao{
 			
 			flag = psmt.execute();
 			
-			if (flag == true) {
+			//if (flag == true) {
 				String content = "User update data in t_contract,t_contract_attachment,"
 						+ "t_contract_process,t_contract_state";
 				String sql5 = "insert into t_log(time,content)values(?,?)";
@@ -317,7 +317,7 @@ public class ContractDao{
 				psmt.setString(1, date);
 				psmt.setString(2, content);
 				psmt.executeUpdate();
-			}
+			//}
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ContractDaoImpl.updateById");
@@ -325,6 +325,6 @@ public class ContractDao{
 			DBUtil.closeStatement(psmt);
 			DBUtil.closeConnection(conn);
 		}
-		return flag;
+		return true;
 	}
 }

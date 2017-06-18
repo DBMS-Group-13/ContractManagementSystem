@@ -178,10 +178,10 @@ public class ConProcessDao{
 			psmt.setInt(4, conProcess.getUserId());
 			psmt.setInt(5, conProcess.getConId());
 			psmt.setInt(6, conProcess.getType());
-			flag = psmt.execute();
+			psmt.executeUpdate();
 			
 			//记录日志
-			if (flag == true) {
+			//if (flag == true) {
 				String content = "User" + conProcess.getUserId() + "update data in t_contract_process";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
 				psmt = conn.prepareStatement(sql2); 
@@ -192,7 +192,7 @@ public class ConProcessDao{
 				psmt.setString(2, date);
 				psmt.setString(3, content);
 				psmt.executeUpdate();
-			}
+			//}
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ConProcessDaoImpl.update");
@@ -200,7 +200,7 @@ public class ConProcessDao{
 			DBUtil.closeStatement(psmt);
 			DBUtil.closeConnection(conn);
 		}
-		return flag;
+		return true;
 	}
 	
 	/**
