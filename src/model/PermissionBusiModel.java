@@ -7,13 +7,14 @@ public class PermissionBusiModel {
 	private int roleId;			//Role id
 	private String userName;	//User name
 	private String roleName;	//Role name 
-	
+	private String funcIds;
 	
 	public PermissionBusiModel(){
 		this.userId = 0;
 		this.roleId = 0;
 		this.userName = "";
 		this.roleName = "";
+		this.funcIds = "";
 	}
 
 	public int getUserId() {
@@ -46,6 +47,13 @@ public class PermissionBusiModel {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+	public String getfuncIds() {
+		return funcIds;
+	}
+
+	public void setfuncIds(String funcIds) {
+		this.funcIds = funcIds;
 	}
 
 }

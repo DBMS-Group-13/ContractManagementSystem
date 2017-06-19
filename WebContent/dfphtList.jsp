@@ -18,15 +18,6 @@
 <body>
 	<div class="mtitle">Contracts to be assigned</div>
 
-	<div class="search">
-		<form>
-			Search contract to be assigned <input type="text" class="textF"
-				value="Please enter contract name..." name="name"
-				onFocus="this.value=''" /> &nbsp;&nbsp; <input type="submit"
-				value="Search" class="button" /> <br />
-		</form>
-	</div>
-
 	<div class="list">
 		<table>
 			<tr>

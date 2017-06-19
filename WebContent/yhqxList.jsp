@@ -12,14 +12,6 @@
 <body>
 	<div class="mtitle">User permission list</div>
 
-	<div class="search">
-		<form>
-			Search user: <input value="Enter search conditions.." />
-			&nbsp;&nbsp; <input type="submit" value="Search"
-				class="search-submit" /> <br />
-		</form>
-	</div>
-
 	<div class="list">
 		<table>
 			<tr>
@@ -34,7 +26,7 @@
 				%>
 			<tr>
 				<td align="center"><%=pbm.getUserName()%></td>
-				<td align="center"><%=pbm.getRoleName()%></td>
+				<td align="center"><%=pbm.getRoleName()+":"+pbm.getfuncIds()%></td>
 				<td align="center"><a
 					href="toAssignPerm?userId=<%=pbm.getUserId()%>&uName=<%=pbm.getUserName()%>&roleId=<%=pbm.getRoleId()%>">
 						<img src="images/cog_edit.png" alt="Authorize" /> Authorize

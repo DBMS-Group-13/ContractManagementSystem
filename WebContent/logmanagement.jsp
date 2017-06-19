@@ -18,15 +18,6 @@
 <body>
 	<div class="mtitle">log</div>
 
-	<div class="search">
-		<form>
-			Search log <input type="text" class="textF"
-				value="Please..." name="name"
-				onFocus="this.value=''" class=""/> &nbsp;&nbsp; <input type="submit"
-				value="Search" class="button" /> <br />
-		</form>
-	</div>
-
 	<div class="list">
 		<table>
 			<tr>

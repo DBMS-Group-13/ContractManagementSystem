@@ -18,14 +18,6 @@
 <body>
 	<div class="mtitle">Contract Inf</div>
 
-	<div>
-		<form>
-			Search contract<input
-				placeholder="Enter the search conditions.." class="textF"/><input
-				type="submit" value="Search" class="button" />
-		</form>
-	</div>
-
 	<div class="list">
 		<table>
 			<tr>

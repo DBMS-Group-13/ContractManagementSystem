@@ -159,6 +159,7 @@ public class UserService {
 					Role role = roleDao.getById(roleId); 
 					permission.setRoleId(roleId);
 					permission.setRoleName(role.getName());
+					permission.setfuncIds(role.getFuncIds());
 				}
 				
 				permission.setUserId(userId);

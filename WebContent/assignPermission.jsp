@@ -35,7 +35,7 @@
 							List<Role> roleList = (List<Role>) request.getAttribute("roleList");
 							for (Role role : roleList) {
 						%> <input name="roleId" type="radio" value="<%=role.getId()%>"
-					<%if (uRoleId == role.getId()) {%> checked="checked" <%} %> /> <%=role.getName()%>
+					<%if (uRoleId == role.getId()) {%> checked="checked" <%} %> /> <%=role.getName()+":"+role.getFuncIds()%>
 					<br /> <%} %>
 				</td>
 			</tr>

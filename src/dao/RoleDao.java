@@ -14,12 +14,12 @@ import utils.AppException;
 import utils.DBUtil;
 
 /**
- * Role操纵层
+ * Role鎿嶇旱灞�
  */
 public class RoleDao{
 
 	/**
-	 * 查询角色
+	 * 鏌ヨ瑙掕壊
 	 * 
 	 * @param id 
 	 * @return Role 
@@ -67,7 +67,7 @@ public class RoleDao{
 	}
 	
 	/**
-	 * 查询所有角色
+	 * 鏌ヨ鎵�鏈夎鑹�
 	 * 
 	 * @return Role object set
 	 * @throws AppException
@@ -110,7 +110,7 @@ public class RoleDao{
 	}
 
 	/**
-	 * 添加角色
+	 * 娣诲姞瑙掕壊
 	 * @param role
 	 * @return
 	 * @throws AppException
@@ -135,7 +135,7 @@ public class RoleDao{
 			flag = psmt.execute();
 			//if (flag == true) {
 				String content = "User insert data into t_role";
-				String sql2 = "insert into t_log(user_id,time,content)values(?,?)";
+				String sql2 = "insert into t_log(time,content)values(?,?)";
 				psmt = conn.prepareStatement(sql2); 
 				
 				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");   
@@ -156,7 +156,7 @@ public class RoleDao{
 	}
 	
 	/**
-	 * “删除”角色
+	 * 鈥滃垹闄も�濊鑹�
 	 * @param role_id
 	 * @return
 	 * @throws AppException
@@ -207,7 +207,7 @@ public class RoleDao{
 	}
 	
 	/**
-	 * 更新角色
+	 * 鏇存柊瑙掕壊
 	 * @param role
 	 * @return
 	 * @throws AppException

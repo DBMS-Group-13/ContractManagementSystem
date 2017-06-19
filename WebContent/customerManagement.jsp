@@ -12,14 +12,6 @@
 <body>
 	<div class="mtitle">Customer list</div>
 
-	<div class="search">
-		<form>
-			Search user: <input value="Enter search conditions.." />
-			&nbsp;&nbsp; <input type="submit" value="Search"
-				class="search-submit" /> <br />
-		</form>
-	</div>
-
 	<div class="list">
 		<table>
 			<tr>
