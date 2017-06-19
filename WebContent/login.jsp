@@ -41,8 +41,21 @@
 				}			
 			}
 		</script>
+<script type="text/javascript">
+			function printCheck(check){
+				alert(check);
+			}
+		</script>		
 </head>
 
+<%
+if ((String)request.getAttribute("message") != null){
+	String check = (String)request.getAttribute("message");
+%>
+<body onload="printCheck('<%=check%>')">
+<%
+}else
+%>
 <body>
 <img class="logo" src="./images/logo_title.png"></img>
 <div class="cotn_principal">
@@ -83,10 +96,6 @@
           <input type="text" name="name" class="textF" id="name" placeholder="ID" /></td></tr>
           <tr><td>
           <input type="password" name="password" class="textF" id="password" placeholder="Password" /></td></tr>
-          <%
-			if (request.getAttribute("message") != null) {
-		    %> <%=request.getAttribute("message")%> <%
-			}%>
 			</table>
           <button class="btn_login" onClick="return check()">LOGIN</button>
           </form>

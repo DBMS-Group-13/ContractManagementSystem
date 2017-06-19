@@ -27,6 +27,7 @@ public class ToLoginServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Forward to login page
+		
 		request.getRequestDispatcher("/login.jsp")
 				.forward(request, response);
 	}
