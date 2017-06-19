@@ -33,7 +33,6 @@
 				<th width="200px">Contract Id</th>
 				<th width="200px">Contract Name</th>
 				<th width="200px">Contract Time</th>
-				<th width="200px">Contract Draft</th>
 				<th width="200px">Contract Csign</th>
 				<th width="200px">Contract Approve</th>
 				<th width="200px">Contract Sign</th>
@@ -46,7 +45,6 @@
 				<td align="center"><%=cbm.getId() %></td>
 				<td align="center"><%=cbm.getConName() %></td>
 				<td align="center"><%=cbm.getDrafTime() %></td>
-				<td align="center"><%=cbm.getDraft() %></td>
 				<td align="center"><%=cbm.getCsign() %></td>
 				<td align="center"><%=cbm.getApprove() %></td>
 				<td align="center"><%=cbm.getSign() %></td>

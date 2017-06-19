@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.ConBusiModel;
 import model.User;
 import service.ContractService;
 import service.UserService;
@@ -19,7 +20,7 @@ import utils.Constant;
 /**
  * Servlet for assigning contract
  */
-public class SearchListServlet extends HttpServlet {
+public class SearchConBusiServlet extends HttpServlet {
 
 	/**
 	 * Process result of assign contrct
@@ -29,18 +30,20 @@ public class SearchListServlet extends HttpServlet {
 		// Set the request's character encoding
 		request.setCharacterEncoding("UTF-8");
 		ContractService cs = new ContractService();
-		List<User> users = new ArrayList<User>();
-		List<User> usersRes = new ArrayList<User>();
+		List<ConBusiModel> contracts = new ArrayList<ConBusiModel>();
+		List<ConBusiModel> contractsRes = new ArrayList<ConBusiModel>();
 		HttpSession session = null;
 		// Get session by using request
 		session = request.getSession();
-		users = (List<User>) session.getAttribute("userList");
+		contracts = (List<ConBusiModel>) session.getAttribute("contractList");
 		String name = request.getParameter("searchname");
-		usersRes = cs.SearchUser(users, name);
+		String jsp = request.getParameter("jspname");
+		contractsRes = cs.SearchConBusiModel(contracts, name);
 		// Save user name into request
-		request.setAttribute("users", usersRes);	
+		request.setAttribute("contractList", contractsRes);	
+		System.out.println(jsp);
 		// Forward to login page
-		request.getRequestDispatcher("/userManagement.jsp").forward(request,
+		request.getRequestDispatcher(jsp).forward(request,
 				response);
 	}
 

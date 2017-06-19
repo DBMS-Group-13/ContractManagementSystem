@@ -37,6 +37,10 @@
 					// Delete the corresponding item in source list
 					s1.removeChild(arrValueTextRelation[arrSelValue[i]]);  
 				} 
+				for(var i = 0;i < s2.length ; i++){
+					s2.options[i].selected=true;
+				}
+				
 			}
 			
 			// Judgment whether user has assigned operator, if does not assign, giving prompt message; Or submit form to assign operator
@@ -75,7 +79,9 @@
 		<%=contract.getName()%>
 	</div>
 	<%
-			List<User> userList = (List<User>)request.getAttribute("userList");
+			List<User> userCCList = (List<User>)request.getAttribute("userCCList");
+			List<User> userACList = (List<User>)request.getAttribute("userACList");
+			List<User> userSCList = (List<User>)request.getAttribute("userSCList");
         %>
 	<br />
 	<br />
@@ -90,7 +96,7 @@
 				<td>operator to be assigned: <select
 					style="WIDTH: 100%" multiple name="dfphqht" size="12">
 						<%  
-						    	for (User user : userList) {
+						    	for (User user : userCCList) {
 			       	 		%>
 						<option value="<%=user.getId()%>"><%=user.getName()%></option>
 						<%} %>
@@ -103,7 +109,7 @@
 					onclick="moveOption(document.assignOperForm.hqht, document.assignOperForm.dfphqht)">
 				</td>
 				<td width="45%">assigned operator: <select style="WIDTH: 100%"
-					multiple name="hqht" size="12">
+					name="hqht" multiple="multiple" size="12">
 				</select>
 				</td>
 			</tr>
@@ -118,7 +124,7 @@
 				<td width="45%">operator to be assigned: <select
 					style="WIDTH: 100%" multiple name="dfpspht" size="12">
 						<%  
-						    	for (User user : userList) {
+						    	for (User user : userACList) {
 			       	 		%>
 						<option value="<%=user.getId()%>"><%=user.getName()%></option>
 						<%} %>
@@ -145,7 +151,7 @@
 				<td width="45%">operator to be assigned: <select
 					style="WIDTH: 100%" multiple name="dfpqdht" size="12">
 						<%  
-						    	for (User user : userList) {
+						    	for (User user : userSCList) {
 			       	 		%>
 						<option value="<%=user.getId()%>"><%=user.getName()%></option>
 						<%} %>

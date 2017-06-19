@@ -10,11 +10,16 @@
 </head>
 
 <body>
+<%
+List<User> userList = (List<User>) request.getAttribute("users");
+// Get session by using request
+session.setAttribute("userList", userList);
+%>
 	<div class="mtitle">User permission list</div>
 
 	<div class="search">
-		<form>
-			Search user: <input placeholder="Enter search conditions.." class="textF" />
+		<form action = "search" method = "post">
+			Search user: <input placeholder="Enter search conditions.." class="textF" name = "searchname"/>
 			&nbsp;&nbsp; <input type="submit" value="Search"
 				class="search-submit" /> <br />
 		</form>
@@ -31,8 +36,7 @@
 				<th width="200px">User status</th>
 				<th width="400px">Options</th>
 			</tr>
-			<%
-					List<User> userList = (List<User>) request.getAttribute("users");
+			<%					
 					for (User pbm : userList) {
 				%>
 			<tr>

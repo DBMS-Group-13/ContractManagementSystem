@@ -19,7 +19,7 @@ import utils.DBUtil;
 public class ContractDao{
 
 	/**
-	 * 添加合同信息
+	 * 娣诲姞鍚堝悓淇℃伅
 	 * 
 	 * @param contract 
 	 * @return boolean Return true if successful , otherwise false
@@ -84,7 +84,7 @@ public class ContractDao{
 	}
 	
 	/**
-	 * 通过id获取合同
+	 * 閫氳繃id鑾峰彇鍚堝悓
 	 * 
 	 * @param id Contract id
 	 * @return Contract object
@@ -102,7 +102,7 @@ public class ContractDao{
 			conn = DBUtil.getConnection();
 			String sql = "select id,name,user_id,customer,num,beginTime,endTime,content "
 					+"from t_contract "
-					+"where id = ? and del = 0";
+					+"where id = ?";
 
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, id); 
@@ -136,7 +136,7 @@ public class ContractDao{
 	}
 	
 	/**
-	 *通过用户id获取所有合同id
+	 *閫氳繃鐢ㄦ埛id鑾峰彇鎵�鏈夊悎鍚宨d
 	 * 
 	 * @param id Contract id
 	 * @return Contract id set
@@ -176,7 +176,7 @@ public class ContractDao{
 	}
 	
 	/**
-	 * 更新合同
+	 * 鏇存柊鍚堝悓
 	 * 
 	 * @param conId Contract id
 	 * @return boolean Return true if successful , otherwise false
@@ -209,7 +209,7 @@ public class ContractDao{
 		
 			flag = psmt.execute();
 			
-			//写日志
+			//鍐欐棩蹇�
 			//if (flag == true) {
 				String content = "User" + contract.getUserId() + "update data in t_contract";
 				String sql2 = "insert into t_log(user_id,time,content)values(?,?,?)";
@@ -234,7 +234,7 @@ public class ContractDao{
 	}
 	
 	/**
-	 * 获取所有合同id
+	 * 鑾峰彇鎵�鏈夊悎鍚宨d
 	 * @return
 	 * @throws AppException
 	 */
@@ -272,7 +272,7 @@ public class ContractDao{
 	}
 	
 	/**
-	 * "删除"合同
+	 * "鍒犻櫎"鍚堝悓
 	 * @param con_id
 	 * @return
 	 * @throws AppException

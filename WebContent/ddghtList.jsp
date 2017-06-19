@@ -16,12 +16,17 @@
 </head>
 
 <body>
-	<div class="mtitle">Contract to de finalized</div>
+<%
+List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList"); 
+// Get session by using request
+session.setAttribute("contractList", contractList);
+%>
+	<div class="mtitle">Contract to be finalized</div>
 
 	<div>
-		<form>
+		<form action = "searchConBusi?jspname=<%="/ddghtList.jsp"%>" method = "post">
 			Search contract to be finalized <input
-				placeholder="Enter the search conditions.." class="textF"/><input
+				placeholder="Enter the search conditions.." class="textF" name = "searchname"/><input
 				type="submit" value="Search" class="button" />
 		</form>
 	</div>
@@ -33,8 +38,7 @@
 				<th width="200px">Draft time</th>
 				<th width="400px">Operation</th>
 			</tr>
-			<%
-				List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");  
+			<%				 
 		        for (ConBusiModel cbm : contractList) {
        	 	%>
 			<tr>

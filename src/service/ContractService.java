@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import javax.mail.MessagingException;
+
 import dao.ConProcessDao;
 import dao.ConStateDao;
 import dao.ContractDao;
@@ -22,6 +24,7 @@ import model.Log;
 import model.User;
 import utils.AppException;
 import utils.Constant;
+import utils.MailUtil;
 
 /**
  *	合同服务层
@@ -150,6 +153,21 @@ public class ContractService {
 			throws AppException {
 		boolean flag = false;
 		try {
+			if(type == 1){
+				User user = new User();
+				user = userDao.getById(userId);
+				MailUtil.sendMail(user.getEmail(), "ContractSystem:合同提醒", "<p>用户:"+user.getName()+" 您好 O(∩_∩)O~~<br><br>您在ContractSystem有一份新合同正在等待您的会签。<br><br>请尽快登录系统完成操作！:)<br>");
+			}
+			if(type == 2){
+				User user = new User();
+				user = userDao.getById(userId);
+				MailUtil.sendMail(user.getEmail(), "ContractSystem:合同提醒", "<p>用户:"+user.getName()+" 您好 O(∩_∩)O~~<br><br>您在ContractSystem有一份新合同正在等待您的审批。<br><br>请尽快登录系统完成操作！:)<br>");
+			}
+			if(type == 3){
+				User user = new User();
+				user = userDao.getById(userId);
+				MailUtil.sendMail(user.getEmail(), "ContractSystem:合同提醒", "<p>用户:"+user.getName()+" 您好 O(∩_∩)O~~<br><br>您在ContractSystem有一份新合同正在等待您的签订。<br><br>请尽快登录系统完成操作！:)<br>");
+			}
 			ConProcess conProcess = new ConProcess();
 			//分配合同流程
 			conProcess.setConId(conId);
@@ -159,7 +177,7 @@ public class ContractService {
 			conProcess.setUserId(userId);
 			
 			flag = conProcessDao.add(conProcess);
-		} catch (AppException e) {
+		} catch (AppException | MessagingException e) {
 			e.printStackTrace();
 			throw new AppException(
 					"service.ContractService.distribute");
@@ -1029,21 +1047,9 @@ public class ContractService {
 	public List<ConBusiModel> getProcess_SignedList(int userId)throws AppException
 	{
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();  //要返回的合同简略信息列表
-		List<Integer> drafConIds = contractDao.getIdsByUserId(userId);
+		List<Integer> conIds = conProcessDao.getConIds(userId, Constant.PROCESS_SIGN, Constant.DONE);
 		
 		try {
-			/*
-			 * 1.获取特定用户所有签订完成的合同id
-			 */
-			List<Integer> conIds= new ArrayList<Integer>();
-			for (int conId : drafConIds) {
-				if(conStateDao.isExist(conId, Constant.STATE_SIGNED))
-					conIds.add(conId);
-			}
-
-			/* 
-			 * 2.保存到conList数组
-			 */
 			for (int conId : conIds) {
 				ConBusiModel conBusiModel=getConBusiModel(conId);
 				

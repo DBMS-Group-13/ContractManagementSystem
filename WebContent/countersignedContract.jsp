@@ -16,12 +16,17 @@
 </head>
 
 <body>
+<%
+List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList"); 
+// Get session by using request
+session.setAttribute("contractList", contractList);
+%>
 	<div class="mtitle">Countersigned Contract</div>
 
 	<div class="search">
-		<form>
+		<form action = "searchConBusi?jspname=<%="/countersignedContract.jsp"%>" method = "post">
 			Search contract to countersigned <input type="text" class="textF"
-				value="Please enter contract name..." name="name"
+				value="Please enter contract name..." name="searchname"
 				onFocus="this.value=''" class=""/> &nbsp;&nbsp; <input type="submit"
 				value="Search" class="button" /> <br />
 		</form>
@@ -35,7 +40,6 @@
 				<th width="200px">Status</th>
 			</tr>
 			<%
-				List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");  
 		        for (ConBusiModel cbm : contractList) {
        	 	%>
 			<tr>

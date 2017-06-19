@@ -14,12 +14,12 @@ import utils.AppException;
 import utils.DBUtil;
 
 /**
- * t_conState表sql操作层
+ * t_conState琛╯ql鎿嶄綔灞�
  */
 public class ConStateDao{
 
 	/**
-	 * 添加合同状态
+	 * 娣诲姞鍚堝悓鐘舵��
 	 *  
 	 * @param  conState Contract status object
 	 * @return boolean Return true if successful , otherwise false
@@ -41,7 +41,7 @@ public class ConStateDao{
 		
             int result = psmt.executeUpdate();
             
-            //写日志
+            //鍐欐棩蹇�
 			if(result > 0){
 				flag = true;
 				String content = "User insert data into t_contract_state";
@@ -66,7 +66,7 @@ public class ConStateDao{
 	}
 	
 	/**
-	 * 根据状态类型获取合同编号
+	 * 鏍规嵁鐘舵�佺被鍨嬭幏鍙栧悎鍚岀紪鍙�
 	 * 
 	 * @param type  Operation type
 	 * @return Contract ids
@@ -104,7 +104,7 @@ public class ConStateDao{
 	}
 
 	/**
-	 * 根据conId,type获取合同状态信息
+	 * 鏍规嵁conId,type鑾峰彇鍚堝悓鐘舵�佷俊鎭�
 	 * 
 	 * @param conId Contract id
 	 * @param type Operation type
@@ -151,11 +151,11 @@ public class ConStateDao{
 	}
 	
 	/**
-	 * 根据con_id,type判断合同状态是否存在
+	 * 鏍规嵁con_id,type鍒ゆ柇鍚堝悓鐘舵�佹槸鍚﹀瓨鍦�
 	 * 
 	 * @param con_id Countract id
 	 * @param type Operation type
-	 * @return boolean Exist return true，otherwise return false
+	 * @return boolean Exist return true锛宱therwise return false
 	 * @throws AppException
 	 */
 	public boolean isExist(int con_id, int type) throws AppException {

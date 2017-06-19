@@ -410,6 +410,22 @@
     <servlet-name>toRoleManagement</servlet-name>
     <url-pattern>/toRoleManagement</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>search</servlet-name>
+    <servlet-class>web.SearchListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>search</servlet-name>
+    <url-pattern>/search</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>searchConBusi</servlet-name>
+    <servlet-class>web.SearchConBusiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>searchConBusi</servlet-name>
+    <url-pattern>/searchConBusi</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>

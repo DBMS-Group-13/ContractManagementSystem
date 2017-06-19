@@ -42,11 +42,11 @@ public class AssignOperServlet extends HttpServlet {
 		//Get Contract id
 		int conId = Integer.parseInt(request.getParameter("conId"));
 		// Get assigned cuntersign people's id 
-		String[] hqht = request.getParameterValues("hqht");
+		String[] hqht = (String[])request.getParameterValues("hqht");
 		// Get assigned approver's id
-		String[] spht = request.getParameterValues("spht");
+		String[] spht = (String[])request.getParameterValues("spht");
 		// Get assigned signer's id
-		String[] qdht = request.getParameterValues("qdht");
+		String[] qdht = (String[])request.getParameterValues("qdht");
 		try {
 			//  Initialize contractService
 			ContractService contractService = new ContractService();
@@ -54,9 +54,6 @@ public class AssignOperServlet extends HttpServlet {
 			 * Call business logic layer to distributed contract
 			 */ 
 			// Assigned cuntersign people
-			for (String hq : hqht) {
-				System.out.println(hq);
-			}
 			for (String hq : hqht) {
 				contractService.distribute(conId, Integer.parseInt(hq),Constant.PROCESS_CSIGN);
 			}
