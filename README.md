@@ -1,3 +1,3 @@
 # ContractManagementSystem
 Group13-Project
-By YOU,MU,PENG,WANG
+By YOU:GARCIIAa,MU:Sigurd-August,PENG:DaShao11,WANG:W-Sword
