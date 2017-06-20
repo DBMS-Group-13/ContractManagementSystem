@@ -17,7 +17,7 @@ public class User {
 	public User(){
 		this.id = 0;
 		this.name = "";
-		this.password = "";
+		this.password = "-1";
 		this.secPassword="";
 		this.email = "";
 		this.token = "";
