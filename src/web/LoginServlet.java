@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import model.PermissionDetailModel;
 import model.Role;
+import model.User;
 import service.UserService;
 import utils.AppException;
 
@@ -59,7 +60,6 @@ public class LoginServlet extends HttpServlet {
 			}
 			// Call business logic layer for user login
 			userId = userService.login(name, password);
-			
 			if (userId > 0) { // login successfully  
 				//  Declare session
 				HttpSession session = null;
@@ -76,7 +76,10 @@ public class LoginServlet extends HttpServlet {
 				// Process page jump according to the user's role
 				if ( role == null) {
 					//Redirect to new user page
-					response.sendRedirect("toNewUser");
+					message = "You have no right now!\nPlease connect the adminstrator to assign!";
+					request.setAttribute("message", message); // Save prompt message into request
+					request.getRequestDispatcher("/result.jsp").forward(request,
+							response);
 				} else if (role.getName().equals("admin")) {
 					//Redirect to administrator page
 					PermissionDetailModel pdm = userService.getPermissionDetail(userId);

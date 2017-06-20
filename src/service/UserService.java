@@ -569,4 +569,7 @@ public class UserService {
 		}
 		return permissionDetailModel;
 	}	
+	public User getUserById(int id) throws AppException{
+		return userDao.getById(id);
+	}
 }
